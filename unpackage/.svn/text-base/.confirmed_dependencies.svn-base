@@ -1,0 +1,871 @@
+{
+  "index.html": {
+    "refer": [
+      "common.html",
+      "Personalcenter_Inventory.html",
+      "Personalcenter_Equipment.html",
+      "user_register.html",
+      "Personalcenter.html",
+      "Personalcenter_partners.html",
+      "Personalcenter_Partners.html"
+    ],
+    "resources": []
+  },
+  "common.html": {
+    "refer": [
+      "index.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_Inventory.html": {
+    "refer": [
+      "index.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_Equipment.html": {
+    "refer": [
+      "index.html"
+    ],
+    "resources": []
+  },
+  "user_register.html": {
+    "refer": [
+      "index.html",
+      "Personalcenter.html",
+      "Personalcenter_partners.html",
+      "user_login.html",
+      "Personalcenter_Partners.html",
+      "Nav_Index.html",
+      "user_real_name.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter.html": {
+    "refer": [
+      "index.html",
+      "user_register.html"
+    ],
+    "resources": []
+  },
+  "user_login.html": {
+    "refer": [
+      "Personalcenter_partners.html",
+      "user_register.html",
+      "user_password.html",
+      "Personalcenter_Partners.html",
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Index.html",
+      "Nav_Personalcenter_Partners.html"
+    ],
+    "resources": [
+      "Nav_Personalcenter_Agent.html"
+    ]
+  },
+  "Personalcenter_partners.html": {
+    "refer": [
+      "user_login.html",
+      "user_register.html",
+      "Personalcenter_myInventory.html",
+      "user_address.html",
+      "bank_card_list.html",
+      "index.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_myInventory.html": {
+    "refer": [
+      "Personalcenter_partners.html"
+    ],
+    "resources": []
+  },
+  "bank_card_list.html": {
+    "refer": [
+      "Personalcenter_partners.html",
+      "bank_card_add.html",
+      "Personalcenter_Partners.html",
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Personalcenter_Partners.html",
+      "user_pay_password.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_Partners.html": {
+    "refer": [
+      "Personalcenter_myagent.html",
+      "Personalcenter_erweima.html",
+      "user_login.html",
+      "bank_card_list.html",
+      "Personalcenter_myMachine.html",
+      "index.html",
+      "user_register.html",
+      "user_address.html",
+      "Personalcenter_Setting.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_myagent.html": {
+    "refer": [
+      "Personalcenter_Partners.html",
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Personalcenter_Partners.html",
+      "setup_rate.html",
+      "setup_rate_pos.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_erweima.html": {
+    "refer": [
+      "Personalcenter_Partners.html",
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Personalcenter_Partners.html"
+    ],
+    "resources": []
+  },
+  "user_password.html": {
+    "refer": [
+      "user_login.html"
+    ],
+    "resources": []
+  },
+  "bank_card_add.html": {
+    "refer": [
+      "bank_card_list.html",
+      "barcode_scan.html",
+      "user_pay_password.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_myMachine.html": {
+    "refer": [
+      "Personalcenter_Partners.html",
+      "apply_tools_record.html",
+      "Nav_Personalcenter_Agent.html",
+      "Tools_apply_record.html",
+      "Nav_Personalcenter_Partners.html",
+      "Personalcenter_Machine_search.html"
+    ],
+    "resources": []
+  },
+  "user_address.html": {
+    "refer": [
+      "Personalcenter_Partners.html",
+      "user_new_address.html",
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Personalcenter_Partners.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_Setting.html": {
+    "refer": [
+      "user_pay_password.html",
+      "Personalcenter_Partners.html",
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Personalcenter_Partners.html",
+      "about_us.html",
+      "user_change_password.html",
+      "user_look_realname.html",
+      "my_rate.html",
+      "network_loss.html",
+      "user_login.html",
+      "user_real_name.html"
+    ],
+    "resources": [
+      "Nav_Personalcenter_Agent.html"
+    ]
+  },
+  "user_pay_password.html": {
+    "refer": [
+      "Personalcenter_Setting.html",
+      "bank_card_add.html",
+      "bank_card_list.html"
+    ],
+    "resources": []
+  },
+  "Nav_Index.html": {
+    "refer": [
+      "user_register.html",
+      "Nav_Personalcenter_Agent.html",
+      "barcode_scan.html",
+      "Nav_Help.html",
+      "guide.html",
+      "Nav_Applstools.html",
+      "Nav_Applytools.html",
+      "Nav_Personalcenter_Partners.html",
+      "Personalcenter_myprofit.html",
+      "user_login.html",
+      "network_loss.html",
+      "user_real_name.html",
+      "Personalcenter_myprofit_pos.html",
+      "nav_Index_banner.html",
+      "nav_Index_noticelist.html",
+      "user_Face_recognition.html",
+      "Nav_Card.html",
+      "Advertisement.html",
+      "user_identity.html"
+    ],
+    "resources": [
+      "Nav_Personalcenter_Agent.html",
+      "img/icon_apply.png",
+      "css/common.css",
+      "img/icon_yesterday_statistics.png",
+      "img/icon_index_active.png",
+      "img/icon_today_statistics.png",
+      "img/icon_notice.png",
+      "css/mui.css",
+      "Nav_Help.html",
+      "Nav_Personalcenter_Partners.html",
+      "js/custom.js",
+      "js/myStorage.js",
+      "js/rem_controle.js",
+      "img/icon_help.png",
+      "js/jquery-1.8.3.min.js",
+      "js/mui.min.js",
+      "img/icon_user.png",
+      "Personalcenter_myprofit.html",
+      "Nav_Applytools.html",
+      "nav_Index_banner.html"
+    ]
+  },
+  "Nav_Personalcenter_Agent.html": {
+    "refer": [
+      "Nav_Help.html",
+      "Nav_Index.html",
+      "Personalcenter_Setting.html",
+      "user_address.html",
+      "bank_card_list.html",
+      "Personalcenter_profit_library.html",
+      "Personalcenter_myagent.html",
+      "Personalcenter_erweima.html",
+      "Personalcenter_myprofit.html",
+      "Personalcenter_myMachine.html",
+      "user_login.html",
+      "Nav_Applytools.html",
+      "Personalcenter_library.html",
+      "allocation_tools.html",
+      "message.html",
+      "network_loss.html",
+      "user_real_name.html",
+      "user_identity.html",
+      "personal_tools_collect_account.html",
+      "grade_rule.html",
+      "bank_withdrawal.html",
+      "Personalcenter_proxyMachine.html",
+      "Personalcenter_myprofit_pos.html",
+      "Personalcenter_statistics.html",
+      "return_goods.html",
+      "deliver_apply_record.html",
+      "deliver_return_record.html",
+      "Nav_Card.html",
+      "user_Face_recognition.html",
+      "user_Face_recognition_bank.html"
+    ],
+    "resources": [
+      "Nav_Index.html"
+    ]
+  },
+  "Nav_Help.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Index.html",
+      "Nav_Applstools.html",
+      "Nav_Personalcenter_Partners.html",
+      "Nav_Applytools.html",
+      "Help_transaction_fail_list.html",
+      "Help_guarantee.html",
+      "Help_download.html",
+      "Help_app_function.html",
+      "Help_becareful.html",
+      "Help_packing_list.html",
+      "Help_thaw_process.html",
+      "Help_problem_feedback.html",
+      "network_loss.html",
+      "user_login.html"
+    ],
+    "resources": []
+  },
+  "user_new_address.html": {
+    "refer": [
+      "user_address.html",
+      "Nav_Applytools.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_profit_library.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_myprofit.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Personalcenter_Partners.html",
+      "profit_detail_partner.html",
+      "Nav_Index.html",
+      "profit_detail.html",
+      "monthly_bill.html",
+      "profit_detail_agent.html",
+      "user_login.html"
+    ],
+    "resources": []
+  },
+  "apply_tools_record.html": {
+    "refer": [
+      "Personalcenter_myMachine.html"
+    ],
+    "resources": []
+  },
+  "barcode_scan.html": {
+    "refer": [
+      "Nav_Index.html",
+      "bank_card_add.html",
+      "Tools_receive.html",
+      "return_apply.html",
+      "return_goods.html",
+      "deliver_goods.html",
+      "deliver_goods_detail.html",
+      "allocation_message.html",
+      "allocation_tools.html",
+      "allocation_detail.html"
+    ],
+    "resources": [
+      "allocation_message.html"
+    ]
+  },
+  "Nav_Applstools.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Index.html",
+      "Nav_Help.html"
+    ],
+    "resources": []
+  },
+  "Tools_apply_record.html": {
+    "refer": [
+      "Personalcenter_myMachine.html",
+      "Tools_receive.html",
+      "Nav_Applytools.html",
+      "deliver_goods_detail.html"
+    ],
+    "resources": []
+  },
+  "Nav_Applytools.html": {
+    "refer": [
+      "Nav_Index.html",
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Help.html",
+      "Tools_apply_record.html",
+      "Nav_Personalcenter_Partners.html",
+      "user_new_address.html",
+      "user_login.html",
+      "Nav_Card.html"
+    ],
+    "resources": []
+  },
+  "Tools_details.html": {
+    "refer": [
+      "Tools_receive.html",
+      "deliver_goods.html",
+      "deliver_goods_detail.html",
+      "allocation_message.html"
+    ],
+    "resources": []
+  },
+  "Tools_receive.html": {
+    "refer": [
+      "Tools_details.html",
+      "barcode_scan.html",
+      "Tools_apply_record.html",
+      "barcode_scan_confirmreceive.html",
+      "Tools_receive.html"
+    ],
+    "resources": [
+      "Tools_apply_record.html"
+    ]
+  },
+  "Personalcenter_library.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html",
+      "library_apply.html"
+    ],
+    "resources": []
+  },
+  "Nav_Personalcenter_Partners.html": {
+    "refer": [
+      "Personalcenter_myMachine.html",
+      "return_goods.html",
+      "bank_card_list.html",
+      "deliver_apply_record.html",
+      "Personalcenter_erweima.html",
+      "Nav_Help.html",
+      "deliver_return_record.html",
+      "Personalcenter_myagent.html",
+      "Personalcenter_myprofit.html",
+      "Nav_Applytools.html",
+      "Nav_Index.html",
+      "user_login.html",
+      "Personalcenter_Setting.html",
+      "user_address.html",
+      "user_real_name.html",
+      "message.html",
+      "Personalcenter_statistics.html",
+      "bank_withdrawal.html",
+      "Personalcenter_proxyMachine.html",
+      "Personalcenter_myprofit_pos.html",
+      "Nav_Card.html",
+      "user_Face_recognition.html",
+      "user_Face_recognition_bank.html"
+    ],
+    "resources": [
+      "user_login.html",
+      "img/icon_personal_top02.png",
+      "img/icon_index.png",
+      "css/common.css",
+      "img/icon_user_active.png",
+      "img/icon_personal_top04.png",
+      "img/user_head.png",
+      "img/icon_message.png",
+      "img/icon_personal_top01.png",
+      "css/mui.css"
+    ]
+  },
+  "return_goods.html": {
+    "refer": [
+      "Nav_Personalcenter_Partners.html",
+      "return_apply.html",
+      "Nav_Personalcenter_Agent.html"
+    ],
+    "resources": [
+      "Nav_Personalcenter_Partners.html"
+    ]
+  },
+  "barcode_scan_confirmreceive.html": {
+    "refer": [
+      "Tools_receive.html"
+    ],
+    "resources": []
+  },
+  "deliver_apply_record.html": {
+    "refer": [
+      "Nav_Personalcenter_Partners.html",
+      "deliver_goods.html",
+      "Nav_Personalcenter_Agent.html"
+    ],
+    "resources": []
+  },
+  "guide.html": {
+    "refer": [
+      "Nav_Index.html"
+    ],
+    "resources": []
+  },
+  "deliver_return_record.html": {
+    "refer": [
+      "Nav_Personalcenter_Partners.html",
+      "deliver_goods_detail.html",
+      "Nav_Personalcenter_Agent.html"
+    ],
+    "resources": []
+  },
+  "return_apply.html": {
+    "refer": [
+      "return_goods.html",
+      "barcode_scan.html",
+      "return_apply.html",
+      "return_Tools_details.html"
+    ],
+    "resources": [
+      "return_goods.html",
+      "img/icon_tips_blue.png",
+      "img/icon_scan.png",
+      "img/icon_personal_enter.png",
+      "css/common.css",
+      "img/icon_danger1.png",
+      "css/mui.css",
+      "js/textarea.js"
+    ]
+  },
+  "deliver_goods_detail.html": {
+    "refer": [
+      "deliver_return_record.html",
+      "Tools_details.html",
+      "barcode_scan.html",
+      "Tools_apply_record.html"
+    ],
+    "resources": []
+  },
+  "deliver_goods.html": {
+    "refer": [
+      "deliver_apply_record.html",
+      "barcode_scan.html",
+      "Tools_details.html",
+      "return_Tools_details.html",
+      "deliver_good_Tools_details.html"
+    ],
+    "resources": []
+  },
+  "return_Tools_details.html": {
+    "refer": [
+      "return_apply.html",
+      "deliver_goods.html"
+    ],
+    "resources": []
+  },
+  "deliver_good_Tools_details.html": {
+    "refer": [
+      "deliver_goods.html"
+    ],
+    "resources": []
+  },
+  "allocation_tools.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html",
+      "allocation_message.html",
+      "allocation_detail.html",
+      "allocation_message_complete.html"
+    ],
+    "resources": []
+  },
+  "allocation_message.html": {
+    "refer": [
+      "allocation_tools.html",
+      "barcode_scan.html",
+      "Tools_details.html",
+      "allocation_Tools_details.html"
+    ],
+    "resources": [
+      "allocation_tools.html"
+    ]
+  },
+  "message.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Personalcenter_Partners.html"
+    ],
+    "resources": []
+  },
+  "profit_detail.html": {
+    "refer": [
+      "Personalcenter_myprofit.html",
+      "profit_library_detail.html"
+    ],
+    "resources": []
+  },
+  "profit_library_detail.html": {
+    "refer": [
+      "profit_detail.html"
+    ],
+    "resources": []
+  },
+  "allocation_Tools_details.html": {
+    "refer": [
+      "allocation_message.html",
+      "allocation_detail.html",
+      "allocation_message_complete.html"
+    ],
+    "resources": []
+  },
+  "monthly_bill.html": {
+    "refer": [
+      "Personalcenter_myprofit.html"
+    ],
+    "resources": []
+  },
+  "profit_detail_partner.html": {
+    "refer": [
+      "Personalcenter_myprofit.html"
+    ],
+    "resources": []
+  },
+  "allocation_detail.html": {
+    "refer": [
+      "allocation_tools.html",
+      "barcode_scan.html",
+      "allocation_Tools_details.html",
+      "allocation_message.html"
+    ],
+    "resources": [
+      "allocation_tools.html"
+    ]
+  },
+  "setup_rate.html": {
+    "refer": [
+      "Personalcenter_myagent.html"
+    ],
+    "resources": []
+  },
+  "Help_transaction_fail_list.html": {
+    "refer": [
+      "Nav_Help.html"
+    ],
+    "resources": []
+  },
+  "Help_guarantee.html": {
+    "refer": [
+      "Nav_Help.html"
+    ],
+    "resources": []
+  },
+  "Help_app_function.html": {
+    "refer": [
+      "Nav_Help.html"
+    ],
+    "resources": []
+  },
+  "Help_becareful.html": {
+    "refer": [
+      "Nav_Help.html"
+    ],
+    "resources": []
+  },
+  "Help_download.html": {
+    "refer": [
+      "Nav_Help.html"
+    ],
+    "resources": []
+  },
+  "Help_packing_list.html": {
+    "refer": [
+      "Nav_Help.html"
+    ],
+    "resources": []
+  },
+  "Question02_operation_process.html": {
+    "refer": [
+      "Help_thaw_process.html"
+    ],
+    "resources": []
+  },
+  "Help_thaw_process.html": {
+    "refer": [
+      "Nav_Help.html",
+      "Question02_operation_process.html",
+      "Question02_becareful_matter.html"
+    ],
+    "resources": []
+  },
+  "network_loss.html": {
+    "refer": [
+      "Nav_Index.html",
+      "Nav_Personalcenter_Agent.html",
+      "Personalcenter_Setting.html",
+      "Nav_Help.html"
+    ],
+    "resources": []
+  },
+  "about_us.html": {
+    "refer": [
+      "Personalcenter_Setting.html"
+    ],
+    "resources": []
+  },
+  "user_real_name.html": {
+    "refer": [
+      "user_register.html",
+      "Nav_Index.html",
+      "Nav_Personalcenter_Agent.html",
+      "user_identity.html",
+      "Nav_Personalcenter_Partners.html",
+      "user_login.html",
+      "Personalcenter_Setting.html",
+      "user_Face_recognition.html"
+    ],
+    "resources": []
+  },
+  "user_identity.html": {
+    "refer": [
+      "Nav_Index.html",
+      "user_real_name.html"
+    ],
+    "resources": []
+  },
+  "personal_tools_collect_account.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html"
+    ],
+    "resources": []
+  },
+  "user_change_password.html": {
+    "refer": [
+      "Personalcenter_Setting.html"
+    ],
+    "resources": [
+      "Personalcenter_Setting.html"
+    ]
+  },
+  "user_look_realname.html": {
+    "refer": [
+      "Personalcenter_Setting.html"
+    ],
+    "resources": []
+  },
+  "profit_detail_agent.html": {
+    "refer": [
+      "Personalcenter_myprofit.html",
+      "user_login.html"
+    ],
+    "resources": []
+  },
+  "my_rate.html": {
+    "refer": [
+      "Personalcenter_Setting.html"
+    ],
+    "resources": []
+  },
+  "library_apply.html": {
+    "refer": [
+      "Personalcenter_library.html",
+      "library_apply.html",
+      "user_login.html"
+    ],
+    "resources": []
+  },
+  "Help_problem_feedback.html": {
+    "refer": [
+      "Nav_Help.html"
+    ],
+    "resources": []
+  },
+  "grade_rule.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html"
+    ],
+    "resources": []
+  },
+  "bank_withdrawal.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html",
+      "bank_withdrawal_record.html",
+      "user_login.html",
+      "Nav_Personalcenter_Partners.html"
+    ],
+    "resources": []
+  },
+  "bank_withdrawal_record.html": {
+    "refer": [
+      "bank_withdrawal.html"
+    ],
+    "resources": []
+  },
+  "Question02_becareful_matter.html": {
+    "refer": [
+      "Help_thaw_process.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_statistics.html": {
+    "refer": [
+      "Nav_Personalcenter_Partners.html",
+      "Nav_Personalcenter_Agent.html"
+    ],
+    "resources": []
+  },
+  "allocation_message_complete.html": {
+    "refer": [
+      "allocation_Tools_details.html",
+      "allocation_tools.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_proxyMachine.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Personalcenter_Partners.html",
+      "Personalcenter_proxyMachine_details.html",
+      "Personalcenter_Machine_search.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_myprofit_pos.html": {
+    "refer": [
+      "Nav_Index.html",
+      "Nav_Personalcenter_Partners.html",
+      "profit_detail_pos.html",
+      "Nav_Personalcenter_Agent.html"
+    ],
+    "resources": []
+  },
+  "profit_detail_pos.html": {
+    "refer": [
+      "Personalcenter_myprofit_pos.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_proxyMachine_details.html": {
+    "refer": [
+      "Personalcenter_proxyMachine.html"
+    ],
+    "resources": []
+  },
+  "setup_rate_pos.html": {
+    "refer": [
+      "Personalcenter_myagent.html"
+    ],
+    "resources": []
+  },
+  "Personalcenter_Machine_search.html": {
+    "refer": [
+      "Personalcenter_proxyMachine.html",
+      "Personalcenter_myMachine.html"
+    ],
+    "resources": []
+  },
+  "nav_Index_banner.html": {
+    "refer": [
+      "Nav_Index.html",
+      "nav_Index_bannercreateShow.html"
+    ],
+    "resources": [
+      "nav_Index_bannercreateShow.html"
+    ]
+  },
+  "nav_Index_noticelist.html": {
+    "refer": [
+      "Nav_Index.html"
+    ],
+    "resources": []
+  },
+  "user_Face_recognition.html": {
+    "refer": [
+      "Nav_Index.html",
+      "Nav_Personalcenter_Agent.html",
+      "user_Face_recognition_bank.html",
+      "user_real_name.html",
+      "user_login.html",
+      "Nav_Personalcenter_Partners.html"
+    ],
+    "resources": []
+  },
+  "Nav_Card.html": {
+    "refer": [
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Index.html",
+      "Nav_Applytools.html",
+      "Nav_Personalcenter_Partners.html",
+      "nav_Card_details.html"
+    ],
+    "resources": []
+  },
+  "user_Face_recognition_bank.html": {
+    "refer": [
+      "user_Face_recognition.html",
+      "bank_withdrawal.html",
+      "Nav_Personalcenter_Agent.html",
+      "Nav_Personalcenter_Partners.html"
+    ],
+    "resources": []
+  },
+  "Advertisement.html": {
+    "refer": [
+      "Nav_Index.html",
+      "guide.html"
+    ],
+    "resources": []
+  },
+  "nav_Card_details.html": {
+    "refer": [
+      "Nav_Card.html"
+    ]
+  }
+}

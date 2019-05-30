@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的代理商</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			#set_rate {
+				line-height: 1.05em;
+				border-bottom: 1px solid #078ffe;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的代理商 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="agent_title overflow">
+				<div class="left" id="upmyagent">我的上级代理</div>
+				<span id="HigherUserProxy" class="title_subtitle right"></span>
+			</div>
+
+			<div class="grey_line"></div>
+
+			<div class="agent_title"><span id="downmyagent">我的下级代理</span><span class="title_subtitle" id="agent_num">（0人）</span></div>
+			<!--<div class="average_three_list text_c">
+				<div>王佳</div>
+				<div>138****0214</div>
+				<div class="list_date">2018/06/05</div>
+			</div>-->
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.back = function() {
+				if(1 == myStorage.getItem('Customer_info').type) {
+					location.href = "Nav_Personalcenter_Partners.html"
+				} else {
+					location.href = "Nav_Personalcenter_Agent.html"
+				}
+			};
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//全民代理
+			if(myStorage.getItem('Customer_info').type == 2) {
+				$(".mui-title").html("我的合伙人");
+				$("#downmyagent").html("我的合伙人");
+				$("#upmyagent").html("我的上级合伙人");
+			}
+			if(myStorage.getItem('Customer_info').type == 3) {
+				$(".mui-title").html("我的盟友");
+				$("#downmyagent").html("我的盟友");
+				$("#upmyagent").html("我的上级盟友");
+			}
+			//获取下级代理商
+			var customerList = "";
+			if(customerId != null) {
+				mui.ajax(ajax_url + 'appCustomer/getCustomer', {
+					data: {
+						customerId: customerId,
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							var Customer_info = data.obj;
+							myStorage.setItem('Customer_info', Customer_info);
+							customerList = data.obj.customerList;
+							$("#agent_num").html("（" + customerList.length + "人）")
+							if(customerList.length == 0) {
+								var listnone = '<div class="list-none" style="display:block">' +
+									'<img class="icon_none" src="img/icon_none_address.png" style="margin-top:1.5rem">' +
+									'<div class="fonts">空空如也</div>' +
+									'</div>';
+								$(".mui-content").append(listnone)
+							} else {
+								for(var i = 0; i < customerList.length; i++) {
+									console.log(customerList[i])
+									if(customerList[i].name == null) {
+										customerList[i].name = "未实名";
+									}
+									if(myStorage.getItem('Customer_info').type == 1) {
+										//合作伙伴
+										var customer = '<div class="average_three_list">' +
+											'<div class="nameandphone"><span style="font-weight: bold;">' + customerList[i].name + '</span>&nbsp;' + customerList[i].phone + '</div>' +
+											'<div class="list_date">' + customerList[i].ft.split(" ")[0] + '</div>' +
+											'<div class="current_month">闪电宝本月：' + customerList[i].allCustomerTradeMoney + '元/交易&nbsp;&nbsp;' + customerList[i].allCustomerActiviteNumber + '台/激活</div>'+
+											'<div class="current_month">闪POS本月：' + customerList[i].allCustomerTradeMoneyFlash + '元/交易&nbsp;&nbsp;' + customerList[i].allCustomerActiviteNumberFlash + '台/激活</div>' +
+											'<div id="set_rate" class="font_blue right" data-id="' + customerList[i].id + '" data-name="' + customerList[i].name + '" data-phone="' + customerList[i].phone + '">设置费率 </div>';
+									} else if(myStorage.getItem('Customer_info').type == 2) {
+										//合伙人
+										var customer = '<div class="average_three_list">' +
+											'<div class="nameandphone"><span style="font-weight: bold;min-width:60px;display: inline-block;">' + protectionName(customerList[i].name) + '</span>&nbsp;' + customerList[i].phone.replace(/^(\d{3})\d{4}(\d+)/, "$1****$2") + '</div>' +
+											'<div class="list_date">' + customerList[i].ft.split(" ")[0] + '</div>' +
+											'<div class="current_month">闪电宝本月：' + customerList[i].allCustomerTradeMoney + '元/交易&nbsp;&nbsp;' + customerList[i].allCustomerActiviteNumber + '台/激活</div>'+
+											'<div class="current_month">闪POS本月：' + customerList[i].allCustomerTradeMoneyFlash + '元/交易&nbsp;&nbsp;' + customerList[i].allCustomerActiviteNumberFlash + '台/激活</div>' +
+											'<div id="set_rate" class="font_blue right" data-id="' + customerList[i].id + '" data-name="' + customerList[i].name + '" data-phone="' + customerList[i].phone + '">设置闪POS费率 </div>';
+
+										function protectionName(name) {
+											var name_len = name.length;
+											if(name_len == 2) {
+												return name.substring(0, 1) + "*";
+											} else {
+												var xing = '';
+												for(var i = 0; i < name_len - 2; i++) {
+													xing += '*';
+												}
+												return name.substring(0, 1) + xing + name.substring(name_len - 1, name_len);
+											}
+											//不兼容安卓6.0以下
+											//return [...name]
+											//	.map((item, index, arr) => {
+											//		return Math.floor(arr.length / 2) === index ? '*' : item;
+											//	})
+											//	.join('');
+										}
+									} else {
+										//全民代理
+										if(customerList[i].levelSet != null) {
+											var customer = '<div class="average_three_list">' +
+												'<div class="nameandphone"><span style="font-weight: bold;">' + customerList[i].name + '</span>&nbsp;' + customerList[i].phone + '<img class="vip_icon" src="' + img_url + customerList[i].levelSet.imgUrl[0] + '"/></div>' +
+												'<div class="list_date">' + customerList[i].ft.split(" ")[0] + '</div>' +
+												'<div class="current_month">闪电宝本月：' + customerList[i].allCustomerTradeMoney + '元/交易&nbsp;&nbsp;' + customerList[i].allCustomerActiviteNumber + '台/激活' +
+												'<div class="current_month">闪POS本月：' + customerList[i].allCustomerTradeMoneyFlash + '元/交易&nbsp;&nbsp;' + customerList[i].allCustomerActiviteNumberFlash + '台/激活</div>' +
+												'<span id="set_rate" class="font_blue right" data-id="' + customerList[i].id + '" data-name="' + customerList[i].name + '" data-phone="' + customerList[i].phone + '">设置闪POS费率 </span>' +
+												'</div>';
+										} else {
+											var customer = '<div class="average_three_list">' +
+												'<div class="nameandphone"><span style="font-weight: bold;">' + customerList[i].name + '</span>&nbsp;' + customerList[i].phone + '<img class="vip_icon" src="' + img_url + 'level_v0.png"/></div>' +
+												'<div class="list_date">' + customerList[i].ft.split(" ")[0] + '</div>' +
+												'<div class="current_month">闪电宝本月：' + customerList[i].allCustomerTradeMoney + '元/交易&nbsp;&nbsp;' + customerList[i].allCustomerActiviteNumber + '台/激活' +
+												'<div class="current_month">闪POS本月：' + customerList[i].allCustomerTradeMoneyFlash + '元/交易&nbsp;&nbsp;' + customerList[i].allCustomerActiviteNumberFlash + '台/激活</div>' +
+												'<span id="set_rate" class="font_blue right" data-id="' + customerList[i].id + '" data-name="' + customerList[i].name + '" data-phone="' + customerList[i].phone + '">设置闪POS费率 </span>' +
+												'</div>';
+										}
+									}
+									$(".mui-content").append(customer)
+								}
+								//设置费率
+								mui('.average_three_list').on('tap', '#set_rate', function() {
+									var user_info_setrate = [this.dataset.id, this.dataset.name, this.dataset.phone];
+									myStorage.setItem('user_info_setrate', user_info_setrate);
+									if(myStorage.getItem('Customer_info').type == 1) {
+										if(mui.os.plus) {
+											var buttonTit = [{
+												title: "闪电宝"
+											}, {
+												title: "闪POS"
+											}];
+
+											plus.nativeUI.actionSheet({
+												//						title: "上传图片",
+												cancel: "取消",
+												buttons: buttonTit
+											}, function(b) { /*actionSheet 按钮点击事件*/
+												switch(b.index) {
+													case 0:
+														break;
+													case 1:
+														if(null == Customer_info.vip_scan_ratio || "" == Customer_info.vip_scan_ratio) {
+															mui.toast('您的上级未给您设置费率，暂时不可给您的下级设置费率')
+															return false;
+														} else {
+															location.href = "setup_rate.html";
+														}
+														break;
+													case 2:
+														if(null == Customer_info.flash_cloud_ratio || "" == Customer_info.flash_cloud_ratio) {
+															mui.toast('您的上级未给您设置费率，暂时不可给您的下级设置费率')
+															return false;
+														} else {
+															location.href = "setup_rate_pos.html";
+														}
+														break;
+													default:
+														break;
+												}
+											})
+										}
+									} else {
+										if(null == Customer_info.flash_cloud_ratio || "" == Customer_info.flash_cloud_ratio) {
+											mui.toast('您的上级未给您设置费率，暂时不可给您的下级设置费率')
+											return false;
+										} else {
+											location.href = "setup_rate_pos.html";
+										}
+									}
+								});
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+				console.log(myStorage.getItem('Customer_info'))
+			}
+
+			//获取上级代理商
+			var Customer_info = myStorage.getItem('Customer_info');
+			console.log(Customer_info)
+			if(null != Customer_info.customer) {
+				if(Customer_info.customer.levelSet != null) {
+					$("#HigherUserProxy").html(Customer_info.higherName + "<img class='vip_icon' src='" + img_url + Customer_info.customer.levelSet.imgUrl[0] + "'/>")
+				} else {
+					if(user_type == 3) {
+						$("#HigherUserProxy").html(Customer_info.higherName + "<img class='vip_icon' src='" + img_url + "level_v0.png'/>")
+					} else {
+						$("#HigherUserProxy").html(Customer_info.higherName)
+					}
+				}
+			} else {
+				$("#HigherUserProxy").html(Customer_info.higherName)
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>申请机具</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.user_type_01show,
+			.user_type_02show,
+			.user_type_03show {
+				display: none;
+			}
+			
+			.address_chooselists {
+				padding: 0 30px;
+			}
+			
+			.address_chooselists li {
+				border-bottom: 1px solid #ddd;
+				padding: 6px 12px;
+			}
+			
+			.mui-popover.mui-active {
+				top: 20%!important;
+				height: 8rem;
+				padding: 0.2rem 0;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white apply_tools" id="Identity" style="height: auto;">
+		<div class="header_banner">
+			<div class="left header_banner_img"><img class="img" src="img/bg_apply_tools1.png" alt=""></div>
+			<div class="left header_banner_text">
+				自选商户<br />资金秒到账<br />安全可靠
+			</div>
+		</div>
+
+		<form id="applytools_form" class="user_form" action="" method="post">
+			<input id="input_customer" type="hidden" name="model.customer.id" id="" value="" />
+			<div class="appls_from">
+				<div class="head_img"><img class="img" src="img/icon_apply_tools_name.png" alt="" /></div>
+				<div class="title">申请人</div>
+				<div class="userName"><input type="text" name="" id="" maxlength="10" placeholder="请输入申请人姓名" readonly="readonly" /></div>
+			</div>
+			<div class="appls_from choose_postype">
+				<div class="head_img"><img class="img" src="img/icon_apply_tools_type.png" alt="" /></div>
+				<div class="title">机具类型</div>
+				<div>
+					<input type="text" id="tools_type" placeholder="请选择机具类型" readonly="readonly" />
+					<input type="hidden" name="model.posType" id="tools_type_index" />
+				</div>
+				<img class="icon_tools_type_choose" src="img/icon_personal_enter.png" />
+			</div>
+			<div class="appls_from">
+				<div class="head_img"><img class="img" src="img/icon_apply_tools_number.png" alt="" /></div>
+				<div class="title">申请台数</div>
+				<div><input type="text" name="model.number" id="tools_num" maxlength="3" placeholder="请输入申请台数" onkeyup="value=value.replace(/[^\d]/g,'')" /></div>
+			</div>
+			<div class="appls_from">
+				<div class="head_img"><img class="img" src="img/icon_apply_tools_agent.png" alt="" /></div>
+				<div class="title">发货代理商</div>
+				<div class="userProxy_chargeName"><input type="text" name="" id="" maxlength="10" placeholder="请先选择机具类型" readonly="readonly" /></div>
+			</div>
+
+			<input type="hidden" name="model.addressId" id="addressId" value="" />
+			<input type="hidden" name="model.type" id="" value="1" />
+			<input type="hidden" name="model.returnReason" id="" value="" />
+			<div class="appls_from user_type_01show user_type_03show">
+				<div class="head_img"><img class="img" src="img/icon_apply_tools_price.png" alt="" /></div>
+				<div class="title">机具款</div>
+				<div class="input">
+					<input type="text" name="" id="tools_money_show" placeholder="0.00" readonly="readonly" />
+					<input type="hidden" name="model.money" id="tools_money" />
+				</div>
+			</div>
+			<div class="appls_from" style="overflow: visible;">
+				<div class="head_img"><img class="img" src="img/icon_apply_tools_address.png" alt="" /></div>
+				<div class="title">收货地址</div>
+				<div id="tools_address" class="tools_address"></div>
+				<img class="icon_tools_address_choose" src="img/icon_personal_enter.png" />
+			</div>
+			<div class="collect_tips appls_tips user_type_01show">
+				<img class="head_icon" src="img/icon_tips.png" alt="" style="margin: 0.06rem .15rem 0 0;" />
+				<span>机具款请联系您的发货代理商</span>
+			</div>
+		</form>
+
+		<!--<div class="grey_line user_type_03show"></div>
+		<div class="appls_from user_type_03show">
+			<div class="head_img"><img class="img" src="img/icon_wechat_pay.png" alt=""></div>
+			<div class="title">微信支付</div>
+			<div class="appls_price bold">&yen;<span id="wechat_pay_money">0.00</span>元</div>
+		</div>-->
+
+		<button type="button" class="btn_common_submit">申请</button>
+
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item tab" href="Nav_Index.html?ad=1">
+				<span class="mui-icon"><img src="img/icon_index.png"/></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item tab active" href="#">
+				<span class="mui-icon"><img src="img/icon_apply_active.png"/></span>
+				<span class="mui-tab-label">申请机具</span>
+			</a>
+			<a class="mui-tab-item tab" href="Nav_Card.html">
+				<span class="mui-icon"><img src="img/icon_card.png"/></span>
+				<span class="mui-tab-label">信用卡办理</span>
+			</a>
+			<!--<a class="mui-tab-item tab" href="Nav_Help.html">
+				<span class="mui-icon"><img src="img/icon_help.png"/></span>
+				<span class="mui-tab-label">帮助中心</span>
+			</a>-->
+			<a class="mui-tab-item tab" href="" data-name="Nav_Personalcenter">
+				<span class="mui-icon"><img src="img/icon_user.png"/></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		<!--全民代理机具款付款弹框-->
+		<div id="div"></div>
+		<div id="popover_apply_tool" class="mui-popover popup_index">
+			<div class="popup_title" style="font-size: 0.36rem;"><br />申请机具成功</div>
+			<div class="popup_close"><img class="img" src="img/icon_profit_close.png" alt="" /></div>
+			<div class="popup_bank" style="font-size: 0.98em;padding-top: 0.8rem;">
+				请联系您的推荐人
+			</div>
+			<!--<div class="popup_text" style="font-size: 0.6em;">银行联行号：309192003010</div>-->
+		</div>
+		<!--地址选择弹框-->
+		<div id="bg_popover"></div>
+		<div id="popover" class="mui-popover mui-scroll-wrapper">
+			<ul class="address_chooselists"></ul>
+		</div>
+
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/textarea.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			/**
+			 * 重写mui.back()，一秒内连续点击两次，退出应用，仅安卓有效；
+			 */
+			var first = null;
+			mui.back = function() {
+				if(!first) {
+					first = new Date().getTime();
+					/**
+					 * 自动消失提示信息
+					 * http://www.html5plus.org/doc/zh_cn/nativeui.html#plus.nativeUI.toast
+					 */
+					plus.nativeUI.toast("再按一次退出应用");
+					setTimeout(function() {
+						first = null;
+					}, 1000);
+				} else {
+					if(new Date().getTime() - first < 1000) {
+						/**
+						 * 退出应用，仅安卓有效；
+						 * http://www.html5plus.org/doc/zh_cn/runtime.html#plus.runtime.quit
+						 */
+						plus.runtime.quit();
+					}
+				}
+			};
+			(function($) {
+				$(".mui-scroll-wrapper").scroll({});
+			})(mui);
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('dark');
+
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			var Customer_info = "",
+				posPrice = "",
+				posNumber = "",
+				getHigherUserProxy_posType = "";
+			//申请人姓名、ID
+			Customer_info = myStorage.getItem('Customer_info');
+			console.log(Customer_info)
+			$("#input_customer").val(Customer_info.id);
+			$(".userName input").val(Customer_info.name);
+			//收货地址
+			setTimeout(function(){
+				getaddress();
+			},100);
+			function getaddress() {
+				if(0 == Customer_info.addressList.length) {
+					var btnArray = ['取消', '添加地址'];
+					mui.confirm("您还没有添加地址，请点击添加", " ", btnArray, function(e) {
+						if(e.index == 1) {
+							location.href = "user_new_address.html?key=applytool"
+						} else {
+
+						}
+					});
+				} else {
+					var ishasDefault = false;
+					for(var i = 0; i < Customer_info.addressList.length; i++) {
+						if(1 == Customer_info.addressList[i].isDefault) {
+							ishasDefault = true;
+							$("#tools_address").html(Customer_info.addressList[i].content.replace("-", ""));
+							$("#addressId").val(Customer_info.addressList[i].id);
+						}
+					}
+					if(ishasDefault == false) {
+						$("#tools_address").html("还没有设置默认地址，请选择");
+					}
+				}
+			}
+			//发货代理商
+			function getHigherUserProxy() {
+				mui.ajax(ajax_url + 'appCustomer/getHigherUserProxy', {
+					data: {
+						customerId: Customer_info.id,
+						posType: getHigherUserProxyposType
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							$(".userProxy_chargeName input").val(data.obj);
+							console.log(data)
+							posPrice = data.attributes.posPrice;
+							if(2 == user_type) {
+								posNumber = data.attributes.posNumber;
+								$("#tools_num").val(posNumber);
+							}
+							get_tools_money();
+						}
+						if(false == data.success) {
+							mui.alert(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+
+			//选择地址
+			mui('.icon_tools_address_choose')[0].addEventListener('tap', function() {
+				choose_address();
+			});
+			mui('#tools_address')[0].addEventListener('tap', function() {
+				choose_address();
+			});
+			//选择机具类型
+			mui('.choose_postype')[0].addEventListener('tap', function() {
+				if(mui.os.plus) {
+					var buttonTit = [{
+						title: "闪电宝"
+					}, {
+						title: "闪POS"
+					}];
+
+					plus.nativeUI.actionSheet({
+						//title: "上传图片",
+						cancel: "取消",
+						buttons: buttonTit
+					}, function(b) { /*actionSheet 按钮点击事件*/
+						switch(b.index) {
+							case 0:
+								break;
+							case 1:
+								$("#tools_type").val("闪电宝");
+								$("#tools_type_index").val("1");
+								getHigherUserProxyposType = 1;
+								getHigherUserProxy();
+								break;
+							case 2:
+								$("#tools_type").val("闪POS");
+								$("#tools_type_index").val("2");
+								getHigherUserProxyposType = 2;
+								getHigherUserProxy();
+								break;
+							case 3:
+								$("#tools_type").val("智能终端");
+								$("#tools_type_index").val("3");
+								getHigherUserProxyposType = 3;
+								getHigherUserProxy();
+								break;
+							default:
+								break;
+						}
+					})
+				}
+			});
+
+			function choose_address() {
+				$(".address_chooselists").html("");
+				if(0 == Customer_info.addressList.length) {
+					var btnArray = ['取消', '添加地址'];
+					mui.confirm("您还没有添加地址，请点击添加", '', btnArray, function(e) {
+						if(e.index == 1) {
+							location.href = "user_new_address.html?key=applytool"
+						} else {
+
+						}
+					});
+				} else {
+					for(var i = 0; i < Customer_info.addressList.length; i++) {
+						var address_chooselist = '<li id="' + Customer_info.addressList[i].id + '">' + Customer_info.addressList[i].content.replace("-", "") + '</li>';
+						$(".address_chooselists").append(address_chooselist)
+					}
+					mui("#popover").popover('toggle', document.getElementById("bg_popover"));
+				}
+			}
+			mui('.address_chooselists').on('tap', 'li', function(e) {
+				console.log(this)
+				$("#tools_address").html(this.innerHTML);
+				$("#addressId").val(this.id);
+				mui("#popover").popover('toggle');
+			});
+
+			//判断用户身份1：合作伙伴，2：合伙人，3：全民代理
+			var user_type = myStorage.getItem('Customer_info').type;
+			if(1 == user_type) {
+				$(".user_type_01show").css("display", "flex");
+				//输入申请台数，自动计算价格
+			} else if(2 == user_type) {
+				$(".user_type_02show").css("display", "flex");
+				//输入申请台数，可修改，但不可比默认值大
+			} else if(3 == user_type) {
+				$(".user_type_03show").css("display", "flex");
+				//输入申请台数，自动计算价格
+			}
+			$("#tools_num").bind('input propertychange', function() {
+				get_tools_money();
+			});
+
+			function get_tools_money() {
+				if(1 == getHigherUserProxyposType) {
+					// 闪电宝
+					if(1 == user_type) {
+						if("NaN" != Number(posPrice * $("#tools_num").val()).toFixed(2)) {
+							$("#tools_money,#tools_money_show").val(Number(posPrice * $("#tools_num").val()).toFixed(2))
+						}
+					} else if(2 == user_type) {
+						if(Number($("#tools_num").val()) > posNumber) {
+							$("#tools_num").val(posNumber);
+							mui.toast("您最多可以申请" + posNumber + "台机具")
+						}
+					} else if(3 == user_type) {
+						if("NaN" != Number(posPrice * $("#tools_num").val()).toFixed(2)) {
+							$("#tools_money,#tools_money_show").val(Number(posPrice * $("#tools_num").val()).toFixed(2))
+						}
+					}
+				} else if(2 == getHigherUserProxyposType) {
+					//闪POS
+					if("NaN" != Number(posPrice * $("#tools_num").val()).toFixed(2)) {
+						$("#tools_money,#tools_money_show").val(Number(posPrice * $("#tools_num").val()).toFixed(2))
+					}
+				} else {
+					// 智能终端
+				}
+			}
+
+			//申请或支付
+			mui('.btn_common_submit')[0].addEventListener('tap', function() {
+				if("" == $("#tools_type_index").val()) {
+					mui.toast("请选择申请机具类型");
+				} else if("" == $("#tools_num").val() || null == $("#tools_num").val()) {
+					mui.toast("请填写申请机具台数");
+				} else if(0 == $("#tools_num").val()) {
+					mui.toast("申请机具台数需大于0才可以提交！");
+				} else if($("#tools_address").html() == "还没有设置默认地址，请选择") {
+					mui.toast("请选择地址！");
+				} else {
+					var formData = $('#applytools_form').serialize();
+					formData = decodeURIComponent(formData, true);
+					console.log(formData);
+					mui.ajax(ajax_url + 'appCustomer/askPos', {
+						data: formData,
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								if(3 == user_type) {
+									mui("#popover_apply_tool").popover('toggle', document.getElementById("div"));
+									$(".popup_close,.mui-backdrop,#div").click(function() {
+										mui("#popover_apply_tool").popover('toggle');
+										setTimeout(function() {
+											//											mui.toast("申请成功，厂家会尽快安排发货");
+											location.href = 'Tools_apply_record.html?key=applytool';
+										}, 500)
+									});
+								} else {
+									mui.toast("申请成功，厂家会尽快安排发货");
+									location.href = 'Tools_apply_record.html?key=applytool';
+								}
+							}
+							if(false == data.success) {
+								if("您还没有添加地址~" == data.msg) {
+									var btnArray = ['取消', '添加地址'];
+									mui.confirm("您还没有添加地址，请点击添加", '', btnArray, function(e) {
+										if(e.index == 1) {
+											location.href = "user_new_address.html"
+										} else {
+
+										}
+									});
+								} else {
+									mui.toast(data.msg)
+								}
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							if(xhr.status != '0')
+								mui.toast('服务器走丢了')
+						}
+					});
+				}
+			});
+		</script>
+	</body>
+
+</html>

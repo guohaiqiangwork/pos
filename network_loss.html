@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>网络丢失</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<img class="img_network_loss" src="img/img_network_loss.png" alt="" />
+		<div class="network_loss_text">您的网络掉坑里了</div>
+		<div class="network_loss_btn">刷新</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色，颜色
+			plus.navigator.setStatusBarBackground('#078ffe');
+			plus.navigator.setStatusBarStyle('dark');
+		}
+
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		mui('.network_loss_btn')[0].addEventListener('tap', function() {
+			var nt = plus.networkinfo.getCurrentType();
+			switch(nt) {
+				case plus.networkinfo.CONNECTION_ETHERNET:
+				case plus.networkinfo.CONNECTION_WIFI:
+					//返回上一页
+					mui.back();
+					break;
+				case plus.networkinfo.CONNECTION_CELL2G:
+				case plus.networkinfo.CONNECTION_CELL3G:
+				case plus.networkinfo.CONNECTION_CELL4G:
+					//返回上一页
+					mui.back();
+					break;
+				default:
+					mui.toast("请检查您的网络设置");
+					break;
+			}
+		})
+	</script>
+
+</html>

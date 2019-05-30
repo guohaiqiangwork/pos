@@ -1,0 +1,1007 @@
+{
+    "@platforms" : [ "android", "iPhone", "iPad" ],
+    "id" : "H540E3874", /*应用的标识，创建应用时自动生成，勿手动修改*/
+    "name" : "汇爱天下", /*应用名称，程序桌面图标名称*/
+    "version" : {
+        "name" : "2.0.0", /*应用版本名称*/
+        "code" : "87"
+    },
+    "description" : "", /*应用描述信息*/
+    "icons" : {
+        "72" : "icon.png"
+    },
+    "launch_path" : "Nav_Index.html", /*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+    "developer" : {
+        "name" : "", /*开发者名称*/
+        "email" : "", /*开发者邮箱地址*/
+        "url" : ""
+    },
+    "permissions" : {
+        "Cache" : {
+            "description" : "管理应用缓存"
+        },
+        "Console" : {
+            "description" : "跟踪调试输出日志"
+        },
+        "Contacts" : {
+            "description" : "访问系统联系人信息"
+        },
+        "Events" : {
+            "description" : "应用扩展事件"
+        },
+        "Runtime" : {
+            "description" : "运行环境"
+        },
+        "Share" : {},
+        "Push" : {}
+    },
+    "plus" : {
+        "statusbar" : {
+            "immersed" : true
+        },
+        "splashscreen" : {
+            "autoclose" : true, /*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/
+            "waiting" : false,
+            "delay" : "0"
+        },
+        "runmode" : "liberate", /*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
+        "signature" : "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==", /*可选，保留给应用签名，暂不使用*/
+        "distribute" : {
+            "plugins" : {
+                "push" : {
+                    "igexin" : {
+                        "appid" : "89pnDAPKLCAmeDtEpFJRM2",
+                        "appkey" : "pW2mZBuCT16viHw6SijlP7",
+                        "appsecret" : "jY99NY1oDy5K4uw0H1FUg8"
+                    }
+                },
+                "share" : {
+                    "weixin" : {
+                        "appid" : "wx00f760b97387b5e8",
+                        "appsecret" : "7fb3267733bf2f8d936e2247cdca07f7",
+                        "description" : "可选，微信分享"
+                    },
+                    "qq" : {
+                        "appid" : "1107839128",
+                        "description" : "QQ分享"
+                    }
+                }
+            },
+            "apple" : {
+                "appid" : "", /*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
+                "mobileprovision" : "", /*iOS应用打包配置文件*/
+                "password" : "", /*iOS应用打包个人证书导入密码*/
+                "p12" : "", /*iOS应用打包个人证书，打包配置文件关联的个人证书*/
+                "devices" : "universal", /*iOS应用支持的设备类型，可取值iphone/ipad/universal*/
+                "frameworks" : []
+            },
+            "google" : {
+                "packagename" : "", /*Android应用包名，如io.dcloud.HelloH5*/
+                "keystore" : "", /*Android应用打包使用的密钥库文件*/
+                "password" : "", /*Android应用打包使用密钥库中证书的密码*/
+                "aliasname" : "", /*Android应用打包使用密钥库中证书的别名*/
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>",
+                    "<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>"
+                ]
+            },
+            "orientation" : [ "portrait-primary" ], /*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+            "icons" : {
+                "ios" : {
+                    "prerendered" : true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
+
+                    /*应用图标，分辨率：512x512，用于自动生成各种尺寸程序图标*/
+                    "iphone" : {
+                        "normal" : "", /*iPhone普通屏幕程序图标，分辨率：57x57*/
+                        "retina" : "", /*iPhone高分屏程序图标，分辨率：114x114*/
+
+                        /*iPhone iOS7高分屏程序图标，分辨率：120x120*/
+                        "spotlight-normal" : "", /*iPhone Spotlight搜索程序图标，分辨率：29x29*/
+                        "spotlight-retina" : "", /*iPhone高分屏Spotlight搜索程序图标，分辨率：58x58*/
+
+                        /*iPhone iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*/
+                        "settings-normal" : "", /*iPhone设置页面程序图标，分辨率：29x29*/
+                        "app@2x" : "unpackage/res/icons/120x120.png",
+                        "app@3x" : "unpackage/res/icons/180x180.png",
+                        "settings@3x" : "unpackage/res/icons/87x87.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
+                        "spotlight@3x" : "unpackage/res/icons/120x120.png",
+                        "notification@3x" : "unpackage/res/icons/60x60.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png"
+                    },
+                    "ipad" : {
+                        "normal" : "", /*iPad普通屏幕程序图标，分辨率：72x72*/
+                        "retina" : "", /*iPad高分屏程序图标，分辨率：144x144*/
+
+                        /*iPad iOS7程序图标，分辨率：76x76*//*iPad iOS7高分屏程序图标，分辨率：152x152*/
+                        "spotlight-normal" : "", /*iPad Spotlight搜索程序图标，分辨率：50x50*/
+                        "spotlight-retina" : "", /*iPad高分屏Spotlight搜索程序图标，分辨率：100x100*/
+
+                        /*iPad iOS7 Spotlight搜索程序图标，分辨率：40x40*//*iPad iOS7高分屏Spotlight搜索程序图标，分辨率：80x80*//*iPad设置页面程序图标，分辨率：29x29*/
+                        "app" : "unpackage/res/icons/76x76.png",
+                        "app@2x" : "unpackage/res/icons/152x152.png",
+                        "settings" : "unpackage/res/icons/29x29.png",
+                        "proapp@2x" : "unpackage/res/icons/167x167.png",
+                        "spotlight" : "unpackage/res/icons/40x40.png",
+                        "settings@2x" : "unpackage/res/icons/58x58.png",
+                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
+                        "notification" : "unpackage/res/icons/20x20.png",
+                        "notification@2x" : "unpackage/res/icons/40x40.png"
+                    },
+                    "appstore" : "unpackage/res/icons/1024x1024.png"
+                },
+                "android" : {
+                    "mdpi" : "unpackage/res/icons/48x48.png", /*普通屏程序图标，分辨率：48x48*/
+                    "ldpi" : "unpackage/res/icons/48x48.png", /*大屏程序图标，分辨率：48x48*/
+                    "hdpi" : "unpackage/res/icons/72x72.png", /*高分屏程序图标，分辨率：72x72*/
+                    "xhdpi" : "unpackage/res/icons/96x96.png", /*720P高分屏程序图标，分辨率：96x96*/
+                    "xxhdpi" : "unpackage/res/icons/144x144.png",
+                    "xxxhdpi" : "unpackage/res/icons/192x192.png"
+                }
+            },
+            "splashscreen" : {
+                "ios" : {
+                    "iphone" : {
+                        "default" : "", /*iPhone3启动图片选，分辨率：320x480*/
+                        "retina35" : "F:/项目文档/POS-daili/splash-ios/640×960.png", /*3.5英寸设备(iPhone4)启动图片，分辨率：640x960*/
+                        "retina40" : "F:/项目文档/POS-daili/splash-ios/640×1136.png",
+                        "iphonexl" : "F:/项目文档/POS-daili/splash-ios/2436×1125.png",
+                        "retina47" : "F:/项目文档/POS-daili/splash-ios/750×1334.png",
+                        "retina55" : "F:/项目文档/POS-daili/splash-ios/1242×2208.png",
+                        "retina55l" : "F:/项目文档/POS-daili/splash-ios/2208×1242.png",
+                        "iphonex" : "F:/项目文档/POS-daili/splash-ios/1125×2436.png"
+                    },
+                    "ipad" : {
+                        "portrait" : "F:/项目文档/POS-daili/splash-ios/768×1004.png", /*iPad竖屏启动图片，分辨率：768x1004*/
+                        "portrait-retina" : "F:/项目文档/POS-daili/splash-ios/1536×2008.png", /*iPad高分屏竖屏图片，分辨率：1536x2008*/
+                        "landscape" : "F:/项目文档/POS-daili/splash-ios/1024×748.png", /*iPad横屏启动图片，分辨率：1024x748*/
+                        "landscape-retina" : "F:/项目文档/POS-daili/splash-ios/2048×1496.png", /*iPad高分屏横屏启动图片，分辨率：2048x1496*/
+                        "portrait7" : "F:/项目文档/POS-daili/splash-ios/768×1024.png", /*iPad iOS7竖屏启动图片，分辨率：768x1024*/
+                        "portrait-retina7" : "F:/项目文档/POS-daili/splash-ios/1536×2048.png", /*iPad iOS7高分屏竖屏图片，分辨率：1536x2048*/
+                        "landscape7" : "F:/项目文档/POS-daili/splash-ios/1025×768.png", /*iPad iOS7横屏启动图片，分辨率：1024x768*/
+                        "landscape-retina7" : "F:/项目文档/POS-daili/splash-ios/2048×1536.png"
+                    }
+                },
+                "android" : {
+                    "mdpi" : "", /*普通屏启动图片，分辨率：240x282*/
+                    "ldpi" : "", /*大屏启动图片，分辨率：320x442*/
+                    "hdpi" : "F:/项目文档/POS-daili/splash_android/480x762.png", /*高分屏启动图片，分辨率：480x762*/
+                    "xhdpi" : "F:/项目文档/POS-daili/splash_android/720x1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
+                    "xxhdpi" : "F:/项目文档/POS-daili/splash_android/1080x1882.png"
+                }
+            },
+            "debug" : true
+        }
+    },
+    "dependencies" : {
+        "pages" : {
+            "index.html" : {
+                "resources" : [],
+                "refer" : [
+                    "common.html",
+                    "Personalcenter_Inventory.html",
+                    "Personalcenter_Equipment.html",
+                    "user_register.html",
+                    "Personalcenter.html",
+                    "Personalcenter_partners.html",
+                    "Personalcenter_Partners.html"
+                ],
+                "priority" : 0
+            },
+            "common.html" : {
+                "resources" : [],
+                "refer" : [ "index.html" ],
+                "priority" : 0
+            },
+            "Personalcenter_Inventory.html" : {
+                "resources" : [],
+                "refer" : [ "index.html" ],
+                "priority" : 0
+            },
+            "Personalcenter_Equipment.html" : {
+                "resources" : [],
+                "refer" : [ "index.html" ],
+                "priority" : 0
+            },
+            "user_register.html" : {
+                "resources" : [],
+                "refer" : [
+                    "index.html",
+                    "Personalcenter.html",
+                    "Personalcenter_partners.html",
+                    "user_login.html",
+                    "Personalcenter_Partners.html",
+                    "Nav_Index.html",
+                    "user_real_name.html"
+                ],
+                "priority" : 0
+            },
+            "Personalcenter.html" : {
+                "resources" : [],
+                "refer" : [ "index.html", "user_register.html" ],
+                "priority" : 0
+            },
+            "user_login.html" : {
+                "resources" : [ "Nav_Personalcenter_Agent.html" ],
+                "refer" : [
+                    "Personalcenter_partners.html",
+                    "user_register.html",
+                    "user_password.html",
+                    "Personalcenter_Partners.html",
+                    "Nav_Index.html",
+                    "Nav_Personalcenter_Partners.html"
+                ],
+                "priority" : 0
+            },
+            "Personalcenter_partners.html" : {
+                "resources" : [],
+                "refer" : [
+                    "user_login.html",
+                    "user_register.html",
+                    "Personalcenter_myInventory.html",
+                    "user_address.html",
+                    "bank_card_list.html",
+                    "index.html"
+                ],
+                "priority" : 0
+            },
+            "Personalcenter_myInventory.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_partners.html" ],
+                "priority" : 0
+            },
+            "bank_card_list.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Personalcenter_partners.html",
+                    "bank_card_add.html",
+                    "Personalcenter_Partners.html",
+                    "Nav_Personalcenter_Agent.html",
+                    "Nav_Personalcenter_Partners.html",
+                    "user_pay_password.html"
+                ],
+                "priority" : 0
+            },
+            "Personalcenter_Partners.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Personalcenter_myagent.html",
+                    "Personalcenter_erweima.html",
+                    "user_login.html",
+                    "bank_card_list.html",
+                    "Personalcenter_myMachine.html",
+                    "index.html",
+                    "user_register.html",
+                    "user_address.html",
+                    "Personalcenter_Setting.html"
+                ],
+                "priority" : 0
+            },
+            "Personalcenter_myagent.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Personalcenter_Partners.html",
+                    "Nav_Personalcenter_Agent.html",
+                    "Nav_Personalcenter_Partners.html",
+                    "setup_rate.html",
+                    "setup_rate_pos.html"
+                ],
+                "priority" : 0
+            },
+            "Personalcenter_erweima.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Personalcenter_Partners.html",
+                    "Nav_Personalcenter_Agent.html",
+                    "Nav_Personalcenter_Partners.html"
+                ],
+                "priority" : 0
+            },
+            "user_password.html" : {
+                "resources" : [],
+                "refer" : [ "user_login.html" ],
+                "priority" : 0
+            },
+            "bank_card_add.html" : {
+                "resources" : [],
+                "refer" : [ "bank_card_list.html", "barcode_scan.html", "user_pay_password.html" ],
+                "priority" : 0
+            },
+            "Personalcenter_myMachine.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Personalcenter_Partners.html",
+                    "apply_tools_record.html",
+                    "Nav_Personalcenter_Agent.html",
+                    "Tools_apply_record.html",
+                    "Nav_Personalcenter_Partners.html",
+                    "Personalcenter_Machine_search.html"
+                ],
+                "priority" : 0
+            },
+            "user_address.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Personalcenter_Partners.html",
+                    "user_new_address.html",
+                    "Nav_Personalcenter_Agent.html",
+                    "Nav_Personalcenter_Partners.html"
+                ],
+                "priority" : 0
+            },
+            "Personalcenter_Setting.html" : {
+                "resources" : [ "Nav_Personalcenter_Agent.html" ],
+                "refer" : [
+                    "user_pay_password.html",
+                    "Personalcenter_Partners.html",
+                    "Nav_Personalcenter_Partners.html",
+                    "about_us.html",
+                    "user_change_password.html",
+                    "user_look_realname.html",
+                    "my_rate.html",
+                    "network_loss.html",
+                    "user_login.html",
+                    "user_real_name.html"
+                ],
+                "priority" : 0
+            },
+            "user_pay_password.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Personalcenter_Setting.html",
+                    "bank_card_add.html",
+                    "bank_card_list.html"
+                ],
+                "priority" : 0
+            },
+            "Nav_Index.html" : {
+                "resources" : [
+                    "Nav_Personalcenter_Partners.html",
+                    "Nav_Personalcenter_Agent.html",
+                    "img/icon_apply.png",
+                    "css/common.css",
+                    "img/icon_yesterday_statistics.png",
+                    "img/icon_index_active.png",
+                    "img/icon_today_statistics.png",
+                    "img/icon_notice.png",
+                    "css/mui.css",
+                    "Nav_Help.html",
+                    "js/custom.js",
+                    "js/myStorage.js",
+                    "js/rem_controle.js",
+                    "img/icon_help.png",
+                    "js/jquery-1.8.3.min.js",
+                    "js/mui.min.js",
+                    "img/icon_user.png",
+                    "Personalcenter_myprofit.html",
+                    "Nav_Applytools.html",
+                    "nav_Index_banner.html"
+                ],
+                "refer" : [
+                    "user_register.html",
+                    "barcode_scan.html",
+                    "guide.html",
+                    "Nav_Applstools.html",
+                    "user_login.html",
+                    "network_loss.html",
+                    "user_real_name.html",
+                    "Personalcenter_myprofit_pos.html",
+                    "nav_Index_noticelist.html",
+                    "user_Face_recognition.html",
+                    "Nav_Card.html",
+                    "Advertisement.html",
+                    "user_identity.html"
+                ],
+                "priority" : 0
+            },
+            "Nav_Personalcenter_Agent.html" : {
+                "resources" : [ "Nav_Index.html" ],
+                "refer" : [
+                    "Nav_Help.html",
+                    "Personalcenter_Setting.html",
+                    "user_address.html",
+                    "bank_card_list.html",
+                    "Personalcenter_profit_library.html",
+                    "Personalcenter_myagent.html",
+                    "Personalcenter_erweima.html",
+                    "Personalcenter_myprofit.html",
+                    "Personalcenter_myMachine.html",
+                    "user_login.html",
+                    "Nav_Applytools.html",
+                    "Personalcenter_library.html",
+                    "allocation_tools.html",
+                    "message.html",
+                    "network_loss.html",
+                    "user_real_name.html",
+                    "user_identity.html",
+                    "personal_tools_collect_account.html",
+                    "grade_rule.html",
+                    "bank_withdrawal.html",
+                    "Personalcenter_proxyMachine.html",
+                    "Personalcenter_myprofit_pos.html",
+                    "Personalcenter_statistics.html",
+                    "return_goods.html",
+                    "deliver_apply_record.html",
+                    "deliver_return_record.html",
+                    "Nav_Card.html",
+                    "user_Face_recognition.html",
+                    "user_Face_recognition_bank.html"
+                ],
+                "priority" : 0
+            },
+            "Nav_Help.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Personalcenter_Agent.html",
+                    "Nav_Index.html",
+                    "Nav_Applstools.html",
+                    "Nav_Personalcenter_Partners.html",
+                    "Nav_Applytools.html",
+                    "Help_transaction_fail_list.html",
+                    "Help_guarantee.html",
+                    "Help_download.html",
+                    "Help_app_function.html",
+                    "Help_becareful.html",
+                    "Help_packing_list.html",
+                    "Help_thaw_process.html",
+                    "Help_problem_feedback.html",
+                    "network_loss.html",
+                    "user_login.html"
+                ],
+                "priority" : 0
+            },
+            "user_new_address.html" : {
+                "resources" : [],
+                "refer" : [ "user_address.html", "Nav_Applytools.html" ],
+                "priority" : 0
+            },
+            "Personalcenter_profit_library.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Personalcenter_Agent.html" ],
+                "priority" : 0
+            },
+            "Personalcenter_myprofit.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Personalcenter_Agent.html",
+                    "Nav_Personalcenter_Partners.html",
+                    "profit_detail_partner.html",
+                    "Nav_Index.html",
+                    "profit_detail.html",
+                    "monthly_bill.html",
+                    "profit_detail_agent.html",
+                    "user_login.html"
+                ],
+                "priority" : 0
+            },
+            "apply_tools_record.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_myMachine.html" ],
+                "priority" : 0
+            },
+            "barcode_scan.html" : {
+                "resources" : [ "allocation_message.html" ],
+                "refer" : [
+                    "Nav_Index.html",
+                    "bank_card_add.html",
+                    "Tools_receive.html",
+                    "return_apply.html",
+                    "return_goods.html",
+                    "deliver_goods.html",
+                    "deliver_goods_detail.html",
+                    "allocation_tools.html",
+                    "allocation_detail.html"
+                ],
+                "priority" : 0
+            },
+            "Nav_Applstools.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Personalcenter_Agent.html", "Nav_Index.html", "Nav_Help.html" ],
+                "priority" : 0
+            },
+            "Tools_apply_record.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Personalcenter_myMachine.html",
+                    "Tools_receive.html",
+                    "Nav_Applytools.html",
+                    "deliver_goods_detail.html"
+                ],
+                "priority" : 0
+            },
+            "Nav_Applytools.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Index.html",
+                    "Nav_Personalcenter_Agent.html",
+                    "Nav_Help.html",
+                    "Tools_apply_record.html",
+                    "Nav_Personalcenter_Partners.html",
+                    "user_new_address.html",
+                    "user_login.html",
+                    "Nav_Card.html"
+                ],
+                "priority" : 0
+            },
+            "Tools_details.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Tools_receive.html",
+                    "deliver_goods.html",
+                    "deliver_goods_detail.html",
+                    "allocation_message.html"
+                ],
+                "priority" : 0
+            },
+            "Tools_receive.html" : {
+                "resources" : [ "Tools_apply_record.html" ],
+                "refer" : [
+                    "Tools_details.html",
+                    "barcode_scan.html",
+                    "barcode_scan_confirmreceive.html",
+                    "Tools_receive.html"
+                ],
+                "priority" : 0
+            },
+            "Personalcenter_library.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Personalcenter_Agent.html", "library_apply.html" ],
+                "priority" : 0
+            },
+            "Nav_Personalcenter_Partners.html" : {
+                "resources" : [
+                    "user_login.html",
+                    "img/icon_personal_top02.png",
+                    "img/icon_index.png",
+                    "css/common.css",
+                    "img/icon_user_active.png",
+                    "img/icon_personal_top04.png",
+                    "img/user_head.png",
+                    "img/icon_message.png",
+                    "img/icon_personal_top01.png",
+                    "css/mui.css"
+                ],
+                "refer" : [
+                    "Personalcenter_myMachine.html",
+                    "return_goods.html",
+                    "bank_card_list.html",
+                    "deliver_apply_record.html",
+                    "Personalcenter_erweima.html",
+                    "Nav_Help.html",
+                    "deliver_return_record.html",
+                    "Personalcenter_myagent.html",
+                    "Personalcenter_myprofit.html",
+                    "Nav_Applytools.html",
+                    "Nav_Index.html",
+                    "Personalcenter_Setting.html",
+                    "user_address.html",
+                    "user_real_name.html",
+                    "message.html",
+                    "Personalcenter_statistics.html",
+                    "bank_withdrawal.html",
+                    "Personalcenter_proxyMachine.html",
+                    "Personalcenter_myprofit_pos.html",
+                    "Nav_Card.html",
+                    "user_Face_recognition.html",
+                    "user_Face_recognition_bank.html"
+                ],
+                "priority" : 0
+            },
+            "return_goods.html" : {
+                "resources" : [ "Nav_Personalcenter_Partners.html" ],
+                "refer" : [ "return_apply.html", "Nav_Personalcenter_Agent.html" ],
+                "priority" : 0
+            },
+            "barcode_scan_confirmreceive.html" : {
+                "resources" : [],
+                "refer" : [ "Tools_receive.html" ],
+                "priority" : 0
+            },
+            "deliver_apply_record.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Personalcenter_Partners.html",
+                    "deliver_goods.html",
+                    "Nav_Personalcenter_Agent.html"
+                ],
+                "priority" : 0
+            },
+            "guide.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Index.html" ],
+                "priority" : 0
+            },
+            "deliver_return_record.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Personalcenter_Partners.html",
+                    "deliver_goods_detail.html",
+                    "Nav_Personalcenter_Agent.html"
+                ],
+                "priority" : 0
+            },
+            "return_apply.html" : {
+                "resources" : [
+                    "return_goods.html",
+                    "img/icon_tips_blue.png",
+                    "img/icon_scan.png",
+                    "img/icon_personal_enter.png",
+                    "css/common.css",
+                    "img/icon_danger1.png",
+                    "css/mui.css",
+                    "js/textarea.js"
+                ],
+                "refer" : [ "barcode_scan.html", "return_apply.html", "return_Tools_details.html" ],
+                "priority" : 0
+            },
+            "deliver_goods_detail.html" : {
+                "resources" : [],
+                "refer" : [
+                    "deliver_return_record.html",
+                    "Tools_details.html",
+                    "barcode_scan.html",
+                    "Tools_apply_record.html"
+                ],
+                "priority" : 0
+            },
+            "deliver_goods.html" : {
+                "resources" : [],
+                "refer" : [
+                    "deliver_apply_record.html",
+                    "barcode_scan.html",
+                    "Tools_details.html",
+                    "return_Tools_details.html",
+                    "deliver_good_Tools_details.html"
+                ],
+                "priority" : 0
+            },
+            "return_Tools_details.html" : {
+                "resources" : [],
+                "refer" : [ "return_apply.html", "deliver_goods.html" ],
+                "priority" : 0
+            },
+            "deliver_good_Tools_details.html" : {
+                "resources" : [],
+                "refer" : [ "deliver_goods.html" ],
+                "priority" : 0
+            },
+            "allocation_tools.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Personalcenter_Agent.html",
+                    "allocation_message.html",
+                    "allocation_detail.html",
+                    "allocation_message_complete.html"
+                ],
+                "priority" : 0
+            },
+            "allocation_message.html" : {
+                "resources" : [ "allocation_tools.html" ],
+                "refer" : [
+                    "barcode_scan.html",
+                    "Tools_details.html",
+                    "allocation_Tools_details.html"
+                ],
+                "priority" : 0
+            },
+            "message.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Personalcenter_Agent.html", "Nav_Personalcenter_Partners.html" ],
+                "priority" : 0
+            },
+            "profit_detail.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_myprofit.html", "profit_library_detail.html" ],
+                "priority" : 0
+            },
+            "profit_library_detail.html" : {
+                "resources" : [],
+                "refer" : [ "profit_detail.html" ],
+                "priority" : 0
+            },
+            "allocation_Tools_details.html" : {
+                "resources" : [],
+                "refer" : [
+                    "allocation_message.html",
+                    "allocation_detail.html",
+                    "allocation_message_complete.html"
+                ],
+                "priority" : 0
+            },
+            "monthly_bill.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_myprofit.html" ],
+                "priority" : 0
+            },
+            "profit_detail_partner.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_myprofit.html" ],
+                "priority" : 0
+            },
+            "allocation_detail.html" : {
+                "resources" : [ "allocation_tools.html" ],
+                "refer" : [
+                    "barcode_scan.html",
+                    "allocation_Tools_details.html",
+                    "allocation_message.html"
+                ],
+                "priority" : 0
+            },
+            "setup_rate.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_myagent.html" ],
+                "priority" : 0
+            },
+            "Help_transaction_fail_list.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Help.html" ],
+                "priority" : 0
+            },
+            "Help_guarantee.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Help.html" ],
+                "priority" : 0
+            },
+            "Help_app_function.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Help.html" ],
+                "priority" : 0
+            },
+            "Help_becareful.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Help.html" ],
+                "priority" : 0
+            },
+            "Help_download.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Help.html" ],
+                "priority" : 0
+            },
+            "Help_packing_list.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Help.html" ],
+                "priority" : 0
+            },
+            "Question02_operation_process.html" : {
+                "resources" : [],
+                "refer" : [ "Help_thaw_process.html" ],
+                "priority" : 0
+            },
+            "Help_thaw_process.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Help.html",
+                    "Question02_operation_process.html",
+                    "Question02_becareful_matter.html"
+                ],
+                "priority" : 0
+            },
+            "network_loss.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Index.html",
+                    "Nav_Personalcenter_Agent.html",
+                    "Personalcenter_Setting.html",
+                    "Nav_Help.html"
+                ],
+                "priority" : 0
+            },
+            "about_us.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_Setting.html" ],
+                "priority" : 0
+            },
+            "user_real_name.html" : {
+                "resources" : [],
+                "refer" : [
+                    "user_register.html",
+                    "Nav_Index.html",
+                    "Nav_Personalcenter_Agent.html",
+                    "user_identity.html",
+                    "Nav_Personalcenter_Partners.html",
+                    "user_login.html",
+                    "Personalcenter_Setting.html",
+                    "user_Face_recognition.html"
+                ],
+                "priority" : 0
+            },
+            "user_identity.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Index.html", "user_real_name.html" ],
+                "priority" : 0
+            },
+            "personal_tools_collect_account.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Personalcenter_Agent.html" ],
+                "priority" : 0
+            },
+            "user_change_password.html" : {
+                "resources" : [ "Personalcenter_Setting.html" ],
+                "refer" : [],
+                "priority" : 0
+            },
+            "user_look_realname.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_Setting.html" ],
+                "priority" : 0
+            },
+            "profit_detail_agent.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_myprofit.html", "user_login.html" ],
+                "priority" : 0
+            },
+            "my_rate.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_Setting.html" ],
+                "priority" : 0
+            },
+            "library_apply.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Personalcenter_library.html",
+                    "library_apply.html",
+                    "user_login.html"
+                ],
+                "priority" : 0
+            },
+            "Help_problem_feedback.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Help.html" ],
+                "priority" : 0
+            },
+            "grade_rule.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Personalcenter_Agent.html" ],
+                "priority" : 0
+            },
+            "bank_withdrawal.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Personalcenter_Agent.html",
+                    "bank_withdrawal_record.html",
+                    "user_login.html",
+                    "Nav_Personalcenter_Partners.html"
+                ],
+                "priority" : 0
+            },
+            "bank_withdrawal_record.html" : {
+                "resources" : [],
+                "refer" : [ "bank_withdrawal.html" ],
+                "priority" : 0
+            },
+            "Question02_becareful_matter.html" : {
+                "resources" : [],
+                "refer" : [ "Help_thaw_process.html" ],
+                "priority" : 0
+            },
+            "Personalcenter_statistics.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Personalcenter_Partners.html", "Nav_Personalcenter_Agent.html" ],
+                "priority" : 0
+            },
+            "allocation_message_complete.html" : {
+                "resources" : [],
+                "refer" : [ "allocation_Tools_details.html", "allocation_tools.html" ],
+                "priority" : 0
+            },
+            "Personalcenter_proxyMachine.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Personalcenter_Agent.html",
+                    "Nav_Personalcenter_Partners.html",
+                    "Personalcenter_proxyMachine_details.html",
+                    "Personalcenter_Machine_search.html"
+                ],
+                "priority" : 0
+            },
+            "Personalcenter_myprofit_pos.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Index.html",
+                    "Nav_Personalcenter_Partners.html",
+                    "profit_detail_pos.html",
+                    "Nav_Personalcenter_Agent.html"
+                ],
+                "priority" : 0
+            },
+            "profit_detail_pos.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_myprofit_pos.html" ],
+                "priority" : 0
+            },
+            "Personalcenter_proxyMachine_details.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_proxyMachine.html" ],
+                "priority" : 0
+            },
+            "setup_rate_pos.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_myagent.html" ],
+                "priority" : 0
+            },
+            "Personalcenter_Machine_search.html" : {
+                "resources" : [],
+                "refer" : [ "Personalcenter_proxyMachine.html", "Personalcenter_myMachine.html" ],
+                "priority" : 0
+            },
+            "nav_Index_banner.html" : {
+                "resources" : [ "nav_Index_bannercreateShow.html" ],
+                "refer" : [ "Nav_Index.html" ],
+                "priority" : 0
+            },
+            "nav_Index_noticelist.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Index.html" ],
+                "priority" : 0
+            },
+            "user_Face_recognition.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Index.html",
+                    "Nav_Personalcenter_Agent.html",
+                    "user_Face_recognition_bank.html",
+                    "user_real_name.html",
+                    "user_login.html",
+                    "Nav_Personalcenter_Partners.html"
+                ],
+                "priority" : 0
+            },
+            "Nav_Card.html" : {
+                "resources" : [],
+                "refer" : [
+                    "Nav_Personalcenter_Agent.html",
+                    "Nav_Index.html",
+                    "Nav_Applytools.html",
+                    "Nav_Personalcenter_Partners.html",
+                    "nav_Card_details.html"
+                ],
+                "priority" : 0
+            },
+            "user_Face_recognition_bank.html" : {
+                "resources" : [],
+                "refer" : [
+                    "user_Face_recognition.html",
+                    "bank_withdrawal.html",
+                    "Nav_Personalcenter_Agent.html",
+                    "Nav_Personalcenter_Partners.html"
+                ],
+                "priority" : 0
+            },
+            "Advertisement.html" : {
+                "resources" : [],
+                "refer" : [ "Nav_Index.html", "guide.html" ],
+                "priority" : 0
+            }
+        },
+        "idle" : {
+            "resources" : [
+                "fonts/mui.ttf",
+                "img/bg_today_statistics.png",
+                "img/icon_apply_active.png",
+                "img/banner.jpg",
+                "img/bg_yesterday_statistics.png",
+                "css/mui.min.css",
+                "js/mui.js"
+            ]
+        }
+    }
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>提现</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			table#number_input {
+				width: 90%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">提现 </h1>
+			<a href="#more" class="right"><img class="more" src="img/icon_more.png" alt="" /></a>
+		</header>
+
+		<div class="mui-content putforward">
+			<div class="putforward_content">
+				<div class="putforward_title mb06 overflow">
+					<div class="left">到账银行卡</div>
+					<a href="#choose_banklist" style="color: #575757;">
+						<div class="right"><span id="default_bank"></span>&nbsp;<img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>
+					</a>
+				</div>
+
+				<div class="putforward_title">提现金额<span style="font-size: 0.8em;">（至少提现10元）</span></div>
+
+				<div class="putforward_price"><span class="left">&yen;&nbsp;</span><input id="withdraw_money" type="text" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" placeholder="0.00"/></div>
+
+				<div class="mt25 library_content_date font_grey">可提现余额 &yen;<span id="total_money"></span>元，
+					<a href="#" id="btn_whole_withdraw">全部提现</a>
+				</div>
+				<!--输入金额后显示-->
+				<div class="has_withdrawmoney" style="display: none;">
+					<div class="putforward_title mt25">10%个人所得税：<span id="tax_fee"></span>元</div>
+					<div class="putforward_title mt25">银行秒到费：<span>3.00</span>元</div>
+					<div class="putforward_title mt25">实际到账：<span id="reality_fee"></span>元</div>
+					<div class="mt25 library_content_date font_grey"><img class="head_icon" src="img/icon_tips_danger.png" alt="" />10%的个人所得税，可通过联系客服拿税票兑换</div>
+				</div>
+
+				<button type="button" class="btn_common_submit disabled" id="alertBtn">提现</button></d </div>
+
+				<!--右上角更多弹框-->
+				<div id="more" class="mui-popover mui-popover-bottom mui-popover-action">
+					<a href="bank_withdrawal_record.html">
+						<div id="go_withdraw_record" class="share_cancel">提现记录</div>
+					</a>
+					<div class="share_cancel">取消</div>
+				</div>
+				<!--银行卡列表弹框-->
+				<div id="choose_banklist" class="mui-popover mui-popover-bottom mui-popover-action">
+
+				</div>
+
+				<!--提现弹框-->
+				<div id="div"></div>
+				<div id="popover" class="mui-popover popup_profit">
+					<div class="title">请输入提现密码
+						<div class="close"><img class="img" src="img/icon_close.png" /></div>
+					</div>
+					<div class="rate_title text_c">提现</div>
+					<div class="price"><span>&yen;</span><span id="popover_money"></span></div>
+					<div class="mt25 library_content_date font_grey text_c">额外扣除&yen;3元银行秒到费和10%个人所得税</div>
+					<!--密码-->
+					<table id="number_input" border="0" cellspacing="0" cellpadding="0">
+						<tbody>
+							<tr>
+								<td class="input-item"></td>
+								<td class="input-item"></td>
+								<td class="input-item"></td>
+								<td class="input-item"></td>
+								<td class="input-item"></td>
+								<td class="input-item"></td>
+							</tr>
+						</tbody>
+					</table>
+					<!--输入键盘-->
+					<table id="keyboard" border="0" cellspacing="0" cellpadding="0">
+						<tbody>
+							<tr>
+								<td class="keyboard-number">1</td>
+								<td class="keyboard-number">2</td>
+								<td class="keyboard-number">3</td>
+							</tr>
+							<tr>
+								<td class="keyboard-number">4</td>
+								<td class="keyboard-number">5</td>
+								<td class="keyboard-number">6</td>
+							</tr>
+							<tr>
+								<td class="keyboard-number">7</td>
+								<td class="keyboard-number">8</td>
+								<td class="keyboard-number">9</td>
+							</tr>
+							<tr>
+								<td class="keboard-action" data-action="reset">重置</td>
+								<td class="keyboard-number">0</td>
+								<td class="keboard-action" data-action="cancel">删除</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/md5.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back = function() {
+				var user_type = myStorage.getItem('Customer_info').type;
+				if(1 == user_type) {
+					location.href = "Nav_Personalcenter_Partners.html";
+				} else if(2 == user_type || 3 == user_type) {
+					location.href = "Nav_Personalcenter_Agent.html";
+				}
+			}
+			var bankCard_id = "";
+			var askMoney = "";
+			//银行卡列表
+			var bankCardList = myStorage.getItem('Customer_info').bankCardList;
+			for(var i = 0; i < bankCardList.length; i++) {
+				var banklist = '<li data-id="' + bankCardList[i].id + '">' + bankCardList[i].bankName + '（' + bankCardList[i].code.substr(bankCardList[i].code.length - 4) + '）</li>'
+				$("#choose_banklist").append(banklist)
+			}
+			//默认 
+			$("#default_bank").html(bankCardList[0].bankName + "（<span>" + bankCardList[0].code.substr(bankCardList[0].code.length - 4) + "</span>）")
+			bankCard_id = bankCardList[0].id;
+			//选择银行卡
+			mui('body').on('tap', '#choose_banklist li', function(e) {
+				bankCard_id = this.dataset.id;
+				$("#default_bank").html(this.innerText);
+				mui('#choose_banklist').popover('toggle');
+			});
+			//可提现金额、全部提现
+			$("#total_money").html(myStorage.getItem('Customer_info').money)
+			document.getElementById("btn_whole_withdraw").addEventListener("tap", function() {
+				$("#withdraw_money").val(myStorage.getItem('Customer_info').money);
+				has_withdrawmoney();
+			});
+			//输入金额
+			$("#withdraw_money").bind('input propertychange', function() {
+				console.log("8")
+				has_withdrawmoney();
+			});
+			//输入金额，显示各项费用，和提现
+			function has_withdrawmoney() {
+				$(".has_withdrawmoney").show();
+				$("#tax_fee").html(($("#withdraw_money").val() * 0.1).toFixed(2));
+				$("#reality_fee").html(($("#withdraw_money").val() * 0.9 - 3).toFixed(2));
+				if($("#withdraw_money").val()-0>=10){
+					$("#alertBtn").removeClass("disabled");
+				}else{
+					$("#alertBtn").addClass("disabled");
+				}
+			}
+
+			//关闭提现记录弹框
+			$('.share_cancel').click(function(e) {
+				mui('#more').popover('toggle');
+			});
+
+			//支付弹框 --提现密码
+			document.getElementById("alertBtn").addEventListener("tap", function() {
+				if($(this).hasClass("disabled")) {} else {
+					askMoney = $("#withdraw_money").val();
+					var test_reg = /^(([1-9][0-9]{0,7})(\.{1}[0-9]{1,2}){0,1}|([0-9]{1}\.{1}[0-9]{0,1}[1-9])|([0-9]{1}\.{1}[1-9][0-9]{0,1})|0|0.0|0.00)$/;
+					if(!test_reg.test(askMoney)){
+						mui.toast("提现金额格式不对，参考格式168.88");
+						return false;
+					}
+					mui("#popover").popover('toggle', document.getElementById("div"));
+					$("#popover_money").html($("#withdraw_money").val())
+				}
+			});
+			$(function() {
+				$(".close").click(function() {
+					mui("#popover").popover('toggle');
+				});
+			});
+			//提现记录跳转
+			document.getElementById("go_withdraw_record").addEventListener("tap", function() {
+				location.href = "bank_withdrawal_record.html";
+			});
+
+			//支付密码
+			mui.ready(function() {
+				// 数字索引
+				var activeIndex = 0;
+				// 密码结果
+				var resultValue = "";
+				// 所有输入框
+				var inputList = mui(".input-item");
+				// 所有数字键
+				var numberList = mui(".keyboard-number");
+				// 数字键盘点击事件
+				mui("#keyboard").on("tap", ".keyboard-number", function() {
+					if(activeIndex == 6) {
+						return;
+					}
+					var num = this.innerText;
+					addNumber(num);
+				});
+				mui("#keyboard").on("tap", ".keboard-action", function() {
+					var value = this.getAttribute("data-action");
+					switch(value) {
+						case "cancel":
+							if(activeIndex == 0) {
+								return;
+							}
+							cancelNumber();
+							break;
+						case "reset":
+							resetInput();
+							break;
+						default:
+							break;
+					}
+				});
+				// 添加数字
+				function addNumber(num) {
+					inputList[activeIndex].innerText = "*";
+					resultValue += num;
+					activeIndex++;
+					// 检测密码长度
+					if(activeIndex == 6) {
+						//会员提现
+						var payPassword = hex_md5(resultValue);
+						console.log(customerId);
+						console.log(bankCard_id);
+						console.log(askMoney);
+						console.log(payPassword)
+						mui.ajax(ajax_url + 'appCustomer/doWithDraw', {
+							data: {
+								"model.customer.id": customerId,
+								"model.bankCard.id": bankCard_id,
+								"model.askMoney": askMoney,
+								"model.customer.payPassword": payPassword
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								if(true == data.success) {
+									mui("#popover").popover('toggle');
+									mui.alert('提现成功', ' ', function() {
+										location.href = 'bank_withdrawal_record.html?key=withdrawal_success';
+									});
+								}
+								if(false == data.success) {
+									if("payPassword_error" == data.msg) {
+										wrongPassword()
+									}else {
+										mui.toast(data.msg);
+										location.reload();
+									}
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								if(xhr.status != '0')
+									mui.toast('服务器走丢了')
+							}
+						});
+
+					}
+				}
+				// 撤销数字
+				function cancelNumber() {
+					activeIndex--;
+					inputList[activeIndex].innerText = "";
+					resultValue = resultValue.substring(0, resultValue.length - 1);
+				}
+				// 密码框置空
+				function resetInput() {
+					activeIndex = 0;
+					resultValue = "";
+					mui(".input-item").each(function(index, element) {
+						element.innerText = "";
+					});
+				}
+				// 密码错误
+				function wrongPassword() {
+					mui("#popover").popover('toggle');
+					mui.confirm("密码错误", "验证结果", ["再试一次", "密码忘了"], function(event) {
+						var index = event.index;
+						if(index == 0) {
+							mui("#popover").popover('toggle');
+							mui.toast("请再次输入");
+						} else {
+							mui.toast("下一步跳转到忘记密码的页面");
+							location.href = 'user_change_password.html';
+
+						}
+						resetInput();
+					});
+				}
+
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>机具搜索</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white profit_detail">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">机具搜索</h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="serch" id="Equipment_serach">
+				<input type="search" id="search_poscode" placeholder="搜索您想找的机具号" style="margin: 0;" />
+				<img class="mark_portrait" src="img/icon_serch.png" />
+				<button id="search_machine" class="btn_search">搜索</button>
+			</div>
+			<div class="list-none" style="display:block">
+				<img class="icon_none" src="img/icon_none_address.png" style="margin-top:1.5rem">
+				<div class="fonts">空空如也</div>
+			</div>
+			<div class="machinebox" style="clear: both;">
+
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/mui.pullToRefresh.js"></script>
+		<script src="js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			var key = getQueryString("key"),
+				posCode = "";
+			mui.back = function() {
+				$("input").blur();
+				if(key == "mine") {
+					location.href = "Personalcenter_myMachine.html"
+				} else {
+					location.href = "Personalcenter_proxyMachine.html"
+				}
+			};
+
+			mui('body').on('tap', '#search_machine', function(e) {
+				posCode = $("#search_poscode").val()
+				if(posCode != "") {
+					if(key == "mine") {
+						mui.ajax(ajax_url + 'appCustomer/getPosByCustomer', {
+							data: {
+								customerId: customerId,
+								posCode: posCode
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								if(true == data.success) {
+									if(0 == data.obj.totalRecord) {
+										$(".list-none .fonts").html("没有找到机具，请检查机具码再试试")
+										$(".list-none").show();
+									} else {
+										$(".list-none").hide();
+										var Equipment_lists = data.obj.results;
+										console.log(Equipment_lists)
+										$(".machinebox").html("");
+										for(var i = 0; i < Equipment_lists.length; i++) {
+											var posicon = "";
+											if(Equipment_lists[i].type == 1) {
+												posicon = "<img width='12' src='img/post_ype01.png' style='vertical-align: sub;'/><span>&nbsp;闪电宝&nbsp;&nbsp;</span>";
+											} else if(Equipment_lists[i].type == 2) {
+												posicon = "<img width='12' src='img/post_ype02.png' style='vertical-align: sub;'/><span>&nbsp;闪POS&nbsp;&nbsp;</span>";
+											} else {
+												posicon = "<img width='12' src='img/post_ype03.png' style='vertical-align: sub;'/><span>&nbsp;智能终端&nbsp;&nbsp;</span>";
+											}
+											console.log(Equipment_lists[i])
+											if(Equipment_lists[i].state == 2) {
+												var Equipment_list = '<div style="padding: 0.3rem;border-bottom:1px solid #dcdcdc;overflow:hidden">' +
+													'<span class="left clearboth">类型：' + posicon + Equipment_lists[i].posType.name + '</span>' +
+													'<span class="right"><span class="font_blue">' + Equipment_lists[i].stateValue + '</span></span>' +
+													'<span class="left clearboth">编号：' + Equipment_lists[i].code + '</span>' +
+													'<span class="right time">' + (timestampToTime(Equipment_lists[i].activationTime)).split(" ")[0] + '</span>' +
+													'</div>';
+											} else {
+												if(Equipment_lists[i].code != null) {
+													var Equipment_list = '<div style="padding: 0.3rem;border-bottom:1px solid #dcdcdc;overflow:hidden">' +
+														'<span class="left">类型：' + posicon + Equipment_lists[i].posType.name + '</span>' +
+														'<span class="right"><span class="font_blue">' + Equipment_lists[i].stateValue + '</span></span>' +
+														'<span class="left clearboth">编号：' + Equipment_lists[i].code + '</span>' +
+														'<span class="right time">' + (timestampToTime(Equipment_lists[i].lestLogisticsTime)).split(" ")[0] + '</span>' +
+														'</div>';
+												} else {
+													var Equipment_list = '<div style="padding: 0.3rem;border-bottom:1px solid #dcdcdc;overflow:hidden">' +
+														'<span class="left">类型：暂无</span>' +
+														'<span class="right">状态：<span class="font_blue">' + Equipment_lists[i].stateValue + '</span></span>' +
+														'<span class="left clearboth">编号：' + Equipment_lists[i].code + '</span>' +
+														'<span class="right time">' + timestampToTime(Equipment_lists[i].lestLogisticsTime) + '</span>' +
+														'</div>';
+												}
+											}
+											$(".machinebox").append(Equipment_list)
+										}
+									}
+
+								}
+								if(false == data.success) {
+									mui.toast(data.msg)
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								if(xhr.status != '0')
+									mui.toast('服务器走丢了')
+							}
+						});
+					} else {
+						getNextProxyPosList();
+					}
+				}
+			});
+
+			function getNextProxyPosList() {
+				mui.ajax(ajax_url + 'appCustomer/getNextProxyPosList', {
+					data: {
+						customerId: customerId,
+						posCode: posCode
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							if(0 == data.obj.length) {
+								$(".list-none .fonts").html("没有找到机具，请检查机具码再试试")
+								$(".list-none").show();
+							} else {
+								$(".list-none").hide();
+								var results = data.obj;
+								console.log(results)
+								$(".machinebox").html("");
+								for(var i = 0; i < results.length; i++) {
+									var state = "",
+										boxclass = "",
+										posicon = "";
+									if(results[i].state == 1) {
+										state = "<span class='danger'>" + results[i].stateValue + "</span>";
+										boxclass = "proxy_machine_list";
+									} else {
+										state = "<span class='font_blue'>" + results[i].stateValue + " <img width='6' src='img/icon_personal_enter.png'/></span>";
+										boxclass = "proxy_machine_list proxy_details";
+									}
+									if(results[i].type == 1) {
+										posicon = '<img class="proxy_machine_icon" src="img/post_ype01.png" />'
+									} else if(results[i].type == 2) {
+										posicon = '<img class="proxy_machine_icon" src="img/post_ype02.png" />'
+									} else if(results[i].type == 3) {
+										posicon = '<img class="proxy_machine_icon" src="img/post_ype03.png" />'
+									}
+									var my_machinelist = '<div class="' + boxclass + '" data-id="' + results[i].id + '" data-postype="' + results[i].type + '" data-poscode="' + results[i].posType.name + '：' + results[i].code + '" data-name="' + results[i].customerName + '" data-todaymoney="' + results[i].todayTrudeMoney + '" data-totalmoney="' + results[i].allTrudeMoney + '">' + posicon +
+										'<p class="info"><span class="proxyname">' + results[i].customerName +
+										'</span><span class="right">状态：' + state +
+										'</span><br /><span>' + results[i].posType.name + '：' + results[i].code +
+										'<br />今日交易额：&yen;' + results[i].todayTrudeMoney +
+										'<br />总交易额：&yen;' + results[i].allTrudeMoney +
+										'</span></p></div>';
+									$(".machinebox").append(my_machinelist)
+								}
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+			//机具详情
+			mui('body').on('tap', '.proxy_details', function(e) {
+				location.href = 'Personalcenter_proxyMachine_details.html?id=' + this.dataset.id + "&name=" + this.dataset.name + "&postype=" + this.dataset.postype + "&poscode=" + this.dataset.poscode + "&todaymoney=" + this.dataset.todaymoney + "&totalmoney=" + this.dataset.totalmoney;
+			});
+		</script>
+	</body>
+
+</html>

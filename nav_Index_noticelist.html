@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>公告列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.notice_box {
+				padding: 0.3rem;
+				line-height: 2.4em;
+			}
+			
+			.notice_overclamp {
+				display: inline-block;
+				width: 6.0rem;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			
+			.icon_enter {
+				width: 0.2rem;
+				float: right;
+				margin-top: 0.14rem;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">公告列表 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<!--暂无记录-->
+			<div class="list-none">
+				<img class="icon_none icon_none_mt" src="img/icon_none_address.png">
+				<div class="fonts">空空如也</div>
+			</div>
+			<!--列表-->
+			<div class="notice_box">
+				<div class="notice_title bold"></div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/mui.pullToRefresh.js"></script>
+		<script src="js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+
+			//选项卡切换
+			var pageNo = 1,
+				flag = true;
+			//加载更多初始化
+			mui('.mui-content').pullToRefresh({
+				up: {
+					callback: function() {
+						var _this = this;
+						console.log(this)
+						setTimeout(function() {
+							console.log(flag)
+							if(flag) {
+								getNoticeList();
+							}
+							_this.endPullUpToRefresh(!flag);
+						}, 500);
+					}
+				}
+
+			});
+			getNoticeList();
+
+			function getNoticeList() {
+				if(1 == getQueryString("noticetype")) {
+					//后台公告
+					mui.ajax(ajax_url + 'appCustomer/getNoticeList', {
+						data: {
+							"page.pageNo": pageNo
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								var noticelist = data.obj.obj.results;
+								$(".notice_title").html("后台公告");
+								if(noticelist.length == 0) {
+									flag = data.obj.haveNextPage;
+									$(".list-none").show()
+								} else {
+									if(data.obj.obj.totalRecord<=10){
+										$(".mui-pull-bottom-wrapper").hide()
+									}
+									for(i = 0; i < noticelist.length; i++) {
+										console.log(noticelist[i])
+										var noticelist_content = '<div class="noticelist_enter" data-id="' + noticelist[i].id + '"><span class="notice_overclamp">'+((pageNo-1)*10+i+1)+'、'+ noticelist[i].title + '</span><img class="icon_enter" src="img/icon_personal_enter.png"/></div>';
+										$(".notice_box").append(noticelist_content)
+									}
+									pageNo++;
+									flag = data.obj.haveNextPage;
+								}
+							} else {
+								mui.toast(data.msg)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							if(xhr.status != '0')
+								mui.toast('服务器走丢了')
+						}
+					});
+				} else {
+					//机具申请列表
+					mui.ajax(ajax_url + 'appCustomer/getPosAskList', {
+						data: {
+							"page.pageNo": pageNo
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								var noticelist = data.obj.results;
+								$(".notice_title").html("申请机具公告");
+								if(noticelist.length == 0) {
+									flag = data.obj.haveNextPage;
+									$(".list-none").show()
+								}else {
+									if(data.obj.totalRecord<=10){
+										$(".mui-pull-bottom-wrapper").hide()
+									}
+									for(i = 0; i < noticelist.length; i++) {
+										var noticelist_content = '<div>'+((pageNo-1)*10+i+1)+'、<span>' + noticelist[i].split(",")[0] + '</span><span class="right">' + noticelist[i].split(",")[1] + '</span></div>';
+										$(".notice_box").append(noticelist_content)
+									}
+									pageNo++;
+									flag = data.obj.haveNextPage;
+								}
+							} else {
+								mui.toast(data.msg)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							if(xhr.status != '0')
+								mui.toast('服务器走丢了')
+						}
+					});
+				}
+
+			}
+
+			mui('body').on('tap', '.noticelist_enter', function(e) {
+				var id = this.dataset.id;
+				location.href = 'nav_Index_noticelist_details.html?noticeid=' + id;
+			});
+		</script>
+	</body>
+
+</html>

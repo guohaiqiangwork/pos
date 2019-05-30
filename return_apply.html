@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>申请退货</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			#tools_type {
+				width: 4.6rem;
+				border: none;
+				border-bottom: 1px solid #ddd;
+				border-radius: 0;
+				text-align: left;
+				font-weight: 100;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">申请退货 </h1>
+			<a id="goscan" href="" class="mui-icon right scan_link"><img class="scan" src="img/icon_scan.png" alt="" /></a>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div id="return_hint" class="library_content_date font_grey bg_gray p30" style="padding: 0.08rem 0.3rem;">请和商家确认好退货，再提交申请</div>
+			<!--商家信息-->
+			<div class="rate_title bold">商家信息</div>
+			<!--<div class="library_content_name overflow p30">
+				<div class="p30 left">收货人: 王佳明</div>
+				<div class="p30 left">电话: 1384585236</div>
+			</div>
+			<div class="p30">
+				<div class="rate_title overflow">
+					<div class="left" style="width: 23%;">收货地址：</div>
+					<div class="left" style="width: 77%;">内蒙古包头市东河区维多利新天地6楼</div>
+				</div>
+			</div>-->
+			<!--申请退机具信息-->
+			<form id="return_tools_form" class="user_form" action="" method="post">
+				<div class="rate_title bold">申请退货</div>
+				<input id="input_customer" type="hidden" name="model.customer.id" id="" value="" />
+				<div class="rate_title choose_postype" style="padding-bottom: 0;position: relative;width: 7rem;margin-top: -0.2rem;">
+					<span style="padding-left: 0.3rem;">机具类型： </span>
+					<input type="text" id="tools_type" placeholder=" 请选择机具类型" readonly="readonly" value="" />
+					<input type="hidden" name="model.posType" id="tools_type_index" />
+					<img class="icon_tools_type_choose" src="img/icon_personal_enter.png" style="right: 0.3rem;" />
+				</div>
+				<div class="rate_title" style="padding-bottom: 0;">
+					<span style="padding-left: 0.3rem;">退货台数：  </span>
+					<input type="text" name="model.number" id="tools_num" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="3" /> 台
+				</div>
+				<input type="hidden" name="model.addressId" id="addressId" value="" />
+				<input type="hidden" name="model.type" id="" value="2" />
+
+				<div class="rate_title bold">退货原因</div>
+
+				<div class="textarea1"><textarea id="textarea" name="model.returnReason" rows="2" placeholder="请输入退货原因"></textarea></div>
+				<input type="hidden" name="model.money" id="money" value="" />
+
+			</form>
+			<div class="look_box">
+				<div class="line"></div>
+				<div class="rate_title overflow">
+					<div class="left bold">扫码录入<span class="title_subtitle">(右上角扫码)</span></div>
+					<div class="right content_titile gotools_details">机具详情&nbsp;<img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>
+				</div>
+
+				<div class="collect_content overflow">
+					<div class="tools_type_box">
+
+					</div>
+					<div class="font_blue collect_receive"><img class="head_icon" src="img/icon_tips_blue.png" alt="" />请扫入未激活的机具</div>
+
+				</div>
+
+			</div>
+			<!--审核-->
+			<div class="apply_refuse">
+				<div class="line"></div>
+				<div class="font_blue collect_receive"><img class="head_icon" src="img/icon_tips_blue.png" alt="" />正在审核，请耐心等待</div>
+				<div class="danger collect_receive"><img class="head_icon" src="img/icon_danger1.png" alt="" />该单已拒绝</div>
+				<p class="refuse_reason"></p>
+			</div>
+
+			<button type="button" class="btn_common_submit" style="display: none;">提交</button>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/textarea.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+
+			//判断查看、发货
+			var key = getQueryString("key"),
+				postype = getQueryString("postype"),
+				applyrecordid = "",
+				asker_info = "",
+				total_num = "";
+			//重写返回
+			mui.back = function() {
+				location.href = 'return_goods.html?postype=' + getQueryString("postype");
+			}
+			//申请人姓名、ID
+			var Customer_info = myStorage.getItem('Customer_info');
+			$("#input_customer").val(Customer_info.id)
+			if("apply" == key) {
+				if(getQueryString("postype") == 1) {
+					$("#tools_type").val("闪电宝");
+					$("#tools_type_index").val("1");
+					getHigherUserProxy()
+				} else if(getQueryString("postype") == 2) {
+					$(".choose_postype").removeClass("choose_postype");
+					$(".icon_tools_type_choose").hide();
+					$("#tools_type").val("闪POS");
+					$("#tools_type_index").val("2");
+					getHigherUserProxy();
+				}
+				$(".mui-title").html("申请退货");
+				$("#goscan").hide();
+				$(".look_box").hide();
+				$(".btn_common_submit").show();
+				//选择机具类型
+				if(getQueryString("postype") == 1) {
+					mui('.choose_postype')[0].addEventListener('tap', function() {
+						if(mui.os.plus) {
+							var buttonTit = [{
+								title: "闪电宝"
+							}, {
+								title: "闪POS"
+							}, 
+//							{
+//								title: "智能终端"
+//							}
+							];
+
+							plus.nativeUI.actionSheet({
+								//						title: "上传图片",
+								cancel: "取消",
+								buttons: buttonTit
+							}, function(b) { /*actionSheet 按钮点击事件*/
+								switch(b.index) {
+									case 0:
+										break;
+									case 1:
+										$("#tools_type").val("闪电宝");
+										$("#tools_type_index").val("1");
+										postype = 1;
+										getHigherUserProxy();
+										break;
+									case 2:
+										$("#tools_type").val("闪POS");
+										$("#tools_type_index").val("2");
+										postype = 2;
+										getHigherUserProxy();
+										break;
+//									case 3:
+//										$("#tools_type").val("智能终端");
+//										$("#tools_type_index").val("3");
+//										postype = 3;
+//										getHigherUserProxy();
+//										break;
+									default:
+										break;
+								}
+							})
+						}
+					});
+				}
+			} else if("look" == key) {
+				applyrecordid = myStorage.getItem('applyrecordid');
+				asker_info = myStorage.getItem('asker');
+				console.log(asker_info)
+				if(asker_info[4] == 1) {
+					postype=1;
+					$("#tools_type").val("闪电宝");
+				} else if(asker_info[4] == 2) {
+					postype=2;
+					$("#tools_type").val("闪POS");
+				} else if(asker_info[4] == 3) {
+					postype=3;
+					$("#tools_type").val("智能终端");
+				}
+				getHigherUserProxy();
+				$("#tools_type").css("border", "none");
+				$("#tools_type_index,.icon_tools_type_choose").remove();
+
+				$(".mui-title").html("退货详情");
+				//退货数量原因
+				$("#return_hint").hide();
+				$("#tools_num").val(asker_info[0]);
+				$("#textarea").val(decodeURIComponent(asker_info[3], true));
+				$("#tools_num,#textarea").attr("disabled", "disabled");
+				if(6 == asker_info[1]) {
+					//审核被拒绝
+					$("#goscan").hide();
+					$(".look_box").hide();
+					$(".apply_refuse").show();
+					console.log(asker_info[2])
+					if(asker_info[2] == "null") {
+						$(".apply_refuse p").html("原因：无");
+					} else {
+						$(".apply_refuse p").html("原因：" + asker_info[2]);
+					}
+					$(".apply_refuse .collect_receive").eq(1).show();
+				} else if(1 == asker_info[1]) {
+					//等待审核
+					$("#goscan").hide();
+					$(".look_box").hide();
+					$(".apply_refuse").show();
+					$(".apply_refuse .collect_receive").eq(0).show();
+				} else {
+					$(".btn_common_submit").show();
+					if(2 == asker_info[1]) {
+						$(".mui-title").html("确认发货");
+						$(".tools_type_box").html("");
+						$("#total").hide();
+						$(".look_box .collect_receive").show();
+						$(".btn_common_submit").addClass("disabled")
+					} else {
+						$("#goscan").hide();
+						$(".btn_common_submit").hide();
+					}
+					//获取申请记录机具详情
+					mui.ajax(ajax_url + 'appCustomer/getPosAskDatil', {
+						data: {
+							id: applyrecordid
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								total_num = data.obj.length;
+								if($("#tools_num").val() == total_num) {
+									$(".btn_common_submit").removeClass("disabled")
+								} else {
+									$(".btn_common_submit").addClass("disabled")
+								}
+								$(".look_box .collect_receive").hide();
+								//机具总数
+								var collect_content = '<div style="margin:8px 0;">总计:&nbsp;&nbsp;<span class="font_blue">' + total_num + '台</span></div>';
+								$(".collect_content").append(collect_content);
+								//机具类型数组
+								var toolstype_num = 0;
+								var array_toolstype = new Array;
+								var array_toolstype_removal = "";
+								for(var i = 0; i < data.obj.length; i++) {
+									//机具类型数组（重复）
+									array_toolstype[toolstype_num] = data.obj[i].pos.posType.name;
+									toolstype_num++;
+								}
+								//机具类型数组（去重）
+								Array.prototype.distinct = function() {
+									var arr = this,
+										result = [],
+										j,
+										k,
+										len = arr.length;
+									for(j = 0; j < len; j++) {
+										for(k = j + 1; k < len; k++) {
+											if(arr[j] === arr[k]) {
+												k = ++j;
+											}
+										}
+										result.push(arr[j]);
+										array_toolstype_removal = result;
+									}
+									return result;
+								}
+								array_toolstype.distinct();
+								//拼接机具类型节点
+								for(var j = 0; j < array_toolstype_removal.length; j++) {
+									//该类型机具数量type_num；该类型已扫码机具type_scan_num
+									var type_num = 0;
+									for(var i = 0; i < data.obj.length; i++) {
+										if(array_toolstype_removal[j] == data.obj[i].pos.posType.name) {
+											type_num++;
+										}
+									}
+									var tools_type_list = '<div>' + array_toolstype_removal[j] + '：' + type_num + '台</div>';
+									$(".tools_type_box").append(tools_type_list);
+								}
+
+							}
+							if(false == data.success) {
+								mui.toast(data.msg)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							if(xhr.status != '0')
+								mui.toast('服务器走丢了')
+						}
+					});
+				}
+
+			}
+			//代理商(商家信息)
+			function getHigherUserProxy() {
+				mui.ajax(ajax_url + 'appCustomer/getHigherUserProxy', {
+					data: {
+						customerId: Customer_info.id,
+						posType: postype
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							console.log(data.attributes.address)
+							$("#HigherUserProxy_info,#HigherUserProxy_add").remove();
+							if(data.attributes.address == undefined) {
+								var userProxy = '<div class="library_content_name overflow p30" id="HigherUserProxy_info">' +
+									'<div class="p30 left">收货人: ' + data.obj + '</div>' +
+									'<div class="p30 left">电话: ' + data.attributes.phone + '</div>' +
+									'</div>' +
+									'<div class="p30" id="HigherUserProxy_add">' +
+									'<div class="rate_title overflow">' +
+									'<div class="left" style="width: 23%;">收货地址：</div>' +
+									'<div class="left" style="width: 77%;color:#a9a9a9">上级还没有设置默认地址</div>' +
+									'</div>' +
+									'</div>';
+							} else {
+								var userProxy = '<div class="library_content_name overflow p30" id="HigherUserProxy_info">' +
+									'<div class="p30 left">收货人: ' + data.obj + '</div>' +
+									'<div class="p30 left">电话: ' + data.attributes.phone + '</div>' +
+									'</div>' +
+									'<div class="p30" id="HigherUserProxy_add">' +
+									'<div class="rate_title overflow">' +
+									'<div class="left" style="width: 23%;">收货地址：</div>' +
+									'<div class="left" style="width: 77%;">' + data.attributes.address + '</div>' +
+									'</div>' +
+									'</div>';
+							}
+
+							$("#return_tools_form").before(userProxy)
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+
+			//申请退货
+			if("apply" == key) {
+				mui('.btn_common_submit')[0].addEventListener('tap', function() {
+					//申请
+					if("" == $("#tools_num").val() || null == $("#tools_num").val()) {
+						mui.toast("请填写申请退货台数");
+						return false;
+					} else if("" == $("#textarea").val()) {
+						mui.toast("请填写退货原因");
+						return false;
+					} else {
+						var formData = $('#return_tools_form').serialize();
+						formData = decodeURIComponent(formData, true);
+						console.log(formData);
+						var btnArray = ['取消', '确认'];
+						mui.confirm(" ", '确认要申请退货吗？', btnArray, function(e) {
+							if(e.index == 1) {
+								mui.ajax(ajax_url + 'appCustomer/askPos', {
+									data: formData,
+									dataType: 'json', //服务器返回json格式数据
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+										if(true == data.success) {
+											mui.toast("申请提交成功，待退货商审核");
+											location.href = 'return_goods.html?postype=' + getQueryString("postype");
+										}
+										if(false == data.success) {
+											if("您还没有添加地址~" == data.msg) {
+												var btnArray = ['取消', '添加地址'];
+												mui.confirm("您还没有添加地址，请点击添加", '', btnArray, function(e) {
+													if(e.index == 1) {
+														location.href = "user_new_address.html"
+													} else {
+
+													}
+												});
+											} else {
+												mui.toast(data.msg)
+											}
+										}
+									},
+									error: function(xhr, type, errorThrown) {
+										if(xhr.status != '0')
+											mui.toast('服务器走丢了')
+									}
+								});
+							} else {
+
+							}
+						});
+					}
+				});
+			}
+			if("look" == key) {
+				mui('.btn_common_submit')[0].addEventListener('tap', function() {
+					if($("#tools_num").val() == total_num) {
+						//确认退货
+						var btnArray = ['取消', '确认'];
+						mui.confirm(" ", '确认要退货吗？', btnArray, function(e) {
+							if(e.index == 1) {
+								mui.ajax(ajax_url + 'appCustomer/confirmTakeDelivery', {
+									data: {
+										type: 2,
+										id: applyrecordid
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+										if(true == data.success) {
+											location.href = 'return_goods.html?postype=' + getQueryString("postype");
+										}
+										if(false == data.success) {
+											mui.toast(data.msg)
+										}
+									},
+									error: function(xhr, type, errorThrown) {
+										if(xhr.status != '0')
+											mui.toast('服务器走丢了')
+									}
+								});
+							} else {
+
+							}
+						});
+					} else {
+						mui.toast("申请数量与发货数量不符")
+					}
+				});
+			}
+			//扫码
+			mui('body').on('tap', '.scan_link', function(e) {
+				location.href = "barcode_scan.html?key=returntool";
+			});
+			//查看机具详情
+			mui('body').on('tap', '.gotools_details', function(e) {
+				location.href = "return_Tools_details.html?state=" + asker_info[1];
+			});
+
+			//textarea自适应高
+			var text = document.getElementById("textarea");
+			autoTextarea(text);
+		</script>
+	</body>
+
+</html>

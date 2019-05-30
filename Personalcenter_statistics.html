@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>查看汇总</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.choose_year_box {
+				position: absolute;
+				top: 76px;
+				right: 5%;
+			}
+			
+			.choose_year_box img {
+				margin: 0 0.2rem;
+				vertical-align: middle;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">查看汇总</h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<!--统计-->
+			<div id="main" style="padding-top:10px ;"></div>
+			<!--年份及选择-->
+			<div class="choose_year_box">年份：<span id="year"></span><img width="12" src="img/icon_down.png" /></div>
+			<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action ">
+				<!-- 可选择菜单 -->
+				<ul class="mui-table-view">
+				</ul>
+				<!-- 取消菜单 -->
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a href="#sheet1"><b>取消</b></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/echarts.common.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/NumberUtil.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back = function() {
+				var user_type = myStorage.getItem('Customer_info').type;
+				if(1 == user_type) {
+					location.href = "Nav_Personalcenter_Partners.html";
+				} else if(2 == user_type || 3 == user_type) {
+					location.href = "Nav_Personalcenter_Agent.html";
+				}
+			}
+
+			$("#main").css({
+				"minHeight": $("body").height() - 60,
+				"width": $("body").width() * 0.96,
+			});
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('main'));
+
+			var data_tradeMoney = [],
+				data_month = [],
+				data_activationNumber = [];
+
+			//申请人、查询年份
+			var customerId = myStorage.getItem('customerId'),
+				year = (new Date).getFullYear(); 
+			$("#year").html(year);
+			getStatistics();
+			//统计数据
+			if(year > 2018) {
+				var yearlist = '<li class="mui-table-view-cell year_list">2018</li>';
+				$(".mui-table-view").eq(0).append(yearlist)
+				for(var i = 0; i < year - 2018; i++) {
+					var yearlist = '<li class="mui-table-view-cell year_list">' + (2019 + i) + '</li>';
+					$(".mui-table-view").eq(0).append(yearlist)
+				}
+				mui('.choose_year_box')[0].addEventListener('tap', function() {
+					mui('#sheet1').popover('toggle');
+				});
+				mui('body').on('tap', '.year_list', function() {
+					year = this.innerText;
+					$("#year").html(year);
+					mui('#sheet1').popover('toggle');
+					getStatistics();
+				});
+			} else {
+				$(".choose_year_box img").hide();
+			}
+
+			function getStatistics() {
+				mui.ajax(ajax_url + 'appCustomer/getStatistics', {
+					data: {
+						customerId: customerId,
+						year: year
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							if(0 == data.obj.length) {
+								$(".list-none").show();
+							} else {
+								console.log(data.obj)
+								$(".list-none").hide();
+								for(var i = 0; i < data.obj.length; i++) {
+									if(1==getQueryString("postype")){
+										data_tradeMoney[i] = data.obj[i].tradeMoney;
+										data_month[i] = data.obj[i].getMoney, 10000;
+										data_activationNumber[i] = data.obj[i].activationNumber;
+									}else{
+										data_tradeMoney[i] = data.obj[i].tradeMoneyFlash;
+										data_month[i] = data.obj[i].getMoneyFlash, 10000;
+										data_activationNumber[i] = data.obj[i].activationNumberFlash;
+									}
+								}
+								// 指定图表的配置项和数据
+								option = {
+									tooltip: {
+										trigger: 'axis',
+										axisPointer: { // 坐标轴指示器，坐标轴触发有效
+											type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+										}
+									},
+									legend: {
+										data: ['激活量', '交易额', '月收益'],
+										right: '0',
+										top: '5%'
+									},
+									grid: {
+										left: '3%',
+										right: '4%',
+										bottom: '5%',
+										containLabel: true
+									},
+									xAxis: [{
+										name: "元",
+										type: 'value',
+										scale: true,
+										min: 0,
+										nameGap: 2,
+										nameLocation: 'end',
+										axisLabel: {
+											rotate: 45,
+											formatter: function(value, index) {
+												if(Math.floor(value) === value) {
+													if(value > 10000) {
+														return value / 10000 + "万";
+													} else {
+														return value;
+													}
+												} else {
+
+												}
+											}
+										}
+									}, {
+										name: "台",
+										type: 'value',
+										scale: true,
+										min: 0,
+										nameGap: 2,
+										nameLocation: 'end',
+										axisLabel: {
+											formatter: function(value, index) {
+												if(Math.floor(value) === value) {
+													return value
+												} else {
+
+												}
+											}
+										}
+									}],
+									yAxis: [{
+										type: 'category',
+										data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+									}],
+									series: [{
+											name: '激活量',
+											type: 'bar',
+											barWidth: 7,
+											xAxisIndex: 1,
+											data: data_activationNumber
+										},
+										{
+											name: '交易额',
+											type: 'bar',
+											barWidth: 7,
+											data: data_tradeMoney
+										},
+										{
+											name: '月收益',
+											type: 'bar',
+											barWidth: 7,
+											xAxisIndex: 0,
+											data: data_month
+										}
+									]
+								};
+
+								// 使用刚指定的配置项和数据显示图表。
+								myChart.setOption(option);
+								//							console.log(data_tradeMoney, data_month, data_activationNumber)
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>调拨详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">调拨详情</h1>
+			<!--<a href="barcode_scan.html" class="mui-icon right scan_link"><img class="scan" src="img/icon_scan.png" alt="" /></a>-->
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="message_title">
+				<span id="title_getCustomer_name"></span>
+				<span class="allocation">调拨</span>
+				<span id="title_owner_name"></span>
+			</div>
+
+			<div class="rate_title bold">代理信息</div>
+
+			<div class="library_content_name overflow p30">
+				<div class="p30 left">调拨人: <span id="title_getCustomer_name_01"></span></div>
+				<div class="p30 left">电话: <span id="title_getCustomer_phone"></span></div>
+			</div>
+
+			<div class="p30">
+				<div class="rate_title overflow">
+					<div class="left">地址：</div>
+					<div class="left" id="title_getCustomer_address"></div>
+				</div>
+			</div>
+
+			<div class="rate_title bold" style="padding-bottom: 0;">调拨台数:
+				<span id="allocation_number"></span> 台</div>
+
+			<div class="rate_title bold">调拨原因</div>
+
+			<div class="textarea1"><textarea id="allocation_reason" rows="2" placeholder="请输入调拨原因……" readonly="readonly"></textarea></div>
+
+			<div class="line"></div>
+
+			<div class="rate_title overflow">
+				<div class="left bold">机具信息</div>
+				<div class="right content_titile" id="scan_details">详情&nbsp;<img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>
+			</div>
+
+			<div class="collect_content overflow">
+				<div class="tools_type_box">
+					<!--<div>UNIS:3台<img class="icon" src="img/icon_danger.png" alt="" /></div>
+					<div>NIIER:1台<img class="icon" src="img/icon_select.png" alt="" /></div>
+					<div>ANS:2台<img class="icon" src="img/icon_danger.png" alt="" /></div>
+					<div>UNIS:3台<img class="icon" src="img/icon_select.png" alt="" /></div>-->
+				</div>
+				<!--<div>总计:&nbsp;&nbsp;<span class="font_blue" id=""></span>台</div>-->
+			</div>
+
+			<!--<div class="rate_title overflow">
+				<div class="left bold">扫码确认<span class="title_subtitle">(右上角扫码)</span></div>
+			</div>
+			<div class="scan_state">
+				<div class="danger collect_receive"><img class="head_icon" src="img/icon_danger1.png" alt="" />待接收<span>3</span>台机具</div>
+				<div class="font_blue collect_receive"><img class="head_icon" src="img/icon_tips_blue.png" alt="" />点击右上角扫码确认收货</div>
+				<div class="font_blue collect_receive"><img class="head_icon" src="img/icon_typecheck.png" alt="" />机具接收成功！</div>
+			</div>-->
+
+			<button type="button" class="btn_common_submit">一键接收</button>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/textarea.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back = function() {
+				location.href = "allocation_tools.html";
+			}
+			var key = getQueryString("key");
+			if(key == "look") {
+				//接收调拨--完成状态下-查看详情
+				$(".collect_content").nextAll().hide();
+			}
+			console.log(myStorage.getItem('allocation_recive'));
+
+			//机具码数组
+			var scan_toolcode = new Array;
+
+			//接收信息
+			$("#ownerId").val(customerId);
+			$("#title_owner_name").html(myStorage.getItem('Customer_info').name);
+			$("#title_getCustomer_name,#title_getCustomer_name_01").html(myStorage.getItem('allocation_recive')[0]);
+			//调拨信息
+			$("#allocation_number").html(myStorage.getItem('allocation_recive')[3]);
+			$("#title_getCustomer_phone").html(myStorage.getItem('allocation_recive')[1])
+			$("#title_getCustomer_address").html(myStorage.getItem('allocation_recive')[2])
+			if("" == myStorage.getItem('allocation_recive')[4]) {
+				$("#allocation_reason").html("无");
+			} else {
+				$("#allocation_reason").html(myStorage.getItem('allocation_recive')[4]);
+			}
+			//获取调拨机具信息
+			var allotId = myStorage.getItem('allocation_recive')[5];
+			//获取申请记录机具详情
+			if(allotId != null) {
+				mui.ajax(ajax_url + 'appCustomer/getAllotDetailByAllotId', {
+					data: {
+						id: allotId
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							//机具总数
+							var collect_content = '<div style="margin:8px 0;">总计:&nbsp;&nbsp;<span class="font_blue">' + data.obj.length + '台</span></div>';
+							$(".collect_content").append(collect_content);
+							//机具类型数组
+							var toolstype_num = 0;
+							var array_toolstype = new Array;
+							var array_toolstype_removal = "";
+							for(var i = 0; i < data.obj.length; i++) {
+								//机具类型数组（重复）
+								array_toolstype[toolstype_num] = data.obj[i].pos.posType.name;
+								toolstype_num++;
+							}
+							//机具类型数组（去重）
+							Array.prototype.distinct = function() {
+								var arr = this,
+									result = [],
+									j,
+									k,
+									len = arr.length;
+								for(j = 0; j < len; j++) {
+									for(k = j + 1; k < len; k++) {
+										if(arr[j] === arr[k]) {
+											k = ++j;
+										}
+									}
+									result.push(arr[j]);
+									array_toolstype_removal = result;
+								}
+								return result;
+							}
+							array_toolstype.distinct();
+							//拼接机具类型节点
+							for(var j = 0; j < array_toolstype_removal.length; j++) {
+								//该类型机具数量type_num；该类型已扫码机具type_scan_num
+								var type_num = 0;
+								for(var i = 0; i < data.obj.length; i++) {
+									scan_toolcode[i] = data.obj[i].id;
+									if(array_toolstype_removal[j] == data.obj[i].pos.posType.name) {
+										type_num++;
+									}
+								}
+								var tools_type_list = '<div>' + array_toolstype_removal[j] + '：' + type_num + '台<span class="icon right"><img class="img" src="img/icon_danger.png" alt="" /></span></div>';
+								$(".tools_type_box").append(tools_type_list);
+							}
+							if(data.obj[0].state == 2) {
+								$(".tools_type_box div span img").attr("src", "img/icon_select.png");
+
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			} else {
+				mui.toast("未获取到信息，请返回试试吧")
+			}
+
+			//textarea自适应高
+			var text = document.getElementById("allocation_reason");
+			autoTextarea(text);
+			//一键接收
+			mui('body').on('tap', '.btn_common_submit', function(e) {
+				var btnArray = ['返回', '确定'];
+				mui.confirm("点击确定后，此申请单包含所有机具将记入库存", '一键接收', btnArray, function(e) {
+					if(e.index == 1) {
+						//确认收货
+						mui.ajax(ajax_url + 'appCustomer/confirmAllotRecord', {
+							data: {
+								allotId: allotId,
+								allotDetailIdList: scan_toolcode.join(",")
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								if(true == data.success) {
+									location.href = "allocation_tools.html"
+								}
+								if(false == data.success) {
+									mui.toast(data.msg)
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								if(xhr.status != '0')
+									mui.toast('服务器走丢了')
+							}
+						});
+					} else {
+
+					}
+				});
+			});
+			//扫码
+			//			mui('body').on('tap', '.scan_link', function(e) {
+			//				location.href = "barcode_scan.html?key=allocation_recive&allotId=" + myStorage.getItem('allocation_recive')[5];
+			//			});
+			//机具详情
+			mui('#scan_details')[0].addEventListener('tap', function() {
+				location.href = "allocation_Tools_details.html?key=allocation_recive&allotId=" + myStorage.getItem('allocation_recive')[5];
+			});
+		</script>
+	</body>
+
+</html>

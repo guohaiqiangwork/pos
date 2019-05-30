@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			body {
+				background-color: #fff;
+			}
+			.adimg {
+				width: 100%;
+				margin-bottom: -6px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<img class="adimg" src=""/>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/custom.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				//手动关闭启动页
+				plus.navigator.closeSplashscreen();
+				//禁止横屏显示
+				plus.screen.lockOrientation("portrait-primary");
+
+				/**
+				 * 获取系统状态栏高度
+				 * http://www.html5plus.org/doc/zh_cn/navigator.html#plus.navigator.getStatusbarHeight
+				 */
+				var sh = plus.navigator.getStatusbarHeight();
+				/**
+				 * 获取设备屏幕高度分辨率以及宽度分辨率
+				 * http://www.html5plus.org/doc/zh_cn/device.html#plus.screen.resolutionHeight
+				 * http://www.html5plus.org/doc/zh_cn/device.html#plus.screen.resolutionWidth
+				 */
+				var h = plus.screen.resolutionHeight;
+				var w = plus.screen.resolutionWidth;
+				
+				var imgs = document.querySelectorAll(".adimg");
+				for(var i = 0, len = imgs.length; i < len; i++) {
+					imgs[i].style.width = w + "px";
+					imgs[i].style.paddingTop = sh + "px";
+				}
+				//广告页5秒后进入首页
+				plus.navigator.closeSplashscreen();
+			});
+			/**
+			 * 重写mui.back()，什么都不执行，反之用户返回到入口页；
+			 */
+			mui.back = function() {};
+			//获取广告图
+			mui.ajax(ajax_url + 'appCustomer/getAdvertisementList', {
+				data: {},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if(data.obj[0].httpurl!=""){
+						$(".adimg").attr("src",img_url+data.obj[0].imgUrl);
+						setTimeout(function(){
+							location.href="Nav_Index.html?ad=1"
+						},4000);
+						mui('body').on('tap', '.adimg', function(e) {
+							myStorage.setItem('ad_httpurl', data.obj[0].httpurl);
+							location.href = 'Nav_AD_details.html';
+						});
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+		</script>
+	</body>
+
+</html>

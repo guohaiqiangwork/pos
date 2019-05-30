@@ -1,0 +1,592 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>扫码</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.min.js"></script>
+		<style type="text/css">
+			html,
+			body,
+			div {
+				height: 100%;
+				width: 100%;
+			}
+			
+			body {
+				position: relative;
+			}
+			
+			#bcid {
+				width: 100%;
+				height: calc(100% - 108px);
+				position: absolute;
+				z-index: 1;
+				top: 64px;
+				bottom: 44px;
+			}
+			
+			footer,
+			header {
+				position: fixed;
+				z-index: 999999;
+				left: 0;
+				width: 100%;
+				height: 44px;
+				line-height: 44px;
+				text-align: center;
+				color: #FFF;
+				box-shadow: none!important;
+			}
+			
+			header {
+				top: 0;
+			}
+			
+			footer {
+				background: #000;
+				bottom: 0px;
+				box-shadow: none!important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #000;">
+			<a onclick="closeSm()" class="mui-icon mui-icon-left-nav mui-pull-left" style="color: #fff;"></a>
+		</header>
+
+		<div id="bcid">
+			<!--盛放扫描控件的div-->
+		</div>
+
+		<footer>
+			<!--当前扫码接件成功数量：<span id="scan_successnum">0</span>件-->
+		</footer>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+
+		<script type="text/javascript">
+			mui.init({});
+			mui.back = function() {
+				closeSm();
+			}
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarStyle('light');
+
+				setTimeout("startRecognize()", 0)
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+
+			var key = getQueryString("key");
+			console.log(key)
+
+			scan = null; //扫描对象   
+
+			function startRecognize() { //开启扫描  
+				try {
+					var filter;
+					//自定义的扫描控件样式    
+					var styles = {
+						frameColor: "#078ffe",
+						scanbarColor: "#078ffe",
+						background: "#000"
+					}
+					//扫描控件构造    
+					filter=[plus.barcode.CODE128,plus.barcode.QR]
+					scan = new plus.barcode.Barcode('bcid', filter, styles);
+					scan.onmarked = onmarked;
+					scan.onerror = onerror; //扫描错误  
+					scan.start();
+				} catch(e) {
+					mui.toast("出现错误啦:\n" + e)
+				}
+			};
+
+			function onerror(e) {
+				//错误弹框
+				alert(e);
+			};
+
+			function onmarked(type, result) {
+				//这个是扫描二维码的回调函数，type是扫描二维码回调的类型
+				var text = '';
+				switch(type) {
+					//QR,EAN13,EAN8都是二维码的一种编码格式,result是返回的结果
+					case plus.barcode.QR:
+						text = 'QR: ';
+						break;
+//					case plus.barcode.EAN13:
+//						text = 'EAN13: ';
+//						break;
+//					case plus.barcode.EAN8:
+//						text = 'EAN8: ';
+//						break;
+//					case plus.barcode.AZTEC:
+//						text = 'AZTEC: ';
+//						break;
+//					case plus.barcode.DATAMATRIX:
+//						text = 'DATAMATRIX: ';
+//						break;
+//					case plus.barcode.UPCA:
+//						text = 'UPCA: ';
+//						break;
+//					case plus.barcode.UPCE:
+//						text = 'UPCE: ';
+//						break;
+//					case plus.barcode.CODABAR:
+//						text = 'CODABAR: ';
+//						break;
+//					case plus.barcode.CODE39:
+//						text = 'CODE39: ';
+//						break;
+//					case plus.barcode.CODE93:
+//						text = 'CODE93: ';
+//						break;
+					case plus.barcode.CODE128:
+						text = 'CODE128: ';
+						break;
+//					case plus.barcode.ITF:
+//						text = 'ITF: ';
+//						break;
+//					case plus.barcode.MAXICODE:
+//						text = 'MAXICODE: ';
+//						break;
+//					case plus.barcode.PDF417:
+//						text = 'PDF417: ';
+//						break;
+//					case plus.barcode.RSS14:
+//						text = 'RSS14: ';
+//						break;
+//					case plus.barcode.RSSEXPANDED:
+//						text = 'RSSEXPANDED: ';
+//						break;
+				}　
+				//二维码结果
+				smresult(result);
+				console.log(result);
+				var applyrecordid = myStorage.getItem('applyrecordid');
+				console.log(applyrecordid);
+				if("receivetool" == key || "deliver_recive" == key) {
+					//收机具、退机具接收
+					var receivetool_recive_scan = "";
+					var receivetool_recive_scan_list = {
+						applyrecordid: applyrecordid,
+						scan_toolcode: []
+					}
+					mui.ajax(ajax_url + 'appCustomer/doInbound', {
+						data: {
+							code: result,
+							type: "appIn",
+							id: applyrecordid
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								console.log(myStorage.getItem('receivetool_recive_scan'))
+								if(null !== myStorage.getItem('receivetool_recive_scan')) {
+									if(myStorage.getItem('receivetool_recive_scan').length > 0) {
+										console.log(myStorage.getItem('receivetool_recive_scan').length)
+										receivetool_recive_scan = myStorage.getItem('receivetool_recive_scan');
+										console.log(receivetool_recive_scan)
+										mui.each(receivetool_recive_scan, function(index, item) {
+											if(applyrecordid == item.applyrecordid) {
+												var item_ = item;
+												var has_scancode = false;
+												mui.each(item.scan_toolcode, function(index, item) {
+													if(data.obj == item) {
+														console.log("has_applyrecordid+has_scancode")
+														has_scancode = true;
+														mui.alert(result, "此二维码已经扫过了", function() {
+															scan.close();
+															scan.start();
+															startRecognize()
+														});
+													}
+												})
+												if(!has_scancode) {
+													console.log("has_applyrecordid+nohas_scancode")
+													item_.scan_toolcode.push(data.obj);
+													mui.alert(result, '扫码成功', function() {
+														scan.close();
+														scan.start();
+														startRecognize()
+													});
+												}
+											} else {
+												console.log("no_applyrecordid")
+												receivetool_recive_scan_list.scan_toolcode.push(data.obj);
+												receivetool_recive_scan.push(receivetool_recive_scan_list);
+												mui.alert(result, '扫码成功', function() {
+													scan.close();
+													scan.start();
+													startRecognize()
+												});
+											}
+										});
+									} else {
+										console.log("first")
+										receivetool_recive_scan = new Array;
+										receivetool_recive_scan_list.scan_toolcode.push(data.obj);
+										receivetool_recive_scan.push(receivetool_recive_scan_list);
+										mui.alert(result, '扫码成功', function() {
+											scan.close();
+											scan.start();
+											startRecognize()
+										});
+									}
+								} else {
+									console.log("first")
+									receivetool_recive_scan = new Array;
+									receivetool_recive_scan_list.scan_toolcode.push(data.obj);
+									receivetool_recive_scan.push(receivetool_recive_scan_list);
+									mui.alert(result, '扫码成功', function() {
+										scan.close();
+										scan.start();
+										startRecognize()
+									});
+								}
+								myStorage.setItem('receivetool_recive_scan', receivetool_recive_scan);
+								console.log(myStorage.getItem('receivetool_recive_scan').length)
+							} else {
+								var scan_msg = "";
+								scan_msg = data.msg;
+								mui.alert(result, scan_msg, function() {
+									scan.close();
+									scan.start();
+									startRecognize()
+								});
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.toast("服务器走丢了，请稍后重试")
+						}
+					});
+				} else if("returntool" == key || "deliver_give" == key) {
+					mui.ajax(ajax_url + 'appCustomer/doDelivery', {
+						data: {
+							code: result,
+							id: applyrecordid
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								mui.alert(result, '扫码成功', function() {
+									scan.close();
+									scan.start();
+									startRecognize()
+								});
+							} else {
+								var scan_msg = "";
+								scan_msg = data.msg;
+								mui.alert(result, scan_msg, function() {
+									scan.close();
+									scan.start();
+									startRecognize()
+								});
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.toast("服务器走丢了，请稍后重试")
+						}
+					});
+				} else if("allocation_launch" == key) {
+					//发出调拨
+					var curr_getCustomerId = getQueryString("getCustomerId");
+					var allocation_recive_scan = "";
+					var allocation_recive_scan_list = {
+						getCustomerId: curr_getCustomerId,
+						scan_toolcode: []
+					}
+					mui.ajax(ajax_url + 'appCustomer/doAllotDelivery', {
+						data: {
+							code: result,
+							type: 1,
+							customerId: customerId
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								if(null !== myStorage.getItem('allocation_recive_scan')) {
+									if(myStorage.getItem('allocation_recive_scan').length > 0) {
+										console.log(myStorage.getItem('allocation_recive_scan').length)
+										allocation_recive_scan = myStorage.getItem('allocation_recive_scan');
+										console.log(allocation_recive_scan)
+										mui.each(allocation_recive_scan, function(index, item) {
+											if(curr_getCustomerId == item.getCustomerId) {
+												console.log("has_CustomerId")
+												var item_ = item;
+												var has_scancode = false;
+												mui.each(item.scan_toolcode, function(index, item) {
+													if(data.obj.id == item.split("-")[0]) {
+														has_scancode = true;
+														mui.alert(result, "此二维码已经扫过了，请换一个继续", function() {
+															scan.close();
+															scan.start();
+															startRecognize()
+														});
+													}
+												})
+												if(!has_scancode) {
+													item_.scan_toolcode.push(data.obj.id + "-" + data.obj.posType.name + "-" + data.obj.code);
+													mui.alert(result, '扫码成功', function() {
+														scan.close();
+														scan.start();
+														startRecognize()
+													});
+												}
+											} else {
+												console.log("no_CustomerId")
+												allocation_recive_scan_list.scan_toolcode.push(data.obj.id + "-" + data.obj.posType.name + "-" + data.obj.code);
+												allocation_recive_scan.push(allocation_recive_scan_list);
+												mui.alert(result, '扫码成功', function() {
+													scan.close();
+													scan.start();
+													startRecognize()
+												});
+											}
+										});
+									} else {
+										allocation_recive_scan = new Array;
+										allocation_recive_scan_list.scan_toolcode.push(data.obj.id + "-" + data.obj.posType.name + "-" + data.obj.code);
+										allocation_recive_scan.push(allocation_recive_scan_list);
+										mui.alert(result, '扫码成功', function() {
+											scan.close();
+											scan.start();
+											startRecognize()
+										});
+									}
+								} else {
+									console.log("first")
+									allocation_recive_scan = new Array;
+									allocation_recive_scan_list.scan_toolcode.push(data.obj.id + "-" + data.obj.posType.name + "-" + data.obj.code);
+									allocation_recive_scan.push(allocation_recive_scan_list);
+									mui.alert(result, '扫码成功', function() {
+										scan.close();
+										scan.start();
+										startRecognize()
+									});
+								}
+								myStorage.setItem('allocation_recive_scan', allocation_recive_scan);
+								console.log(myStorage.getItem('allocation_recive_scan').length)
+							} else {
+								var scan_msg = "";
+								if("pos_running" == data.msg) {
+									scan_msg = "该机具已经被扫码发货了，还未接收，不可以扫码发货";
+								} else if("pos_isActivate" == data.msg) {
+									scan_msg = "机具已经被激活了";
+								} else if("do_not_support_operation" == data.msg) {
+									scan_msg = "不受支持的操作类型";
+								} else if("pos_do_not_be_part_allot_record" == data.msg) {
+									scan_msg = "机具不属于这个调拨记录";
+								} else if("do_not_allow_get" == data.msg) {
+									scan_msg = "当前调拨记录状态不允许扫码收货了";
+								} else if("unknown_allot_record-" == data.msg) {
+									scan_msg = "未知的调拨记录";
+								} else if("pos_do_not_be_part_of_customer" == data.msg) {
+									scan_msg = "该机具不属于会员";
+								} else if("unknown_customer_info" == data.msg) {
+									scan_msg = "未知的会员信息";
+								} else if("unknown_pos_info" == data.msg) {
+									scan_msg = "机具信息不存在";
+								} else if("unknown_pos_code" == data.msg) {
+									scan_msg = "传入的机具编码是空的";
+								} else {
+									scan_msg = data.msg;
+								}
+								mui.alert(result, scan_msg, function() {
+									scan.close();
+									scan.start();
+									startRecognize()
+								});
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.toast("服务器走丢了，请稍后重试")
+						}
+					});
+				} else if("allocation_recive" == key) {
+					//接收调拨
+					var allotId = getQueryString("allotId");
+					var allocation_recive_scan_01 = "";
+					var allocation_recive_scan_list_01 = {
+						allotId: allotId,
+						scan_toolcode: []
+					}
+					mui.ajax(ajax_url + 'appCustomer/doAllotDelivery', {
+						data: {
+							code: result,
+							type: 2,
+							allotId: allotId
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								if(null !== myStorage.getItem('allocation_recive_scan_01')) {
+									if(myStorage.getItem('allocation_recive_scan_01').length > 0) {
+
+										console.log(myStorage.getItem('allocation_recive_scan_01').length)
+										allocation_recive_scan_01 = myStorage.getItem('allocation_recive_scan_01');
+										console.log(allocation_recive_scan_01)
+										mui.each(allocation_recive_scan_01, function(index, item) {
+											if(allotId == item.allotId) {
+												console.log("has_allotId")
+												var item_ = item;
+												var has_scancode = false;
+												mui.each(item.scan_toolcode, function(index, item) {
+													if(data.obj == item) {
+														has_scancode = true;
+														mui.alert(result, "此二维码已经扫过了", function() {
+															scan.close();
+															scan.start();
+															startRecognize()
+														});
+													}
+												})
+												if(!has_scancode) {
+													item.scan_toolcode.push(data.obj);
+													mui.alert(result, '扫码成功', function() {
+														scan.close();
+														scan.start();
+														startRecognize()
+													});
+												}
+											} else {
+												console.log("no_allotId")
+												allocation_recive_scan_list_01.scan_toolcode.push(data.obj);
+												allocation_recive_scan_01.push(allocation_recive_scan_list_01);
+												mui.alert(result, '扫码成功', function() {
+													scan.close();
+													scan.start();
+													startRecognize()
+												});
+											}
+										});
+									} else {
+										console.log("first")
+										allocation_recive_scan_01 = new Array;
+										allocation_recive_scan_list_01.scan_toolcode.push(data.obj);
+										allocation_recive_scan_01.push(allocation_recive_scan_list_01);
+										mui.alert(result, '扫码成功', function() {
+											scan.close();
+											scan.start();
+											startRecognize()
+										});
+									}
+								} else {
+									console.log("first")
+									allocation_recive_scan_01 = new Array;
+									allocation_recive_scan_list_01.scan_toolcode.push(data.obj);
+									allocation_recive_scan_01.push(allocation_recive_scan_list_01);
+									mui.alert(result, '扫码成功', function() {
+										scan.close();
+										scan.start();
+										startRecognize()
+									});
+								}
+								myStorage.setItem('allocation_recive_scan_01', allocation_recive_scan_01);
+								console.log(myStorage.getItem('allocation_recive_scan_01').length)
+							} else {
+								var scan_msg = "";
+								if("pos_running" == data.msg) {
+									scan_msg = "该机具已经被扫码发货了，还未接收，不可以扫码发货";
+								} else if("pos_isActivate" == data.msg) {
+									scan_msg = "机具已经被激活了";
+								} else if("do_not_support_operation" == data.msg) {
+									scan_msg = "不受支持的操作类型";
+								} else if("pos_do_not_be_part_allot_record" == data.msg) {
+									scan_msg = "机具不属于这个调拨记录";
+								} else if("do_not_allow_get" == data.msg) {
+									scan_msg = "当前调拨记录状态不允许扫码收货了";
+								} else if("unknown_allot_record-" == data.msg) {
+									scan_msg = "未知的调拨记录";
+								} else if("pos_do_not_be_part_of_customer" == data.msg) {
+									scan_msg = "该机具不属于会员";
+								} else if("unknown_customer_info" == data.msg) {
+									scan_msg = "未知的会员信息";
+								} else if("unknown_pos_info" == data.msg) {
+									scan_msg = "机具信息不存在";
+								} else if("unknown_pos_code" == data.msg) {
+									scan_msg = "传入的机具编码是空的";
+								} else {
+									scan_msg = data.msg;
+								}
+								mui.alert(result, scan_msg, function() {
+									scan.close();
+									scan.start();
+									startRecognize()
+								});
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.toast("服务器走丢了，请稍后重试")
+						}
+					});
+				}
+			};
+
+			//关闭扫码页面  
+			function closeSm() {
+				scan.close();
+				if(key == "receivetool") {
+					location.href = "Tools_receive.html";
+				} else if(key == "returntool") {
+					location.href = "return_apply.html?key=look";
+				} else if(key == "deliver_give") {
+					location.href = "deliver_goods.html";
+				} else if(key == "deliver_recive") {
+					location.href = "deliver_goods_detail.html";
+				} else if(key == "allocation_launch") {
+					location.href = "allocation_message.html";
+				} else if(key == "allocation_recive") {
+					location.href = "allocation_detail.html";
+				}
+			}
+
+			//结果处理  
+			function smresult(result) {
+				var type = localStorage.getItem("type");
+				if(type == "addfile") {
+					//添加档案扫码处理  
+					if(result) {
+						var str = '<li><input class="file-num" value="' + result + '" type="text"   /><i onclick="remove(this)">╳</i></li>'
+						var wn = plus.webview.currentWebview(); //获取当前窗口的WebviewObject对象，即B   
+						var wvA = wn.opener(); //获取当前窗口的创建者，即A    
+						wvA.evalJS("addNew('" + str + "')"); //执行父窗口中的方法  A中的addNew方法    
+						plus.webview.currentWebview().close(); //扫码成功，关闭当前webview  
+					} else {
+						scan.start();
+					}
+				} else if(type == "getgezi") {
+					//扫码格子获取格子信息  
+					alert("这是个格子扫码");
+					localStorage.setItem("ifFrist", "none"); //设置不是首次调用  
+				} else if(type == "sys") {
+					alert("这是个查询扫码");
+					scan.start();
+				}
+
+			}
+		</script>
+	</body>
+
+</html>

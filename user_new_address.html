@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>地址管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">地址管理 </h1>
+		</header>
+		<div class="mui-content bg_white">
+			<form id="user_new_address_form" class="user_form" action="" method="post">
+				<input id="address_edit_id" type="hidden" name="model.id" id="" value="" />
+				<input id="input_customer" type="hidden" name="model.customer.id" id="" value="" />
+				<div class="user_row_01">
+					<span class="title">收货人</span>
+					<input type="text" name="model.receiver" id="user_name" placeholder="请输入姓名" />
+				</div>
+				<div class="user_row_01">
+					<span class="title">手机号码</span>
+					<input type="text" name="model.phone" id="phone" placeholder="请输入手机号码" maxlength="11" />
+				</div>
+				<div id='showCityPicker3' class="user_row_01">
+					<span class="title">所在地区</span>
+					<input type="text" name="" id="cityResult3" placeholder="请选择所在地区" readonly="readonly" />
+					<span class="mui-icon mui-icon-arrowright row_enter"></span>
+				</div>
+				<input id="address_content" type="hidden" name="model.content" value="" />
+				<input id="address_isDefault" type="hidden" name="model.isDefault" value="2" />
+			</form>
+			<div class="user_row_01 border_none">
+				<span class="title">详细地址</span>
+				<input type="text" name="" id="address_details" placeholder="如道路、门牌号、小区、楼栋号、单元" />
+			</div>
+			<div class="grey_line"></div>
+			<div class="user_row_01 border_none" style="padding-top: 0.3rem;">
+				<span>设为默认地址</span>
+				<div id="address_switch" class="mui-switch mui-switch-mini">
+					<div class="mui-switch-handle"></div>
+				</div>
+			</div>
+			<button class="btn_common_submit">确定</button>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+
+		<script src="js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			var key = getQueryString("key"),
+				edit_user_info = "";
+				console.log(key)
+			//申请人ID
+			$("#input_customer").val(myStorage.getItem('Customer_info').id)
+			if(key=="edit"){
+				var edit_userinfo = myStorage.getItem('edit_userinfo');
+				$("#address_edit_id").val(edit_userinfo[0]);
+				$("#user_name").val(edit_userinfo[1]);
+				$("#phone").val(edit_userinfo[2]);
+				$("#cityResult3").val(edit_userinfo[3]);
+				$("#address_details").val(edit_userinfo[4]);
+				if(1==edit_userinfo[5]){
+					$("#address_switch").addClass("mui-active");
+					$("#address_isDefault").val("1");
+				}else{
+					$("#address_isDefault").val("2");
+				}
+			}else{
+				
+			}
+
+			//新增地址/修改地址
+			mui('.btn_common_submit')[0].addEventListener('tap', function() {
+				if(name_check() && phone_check() && address_check()) {
+					var formData = $('#user_new_address_form').serialize();
+					formData = decodeURIComponent(formData, true);
+					//					console.log(formData);
+					mui.ajax(ajax_url + 'appCustomer/submitAddress', {
+						data: formData,
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								mui.toast("设置地址成功~")
+								mui.ajax(ajax_url + 'appCustomer/getCustomer', {
+									data: {
+										customerId: myStorage.getItem('Customer_info').id,
+									},
+									dataType: 'json', //服务器返回json格式数据
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+										if("applytool"==key){
+												location.href = "Nav_Applytools.html"
+											}else{
+												location.href = "user_address.html"
+											}
+										if(true == data.success) {
+											var Customer_info = data.obj;
+											myStorage.setItem('Customer_info', Customer_info);
+										}
+										if(false == data.success) {
+											mui.toast(data.msg)
+										}
+									},
+									error: function(xhr, type, errorThrown) {
+										if("applytool"==key){
+											location.href = "Nav_Applytools.html"
+										}else{
+											location.href = "user_address.html"
+										}
+										if(xhr.status != '0')
+											mui.toast('服务器走丢了')
+									}
+								});
+							}
+							if(false == data.success) {
+								mui.toast(data.msg)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							if(xhr.status != '0')
+								mui.toast('服务器走丢了')
+						}
+					});
+				}
+			});
+			//地区选择
+			mui('#showCityPicker3')[0].addEventListener('tap', function() {
+				$('input').blur();
+			});
+			(function($_, doc) {
+				$_.init();
+				$_.ready(function() {
+					//地区级联选择
+					var showCityPickerButton = doc.getElementById('showCityPicker3');
+					var cityResult3 = doc.getElementById('cityResult3');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						$('input').blur();
+						var cityPicker3 = new $_.PopPicker({
+							layer: 3
+						});
+						cityPicker3.setData(cityData3);
+						cityPicker3.show(function(items) {
+							cityResult3.value = (items[0] || {}).text + (items[1] || {}).text + ((items[2] || {}).text ? (items[2] || {}).text : "");
+							//返回 false 可以阻止选择框的关闭
+							cityResult3.style.color = "#4c4c4c";
+							//return false;
+						});
+					}, false);
+
+				});
+			})(mui, document);
+			//地址验证
+			function address_check() {
+				if("" == cityResult3.value) {
+					mui.toast("请选择所在地区");
+					return false;
+				} else if("" == $("#address_details").val()) {
+					mui.toast("请填写详细地址");
+					return false;
+				} else {
+					$("#address_content").val(cityResult3.value + "-" + $("#address_details").val());
+					return true;
+				}
+			}
+			//地址是否默认
+			mui('#address_switch')[0].addEventListener('tap', function() {
+				if(true == $(this).hasClass("mui-active")) {
+					$("#address_isDefault").val("1");
+				} else {
+					$("#address_isDefault").val("2");
+				}
+			});
+		</script>
+	</body>
+
+</html>

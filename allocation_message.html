@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>调拨信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">调拨信息</h1>
+			<a href="barcode_scan.html" class="mui-icon right scan_link"><img class="scan" src="img/icon_scan.png" alt="" /></a>
+		</header>
+
+		<div class="mui-content bg_white">
+			<form id="allocation_form" action="" method="post">
+				<div class="message_title">
+					<span id="title_owner_name"></span>
+					<span class="allocation">调拨</span>
+					<span id="title_getCustomer_name"></span>
+				</div>
+				<input type="hidden" name="model.ownerId" id="ownerId" value="" />
+				<input type="hidden" name="model.ownerType" id="" value="4" />
+
+				<div class="rate_title bold">代理信息</div>
+				<div class="library_content_name overflow p30">
+					<input type="hidden" name="model.getCustomer.id" id="getCustomerId" value="" />
+					<div class="p30 left">接收人：<span id="getCustomer_name"></span></div>
+					<div class="p30 left">电话：<span id="getCustomer_phone"></span></div>
+				</div>
+
+				<div class="p30">
+					<div class="rate_title overflow">
+						<div class="left" style="width: 23%;">收货地址：</div>
+						<div class="left" style="width: 77%;" id="getCustomer_address"></div>
+					</div>
+				</div>
+
+				<div class="rate_title bold" style="padding-bottom: 0;">调拨台数：
+					<input id="allocation_number_show" type="text" readonly="readonly" placeholder="0" style="border: none;" /> 台
+					<input id="allocation_number" name="model.number" type="hidden" />
+				</div>
+
+				<div class="rate_title bold">调拨原因</div>
+
+				<div class="textarea1">
+					<textarea id="allocation_reason" name="model.reason" rows="2" placeholder="请输入调拨原因……"></textarea>
+				</div>
+
+				<div class="line"></div>
+
+				<div class="rate_title overflow">
+					<div class="left bold">扫码录入<span class="title_subtitle">(右上角扫码)</span></div>
+					<div class="right content_titile" id="scan_details">详情&nbsp;<img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>
+				</div>
+
+				<div class="collect_content overflow">
+					<div class="tools_type_box">
+						<!--<div>UNIS:3台</div>
+						<div>NIIER:1台</div>
+						<div>ANS:2台</div>
+						<div>UNIS:3台</div>-->
+					</div>
+					<!--<div>总计:&nbsp;&nbsp;<span class="font_blue">6台</span></div>-->
+				</div>
+			</form>
+
+			<div class="font_blue collect_receive">
+				<img class="head_icon" src="img/icon_tips_blue.png" alt="" />请扫入未激活的机具
+			</div>
+
+			<button type="button" class="btn_common_submit">确认</button>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/textarea.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back = function() {
+				location.href = "allocation_tools.html";
+			}
+			//textarea自适应高
+			var text = document.getElementById("allocation_reason");
+			autoTextarea(text);
+
+			//发起人信息
+			$("#ownerId").val(customerId);
+			$("#title_owner_name").html(myStorage.getItem('Customer_info').name);
+			$("#title_getCustomer_name").html(myStorage.getItem('allocation')[2]);
+
+			//接收人信息
+			$("#getCustomerId").val(myStorage.getItem('allocation')[1]);
+			$("#getCustomer_name").html(myStorage.getItem('allocation')[2]);
+			$("#getCustomer_phone").html(myStorage.getItem('allocation')[3]);
+			$("#getCustomer_address").html(myStorage.getItem('allocation')[4]);
+			var getCustomerId = myStorage.getItem('allocation')[1];
+			var removeindex = "";
+			//			console.log(myStorage.getItem('allocation_recive_scan').length)
+			//是否有扫码机具
+			var toolstype_num = 0;
+			var array_toolstype = new Array;
+			var array_toolstype_removal = "";
+			if(null !== myStorage.getItem('allocation_recive_scan')) {
+				allocation_recive_scan = myStorage.getItem('allocation_recive_scan');
+				mui.each(allocation_recive_scan, function(index, item) {
+					if(getCustomerId == item.getCustomerId) {
+						removeindex = index;
+						var k = 0;
+						mui.each(item.scan_toolcode, function(index, item) {
+							var tools_type_list_input = '<input type="hidden" name="model.allotDetailList[' + k + '].pos.id" value="' + item.split("-")[0] + '" />';
+							$(".tools_type_box").append(tools_type_list_input);
+							//机具类型数组（重复）
+							array_toolstype[k] = item.split("-")[1];
+							k++;
+						});
+						$("#allocation_number_show,#allocation_number").val(k)
+					}
+				});
+				//机具类型数组（去重）
+				Array.prototype.distinct = function() {
+					var arr = this,
+						result = [],
+						j,
+						k,
+						len = arr.length;
+					for(j = 0; j < len; j++) {
+						for(k = j + 1; k < len; k++) {
+							if(arr[j] === arr[k]) {
+								k = ++j;
+							}
+						}
+						result.push(arr[j]);
+						array_toolstype_removal = result;
+					}
+					return result;
+				}
+				array_toolstype.distinct();
+				console.log(array_toolstype_removal)
+				//拼接机具类型节点
+				for(var j = 0; j < array_toolstype_removal.length; j++) {
+					//该类型机具数量type_num；该类型已扫码机具type_scan_num
+					var type_num = 0,
+						type_scan_num = 0;
+					for(var i = 0; i < array_toolstype.length; i++) {
+						if(array_toolstype_removal[j] == array_toolstype[i]) {
+							type_num++;
+						}
+					}
+					var tools_type_list = '<div>' + array_toolstype_removal[j] + '：' + type_num + '台</div>';
+					$(".tools_type_box").append(tools_type_list);
+				}
+			} else {
+				$(".collect_receive").show();
+				$(".btn_common_submit").addClass("disabled");
+			}
+
+			//扫码
+			mui('body').on('tap', '.scan_link', function(e) {
+				location.href = "barcode_scan.html?key=allocation_launch&getCustomerId=" + myStorage.getItem('allocation')[1];
+			});
+			//机具详情
+			mui('#scan_details')[0].addEventListener('tap', function() {
+				location.href = "allocation_Tools_details.html?key=allocation_launch&getCustomerId=" + myStorage.getItem('allocation')[1];
+			});
+
+			//确认发起调拨
+			if(!$(".btn_common_submit").hasClass("disabled")) {
+				mui('.btn_common_submit')[0].addEventListener('tap', function() {
+					if($("#allocation_number").val() == "") {
+						mui.toast("请点击右上角扫码录入机具")
+					} else {
+						var formData = $('#allocation_form').serialize();
+						formData = decodeURIComponent(formData, true);
+						console.log(formData)
+						mui.ajax(ajax_url + 'appCustomer/doAllot', {
+							data: formData,
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								if(true == data.success) {
+									mui.toast("发出调拨成功")
+									//清除该条调拨机具缓存
+									var array_car = new Array;
+									array_car = myStorage.getItem('allocation_recive_scan')
+									array_car.splice(removeindex, 1)
+									myStorage.setItem('allocation_recive_scan', array_car);
+									mui.back();
+								}
+								if(false == data.success) {
+									if(data.msg == "pos_info_empty") {
+										mui.toast("请扫码录入要调拨的机具信息")
+									} else {
+										mui.toast(data.msg)
+									}
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								if(xhr.status != '0')
+									mui.toast('服务器走丢了')
+							}
+						});
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

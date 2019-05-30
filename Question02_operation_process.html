@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>操作流程</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">操作流程 </h1>
+		</header>
+
+		<div class="mui-content bg_white p30 font30">
+			<div class="bold pt25">操作流程</div>
+
+			<div class="overflow">
+				<div class="process_num">1</div>
+				<div class="process_content">
+					<div>登陆客户端→点击“我的”→点击“冻结”</div>
+				</div>
+			</div>
+			
+			<div class="transaction_overrun_img">
+				<img class="transaction_img" src="img/img_operation_process1.jpg" alt="" />
+			</div>
+			
+			<div class="overflow">
+				<div class="process_num">2</div>
+				<div class="process_content">
+					<div>仔细阅读“解冻说明”后点击“开始解冻”解冻说明：需验证一张银行卡并操作人脸识别</div>
+				</div>
+			</div>
+			
+			<div class="transaction_overrun_img">
+				<img class="transaction_img" src="img/img_operation_process2.jpg" alt="" />
+			</div>
+			
+			<div class="overflow">
+				<div class="process_num">3</div>
+				<div class="process_content">
+					<div>验证银行卡信息
+						<div class="mt25">a银行卡号由系统自动跳转，无需手动输入</div>
+						<div>b需填写真实有效的持卡人信息（姓名、身份证号码、银行预留手机号及验证码）</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="transaction_overrun_img">
+				<img class="transaction_img" src="img/img_operation_process3.jpg" alt="" />
+			</div>
+			
+			<div class="overflow">
+				<div class="process_num">4</div>
+				<div class="process_content">
+					<div>人脸识别</div>
+				</div>
+			</div>
+			
+			<div class="transaction_overrun_img">
+				<img class="transaction_img" src="img/img_operation_process4.jpg" alt="" />
+			</div>
+			
+			<div class="overflow">
+				<div class="process_num">5</div>
+				<div class="process_content">
+					<div>解冻成功后，商户状态即时恢复“正常”</div>
+				</div>
+			</div>
+			
+			<div class="transaction_overrun_img">
+				<img class="transaction_img" src="img/img_operation_process5.jpg" alt="" />
+			</div>
+		</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色
+			plus.navigator.setStatusBarBackground('#078ffe');
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+	</script>
+
+</html>

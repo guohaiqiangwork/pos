@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的银行卡</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white bg_bankcard_list">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的银行卡 </h1>
+			<a href="bank_card_add.html" class="mui-icon mui-icon-plusempty mui-pull-right add_bankcard" style="font-size: 0.64rem;"></a>
+		</header>
+		<div class="mui-content bg_white">
+			<!--暂无银行卡-->
+			<div class="list-none">
+				<img class="icon_none_lead" src="img/icon_none_lead.png" />
+				<div class="fonts">点击这里添加银行卡</div>
+				<img class="icon_none" src="img/icon_none_address.png">
+				<div class="fonts">空空如也</div>
+			</div>
+			<ul class="bankcard_lists">
+				<!--<li class="bankcard_list">
+					<img class="icon_bank_card" src="img/icon_bank_card_personal.png" />
+					<p class="bank_name">中国银行</p>
+					<p class="bank_card_num">****&nbsp;****&nbsp;****&nbsp;1477</p>
+					<button class="btn_bank_Unbind">解除绑定</button>
+				</li>
+				<li class="bankcard_list">
+					<img class="icon_bank_card" src="img/icon_bank_card_company.png" />
+					<p class="bank_name">中国建设银行</p>
+					<p class="bank_card_num">****&nbsp;****&nbsp;****&nbsp;1477</p>
+					<button class="btn_bank_Unbind">解除绑定</button>
+				</li>-->
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarStyle('dark');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//获取用户信息
+			mui.ajax(ajax_url + 'appCustomer/getCustomer', {
+				data: {
+					customerId: customerId
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if(true == data.success) {
+						var Customer_info = data.obj;
+						myStorage.setItem('Customer_info', Customer_info);
+						//银行卡列表获取
+						if(0 == Customer_info.bankCardList.length) {
+							$(".list-none").show();
+						} else {
+							$(".list-none").hide();
+							for(var i = 0; i < Customer_info.bankCardList.length; i++) {
+								var bankcode = Customer_info.bankCardList[i].code;
+								var bankcode_first = bankcode.substr(0,4);
+								var bankcode_last = bankcode.substr(bankcode.length-4);
+								var bankcard_list = '<li class="bankcard_list">' +
+									'<img class="icon_bank_card" src="img/icon_bank_card_personal.png" />' +
+									'<p class="bank_name">'+Customer_info.bankCardList[i].bankName+'</p>' +
+									'<p class="bank_card_num">'+bankcode_first+'&nbsp;****&nbsp;****&nbsp;****&nbsp;'+bankcode_last+'</p>' +
+									'<button class="btn_bank_Unbind" data-id="'+Customer_info.bankCardList[i].id+'">解除绑定</button>' +
+									'</li>';
+								$(".bankcard_lists").append(bankcard_list);
+							}
+						}
+					}
+					if(false == data.success) {
+						mui.toast(data.msg)
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+
+			//添加银行卡
+			mui('body').on('tap', '.add_bankcard', function(e) {
+				var isSetPayPassword=myStorage.getItem('Customer_info').isSetPayPassword;
+				var url = this.href;
+				if(!isSetPayPassword){
+					var btnArray = ['取消', '设置'];
+					mui.confirm("绑定银行卡前请先设置提现密码", " ", btnArray, function(e) {
+						if(e.index == 1) {
+							location.href = "user_pay_password.html"
+						} else {
+
+						}
+					});
+				}else{
+					location.href = url;
+				}
+			});
+			//解绑银行卡
+			mui('body').on('tap', '.btn_bank_Unbind', function(e) {
+				var id = this.dataset.id;
+				location.href = "user_pay_password.html?key=untieBankCard&id="+id;
+			});
+			
+			mui.back = function(){
+				var user_type = myStorage.getItem('Customer_info').type;
+				if(1 == user_type) {
+					location.href = "Nav_Personalcenter_Partners.html";
+				} else if(2 == user_type || 3 == user_type) {
+					location.href = "Nav_Personalcenter_Agent.html";
+				} 
+			}
+		</script>
+	</body>
+
+</html>

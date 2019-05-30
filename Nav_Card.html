@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>信用卡办理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.tail_icon {
+				width: .35rem;
+				height: .31rem;
+				margin-top: 0.3rem;
+			}
+			
+			.icon_bank_img {
+				width: 0.96rem;
+			}
+			
+			.bank_name {
+				color: #4c4c4c;
+				margin: 0 10px;
+				line-height: 0.96rem;
+				font-size: 1em;
+			}
+			
+			.mui-content {
+				background: rgba(255, 255, 255, 0);
+			}
+			
+			.help_content:nth-child(1) {
+				position: relative;
+				z-index: 3;
+				background: #fff;
+				margin-top: -0.6rem;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white help_center">
+		<header class="mui-bar mui-bar-header" style="background: #000;">
+			<p style="text-align: center;font-size:1.2em;line-height:2em;color: #fff;">信用卡办理</p>
+		</header>
+		<img style="width: 100%;margin-top: 20px;" src="img/card_banner.png" />
+		<div class="mui-content bg_white">
+			<div class="overflow help_content" data-url="https://creditcard.ecitic.com/h5/shenqing/index.html?sid=SJW0000375#/home/popularity">
+				<img class="left icon_bank_img" src="img/icon_bank_01.png" alt="" />
+				<div class="left bank_name">中信银行</div>
+				<div class="right"><img class="tail_icon" src="img/icon_enterblue.png" alt="" /></div>
+			</div>
+			<div class="overflow help_content" data-url="https://xyk.cebbank.com/cebmms/apply/ps/card-list.htm?pro_code=FHTG067633SA1458HEZZ">
+				<img class="left icon_bank_img" src="img/icon_bank_02.png" alt="" />
+				<div class="left bank_name">光大银行</div>
+				<div class="right"><img class="tail_icon" src="img/icon_enterblue.png" alt="" /></div>
+			</div>
+			<div class="overflow help_content" data-url="https://ccc.xinyan.com/recommendCard?mchtId=8150727116">
+				<img class="left icon_bank_img" src="img/icon_bank_03.png" alt="" />
+				<div class="left bank_name">民生银行</div>
+				<div class="right"><img class="tail_icon" src="img/icon_enterblue.png" alt="" /></div>
+			</div>
+			<div class="overflow help_content" data-url="https://ccc.xinyan.com/recommendCard?mchtId=8150727116">
+				<img class="left icon_bank_img" src="img/icon_bank_04.png" alt="" />
+				<div class="left bank_name">兴业银行</div>
+				<div class="right"><img class="tail_icon" src="img/icon_enterblue.png" alt="" /></div>
+			</div>
+			<div class="overflow help_content" data-url="https://ccc.xinyan.com/recommendCard?mchtId=8150727116">
+				<img class="left icon_bank_img" src="img/icon_bank_05.png" alt="" />
+				<div class="left bank_name">浦发银行</div>
+				<div class="right"><img class="tail_icon" src="img/icon_enterblue.png" alt="" /></div>
+			</div>
+
+		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item tab" href="Nav_Index.html?ad=1">
+				<span class="mui-icon"><img src="img/icon_index.png"/></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item tab" href="Nav_Applytools.html" data-name="Nav_Applytools">
+				<span class="mui-icon"><img src="img/icon_apply.png"/></span>
+				<span class="mui-tab-label">申请机具</span>
+			</a>
+			<a class="mui-tab-item tab " href="Nav_Card.html">
+				<span class="mui-icon"><img src="img/icon_card_active.png"/></span>
+				<span class="mui-tab-label">信用卡办理</span>
+			</a>
+			<!--<a class="mui-tab-item tab" href="Nav_Help.html">
+				<span class="mui-icon"><img src="img/icon_help.png"/></span>
+				<span class="mui-tab-label">帮助中心</span>
+			</a>-->
+			<a class="mui-tab-item tab" href="" data-name="Nav_Personalcenter">
+				<span class="mui-icon"><img src="img/icon_user.png"/></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		/**
+		 * 重写mui.back()，一秒内连续点击两次，退出应用，仅安卓有效；
+		 */
+		var first = null;
+		mui.back = function() {
+			if(!first) {
+				first = new Date().getTime();
+				/**
+				 * 自动消失提示信息
+				 * http://www.html5plus.org/doc/zh_cn/nativeui.html#plus.nativeUI.toast
+				 */
+				plus.nativeUI.toast("再按一次退出应用");
+				setTimeout(function() {
+					first = null;
+				}, 1000);
+			} else {
+				if(new Date().getTime() - first < 1000) {
+					/**
+					 * 退出应用，仅安卓有效；
+					 * http://www.html5plus.org/doc/zh_cn/runtime.html#plus.runtime.quit
+					 */
+					plus.runtime.quit();
+				}
+			}
+		};
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色，颜色
+			plus.navigator.setStatusBarBackground('#000');
+			plus.navigator.setStatusBarStyle('light');
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		//信用卡链接
+		if(customerId==null){
+			customerId="";
+		}
+		mui('body').on('tap', '.help_content', function() {
+			var url = this.dataset.url;
+			var bankname=$(this).children(".bank_name").text();
+			mui.ajax(ajax_url + 'appCustomer/submitCardUrlClick', {
+				data: {
+					'model.customer.id': customerId,
+					'model.bankName': bankname
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					console.log(data)
+					if(true == data.success) {
+						myStorage.setItem('card_httpurl', url);
+						location.href = 'nav_Card_details.html';
+					}
+					if(false == data.success) {
+						mui.toast(data.msg)
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					//					myStorage.clear();
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+		});
+	</script>
+
+</html>

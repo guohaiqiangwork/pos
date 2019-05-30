@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>设置闪电宝费率</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">设置闪电宝费率 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div id="first_hide" style="display: none;" class="library_content_date font_blue bg_gray p30"><img class="head_icon" src="img/icon_tips_blue.png" alt="" />修改费率后24小时生效！</div>
+
+			<div id="user_info" class="rate_title"></div>
+
+			<div class="line"></div>
+			<!--设置费率表单-->
+			<form id="setrate_form" action="">
+				<input id="input_customer" type="hidden" name="model.id" id="" value="" />
+
+				<div class="my_profit">
+					<div class="my_profit_title">
+						<div class="mark_pay"><img class="img" src="img/icon_profit_vip1.png" alt="" /></div>
+						<div class="my_profit_pay_name">VIP刷卡</div>
+					</div>
+
+					<div class="my_profit_list">
+						<div class="library_content_name">分润：<input id="vip_scan_ratio" name="model.vip_scan_ratio" type="text" placeholder="请输入" value="" />%</div>
+						<div class="library_content_name left">激活费：<input id="vip_scan_activate" name="model.vip_scan_activate" type="text" placeholder="请输入" value="" /></div>
+					</div>
+				</div>
+				<div class="my_profit">
+					<div class="my_profit_title">
+						<div class="mark_pay"><img class="img" src="img/icon_profit_vip.png" alt="" /></div>
+						<div class="my_profit_pay_name">VIP云闪付</div>
+					</div>
+
+					<div class="my_profit_list">
+						<div class="library_content_name">分润：<input id="vip_cloud_ratio" name="model.vip_cloud_ratio" type="text" placeholder="请输入" value="" />%</div>
+						<div class="library_content_name left">激活费：<input id="vip_cloud_activate" name="model.vip_cloud_activate" type="text" placeholder="请输入" value="" /></div>
+					</div>
+				</div>
+				<div class="my_profit">
+					<div class="my_profit_title">
+						<div class="mark_pay"><img class="img" src="img/icon_profit_cloud.png" alt="" /></div>
+						<div class="my_profit_pay_name">云闪付</div>
+					</div>
+
+					<div class="my_profit_list">
+						<div class="library_content_name">分润：<input id="cloudRatio" name="model.cloudRatio" type="text" placeholder="请输入" />%</div>
+						<div class="library_content_name">激活费：<input id="cloudActivate" name="model.cloudActivate" type="text" placeholder="请输入" /></div>
+						<!--<div class="library_content_name">秒到费：<input id="cloudSecond" name="model.cloudSecond" type="text" placeholder="请输入" /></div>-->
+					</div>
+				</div>
+				<div class="my_profit">
+					<div class="my_profit_title">
+						<div class="mark_pay"><img class="img" src="img/icon_profit_card.png" alt="" /></div>
+						<div class="my_profit_pay_name">刷卡支付</div>
+					</div>
+
+					<div class="my_profit_list">
+						<div class="library_content_name">分润：<input id="scanRatio" name="model.scanRatio" type="text" placeholder="请输入" />%</div>
+						<div class="library_content_name">激活费：<input id="scanActivate" name="model.scanActivate" type="text" placeholder="请输入" /></div>
+						<div class="library_content_name">秒到费：<input id="scanSecond" name="model.scanSecond" type="text" placeholder="请输入" /></div>
+					</div>
+				</div>
+			</form>
+			<!--<div class="my_profit">
+				<div class="my_profit_title">
+					<div class="mark_pay"><img class="img" src="img/icon_profit_quick.png" alt="" /></div>
+					<div class="my_profit_pay_name">快捷支付</div>
+				</div> 
+
+				<div class="my_profit_list">
+					<div class="library_content_name">分润：<input type="text" placeholder="请输入" /></div>
+					<div class="library_content_name">激活费：<input type="text" placeholder="请输入" /></div>
+					<div class="library_content_name">秒到费：<input type="text" placeholder="请输入" /></div>
+				</div>
+			</div>-->
+			<button type="button" class="btn_common_submit">提交</button>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.back = function() {
+				location.href = "Personalcenter_myagent.html"
+			}
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//获取设置用户信息
+			var user_info_setrate = myStorage.getItem('user_info_setrate');
+			$("#user_info").html(user_info_setrate[1] + "<span style='margin-left: 30px;'>" + user_info_setrate[2] + "</span>")
+			$("#input_customer").val(user_info_setrate[0]);
+
+			if(customerId != null) {
+				mui.ajax(ajax_url + 'appCustomer/getCustomer', {
+					data: {
+						customerId: customerId,
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							var Customer_info = data.obj;
+							myStorage.setItem('Customer_info', Customer_info);
+							//查询是否有设置费率
+							var customerList = myStorage.getItem('Customer_info').customerList;
+							for(var i = 0; i < customerList.length; i++) {
+								if(customerList[i].id == user_info_setrate[0]) {
+									if(customerList[i].scanActivate != null) {
+										//已经设置过费率
+										$("#first_hide").show();
+										$("#vip_scan_ratio").val(customerList[i].vip_scan_ratio);
+										$("#vip_scan_activate").val(customerList[i].vip_scan_activate);
+										$("#vip_cloud_ratio").val(customerList[i].vip_cloud_ratio);
+										$("#vip_cloud_activate").val(customerList[i].vip_cloud_activate);
+										$("#cloudRatio").val(customerList[i].cloudRatio);
+										$("#cloudActivate").val(customerList[i].cloudActivate);
+										//$("#cloudSecond").val(customerList[i].cloudSecond);
+										$("#scanRatio").val(customerList[i].scanRatio);
+										$("#scanActivate").val(customerList[i].scanActivate);
+										$("#scanSecond").val(customerList[i].scanSecond);
+									}
+								}
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+				console.log(myStorage.getItem('Customer_info'))
+			}
+
+			//设置费率提交
+			mui('.btn_common_submit')[0].addEventListener('tap', function() {
+				for(var i = 0; i < $("input").length; i++) {
+					if($("input").eq(i).val() == "" || $("input").eq(i).val() == null) {
+						mui.toast("请设置全部费率后再提交");
+						return false;
+					}
+				}
+
+				var vip_scan_ratio = $("#vip_scan_ratio").val().trim(),
+					vip_scan_activate = $("#vip_scan_activate").val().trim(),
+					vip_cloud_ratio = $("#vip_cloud_ratio").val().trim(),
+					vip_cloud_activate = $("#vip_cloud_activate").val().trim(),
+					cloudRatio = $("#cloudRatio").val().trim(),
+					cloudActivate = $("#cloudActivate").val().trim(),
+					scanRatio = $("#scanRatio").val().trim(),
+					scanActivate = $("#scanActivate").val().trim(),
+					scanSecond = $("#scanSecond").val().trim();
+
+				//--------------------------------各费率、激活费、秒到费格式校验--start--------------------------------
+				if(!check_rate(vip_scan_ratio, "VIP刷卡分润格式不正确，参考格式：16.88", radio_reg))
+					return false;
+				if(!check_rate(vip_scan_activate, "VIP刷卡激活费格式不正确，参考格式：168.88", money_reg))
+					return false;
+				if(!check_rate(vip_cloud_ratio, "VIP云闪付分润格式不正确，参考格式：16.88", radio_reg))
+					return false;
+				if(!check_rate(vip_cloud_activate, "VIP云闪付激活费格式不正确，参考格式：168.88", money_reg))
+					return false;
+				if(!check_rate(cloudRatio, "云闪付分润格式不正确，参考格式：16.88", radio_reg))
+					return false;
+				if(!check_rate(cloudActivate, "云闪付激活费格式不正确，参考格式：168.88", money_reg))
+					return false;
+				if(!check_rate(scanRatio, "刷卡分润格式不正确，参考格式：16.88", radio_reg))
+					return false;
+				if(!check_rate(scanActivate, "刷卡激活费格式不正确，参考格式：168.88", money_reg))
+					return false;
+				if(!check_rate(scanSecond, "刷卡秒到费格式不正确，参考格式：168.88", money_reg))
+					return false;
+				//--------------------------------各费率、激活费、秒到费格式校验--end----------------------------------
+
+				//--------------------------------各费率取值范围校验--start--------------------------------
+				var Customer_info = myStorage.getItem('Customer_info');
+				if(!check_ratio_number(vip_scan_ratio, '0.65', '0.505', Customer_info.vip_scan_ratio, 'VIP刷卡分润'))
+					return false;
+				if(!check_ratio_number(vip_cloud_ratio, '0.38', '0.3', Customer_info.vip_cloud_ratio, 'VIP云闪付分润'))
+					return false;
+				if(!check_ratio_number(cloudRatio, '0.38', '0.3', Customer_info.cloudRatio, '云闪付分润'))
+					return false;
+				if(!check_ratio_number(scanRatio, '0.63', '0.505', Customer_info.scanRatio, '刷卡分润'))
+					return false;
+				//--------------------------------各费率取值范围校验--end----------------------------------
+
+				//--------------------------------各激活费取值范围校验--start--------------------------------
+				if(!check_activate_number(vip_scan_activate, '300', Customer_info.vip_scan_activate, 'VIP刷卡激活费'))
+					return false;
+				if(!check_activate_number(vip_cloud_activate, '300', Customer_info.vip_cloud_activate, 'VIP云闪付激活费'))
+					return false;
+				if(!check_activate_number(cloudActivate, '300', Customer_info.cloudActivate, '云闪付激活费'))
+					return false;
+				if(!check_activate_number(scanActivate, '300', Customer_info.scanActivate, '刷卡激活费'))
+					return false;
+				//--------------------------------各激活费取值范围校验--end----------------------------------
+
+				//--------------------------------各秒到费取值范围校验--start--------------------------------
+				if(!check_second_number(scanSecond, "3", '0.8', Customer_info.scanSecond, "刷卡秒到费"))
+					return false;
+				//--------------------------------各秒到费取值范围校验--end----------------------------------
+
+				var formData = $('#setrate_form').serialize();
+				console.log(formData)
+				mui.ajax(ajax_url + 'appCustomer/getRateIsLegal', {
+					data: formData,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						console.log(data.obj)
+						if(true == data.success) {
+							//  可以直接设置
+							submit_form();
+						}
+						if(false == data.success) {
+							if("need_alert" == data.msg) {
+								// 需确认是否修改
+								var btnArray = ['取消', '确认设置'];
+								mui.confirm(data.obj, '设置确认', btnArray, function(e) {
+									if(1 == e.index) {
+										submit_form();
+									} else {
+
+									}
+								});
+							} else {
+								mui.toast(data.msg)
+							}
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			});
+
+			function submit_form() {
+				var formData = $('#setrate_form').serialize();
+				mui.ajax(ajax_url + 'appCustomer/setRate', {
+					data: formData,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						console.log(data.obj)
+						if(true == data.success) {
+							mui.toast("设置费率成功");
+							setTimeout(function() {
+								location.href = "Personalcenter_myagent.html"
+							}, 500);
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+			/**
+			 * 分润比例正则
+			 */
+			var radio_reg = /^(([1-9][0-9]{0,1})(\.{1}[0-9]{1,4}){0,1}|([0-9]{1}\.{1}[0-9]{1,4})|0|100)$/;
+			/**
+			 * 激活费、秒到费正则
+			 */
+			var money_reg = /^(([1-9][0-9]{0,7})(\.{1}[0-9]{1,2}){0,1}|([0-9]{1}\.{1}[0-9]{0,1}[1-9])|([0-9]{1}\.{1}[1-9][0-9]{0,1})|0|0.0|0.00)$/;
+			/**
+			 * 格式验证（各激活费、秒到费、分润比例）
+			 * @author 闫枫
+			 * @param {Object} rate_value
+			 * @param {Object} rate_name
+			 * @param {Object} rate_reg
+			 * @date 2018-09-30
+			 * @return boolean(true代表验证通过，否则为验证不通过)
+			 */
+			function check_rate(rate_value, rate_alert_string, rate_reg) {
+				if("" == rate_value || "" == rate_alert_string || "" == rate_reg)
+					return false;
+				if(!rate_reg.test(rate_value)) {
+					mui.toast(rate_alert_string);
+					return false;
+				}
+				return true;
+			}
+			/**
+			 * 分润比例取值范围验证
+			 * @author 闫枫
+			 * @param {Object} rate_value 待验证值
+			 * @param {Object} max_ratio 最大值
+			 * @param {Object} min_ratio 最小值
+			 * @param {Object} my_ratio 本人的值
+			 * @param {Object} rate_alert_string_start 验证项
+			 * @date 2018-10-10
+			 * @return boolean(true代表验证通过，否则为验证不通过)
+			 */
+			function check_ratio_number(rate_value, max_ratio, min_ratio, my_ratio, rate_alert_string_start) {
+				if("" == rate_value || "" == max_ratio || "" == min_ratio || "" == my_ratio || "" == rate_alert_string_start)
+					return false;
+				rate_value = parseFloat(rate_value);
+				max_ratio = parseFloat(max_ratio);
+				min_ratio = parseFloat(min_ratio);
+				my_ratio = parseFloat(my_ratio);
+
+				if(rate_value < min_ratio) {
+					mui.toast(rate_alert_string_start + "不能小于最低值" + min_ratio);
+					return false;
+				}
+				if(rate_value > max_ratio) {
+					mui.toast(rate_alert_string_start + "不能大于最高值" + max_ratio);
+					return false;
+				}
+				if(rate_value < my_ratio) {
+					mui.toast(rate_alert_string_start + "不能小于你自己的费率" + my_ratio);
+					return false;
+				}
+				return true;
+			}
+			/**
+			 * 激活费取值范围验证
+			 * @author 闫枫
+			 * @param {Object} rate_value 待验证值
+			 * @param {Object} max_activate 最大值
+			 * @param {Object} my_activate 本人的值
+			 * @param {Object} rate_alert_string_start 验证项
+			 * @date 2018-10-10
+			 * @return boolean(true代表验证通过，否则为验证不通过)
+			 */
+			function check_activate_number(rate_value, max_activate, my_activate, rate_alert_string_start) {
+				if("" == rate_value || "" == max_activate || "" == my_activate || "" == rate_alert_string_start)
+					return false;
+				rate_value = parseFloat(rate_value);
+				max_activate = parseFloat(max_activate);
+				my_activate = parseFloat(my_activate);
+
+				if(rate_value > max_activate) {
+					mui.toast(rate_alert_string_start + "不能大于最高值" + max_activate);
+					return false;
+				}
+				if(rate_value > my_activate) {
+					mui.toast(rate_alert_string_start + "不能大于你自己的激活费" + my_activate);
+					return false;
+				}
+				return true;
+			}
+			/**
+			 * 秒到费取值范围验证
+			 * @author 闫枫
+			 * @param {Object} rate_value 待验证值
+			 * @param {Object} max_second 最大值
+			 * @param {Object} min_second 最小值
+			 * @param {Object} my_second 本人的值
+			 * @param {Object} rate_alert_string_start 验证项
+			 * @date 2018-10-10
+			 * @return boolean(true代表验证通过，否则为验证不通过)
+			 */
+			function check_second_number(rate_value, max_second, min_second, my_second, rate_alert_string_start) {
+				if("" == rate_value || "" == max_second || "" == min_second || "" == my_second || "" == rate_alert_string_start)
+					return false;
+				rate_value = parseFloat(rate_value);
+				max_second = parseFloat(max_second);
+				min_second = parseFloat(min_second);
+				my_second = parseFloat(my_second);
+
+				if(rate_value < min_second) {
+					mui.toast(rate_alert_string_start + "不能小于最低值" + min_second);
+					return false;
+				}
+				if(rate_value > max_second) {
+					mui.toast(rate_alert_string_start + "不能大于最高值" + max_second);
+					return false;
+				}
+				if(rate_value < my_second) {
+					mui.toast(rate_alert_string_start + "不能小于你自己的秒到费" + my_second);
+					return false;
+				}
+				return true;
+			}
+		</script>
+	</body>
+
+</html>

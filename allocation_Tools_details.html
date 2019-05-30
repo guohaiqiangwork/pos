@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>机具详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">机具详情 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="tools_detail_content">
+				<div class="bold">调拨机具信息</div>
+				<span class="left circular" style="top: -0.3rem;"></span>
+				<ol style="margin-left: -.8rem;">
+					<!--<li class="tools_content">
+						<div class="danger">机具编号: zfhhh0000123456</div>
+						<div class="danger">机具类型: UNIS</div>
+						<span class="icon_danger"><img class="img" src="img/icon_danger.png" alt="" /></span>
+					</li>
+					<li class="tools_content">
+						<div class="danger">机具编号: zfhhh0000123456</div>
+						<div class="danger">机具类型: UNIS</div>
+						<span class="icon_danger"><img class="img" src="img/icon_danger.png" alt="" /></span>
+					</li>
+					<li class="tools_content">
+						<div class="">机具编号: zfhhh0000123456</div>
+						<div class="">机具类型: UNIS</div>
+					</li>-->
+				</ol>
+			</div>
+			<!--暂无记录-->
+			<div class="list-none">
+				<img class="icon_none icon_none_mt" src="img/icon_none_address.png">
+				<div class="fonts">空空如也</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			var allotId = getQueryString("allotId");;
+			var key = getQueryString("key");
+			var allocation_recive_scan = "",
+				allocation_index = "";
+			console.log(key)
+			if("allocation_launch" == key) {
+				//是否有扫码机具
+				var getCustomerId = getQueryString("getCustomerId");
+				if(null !== myStorage.getItem('allocation_recive_scan')) {
+					allocation_recive_scan = myStorage.getItem('allocation_recive_scan');
+					mui.each(allocation_recive_scan, function(index, item) {
+						if(getCustomerId == item.getCustomerId) {
+							allocation_index = index;
+							if(item.scan_toolcode.length == 0) {
+								$(".tools_detail_content").hide();
+								$(".list-none").show();
+							}
+							mui.each(item.scan_toolcode, function(index, item) {
+								var tools_content = '<li class="tools_content">' +
+									'<div class="">机具编号: ' + item.split("-")[2] + '</div>' +
+									'<div class="">机具类型: ' + item.split("-")[1] + '</div>' +
+									'<span class="delete_button" data-id="' + item + '">删除</span>' +
+									'</li>';
+								$(".tools_detail_content ol").append(tools_content);
+							});
+							//删除
+							mui('body').on('tap', '.delete_button', function(e) {
+								var delete_toolcode = this.dataset.id;
+								mui.each(allocation_recive_scan[allocation_index].scan_toolcode, function(index, item) {
+									if(delete_toolcode == item) {
+										//清除该机具缓存
+										var array_car = new Array;
+										array_car = allocation_recive_scan[allocation_index].scan_toolcode;
+										console.log(array_car)
+										array_car.splice(index, 1)
+										allocation_recive_scan[allocation_index].scan_toolcode = array_car;
+										console.log(allocation_recive_scan[allocation_index].scan_toolcode)
+										myStorage.setItem('allocation_recive_scan', allocation_recive_scan);
+										location.reload();
+									}
+								});
+							});
+						}
+					});
+				} else {
+					$(".tools_detail_content").hide();
+					$(".list-none").show();
+				}
+			} else {
+				//获取申请记录机具详情
+				if(allotId != null) {
+					mui.ajax(ajax_url + 'appCustomer/getAllotDetailByAllotId', {
+						data: {
+							id: allotId
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								if(0 == data.obj.length) {
+									$(".list-none").show();
+									$(".tools_detail_content").hide();
+								} else {
+									$(".list-none").hide();
+									for(var i = 0; i < data.obj.length; i++) {
+										console.log(data.obj[i])
+										if(1 == data.obj[i].state) {
+											var tools_content = '<li class="tools_content">' +
+												'<div class="">机具编号: ' + data.obj[i].pos.code + '</div>' +
+												'<div class="">机具类型: ' + data.obj[i].pos.posType.name + '</div>' +
+												'<span class="icon_danger"><img class="img" src="img/icon_danger.png" alt="" /></span>' +
+												'</li>';
+										} else if(2 == data.obj[i].state) {
+											var tools_content = '<li class="tools_content">' +
+												'<div class="">机具编号: ' + data.obj[i].pos.code + '</div>' +
+												'<div class="">机具类型: ' + data.obj[i].pos.posType.name + '<span class="right">' + data.obj[i].pos.stateValue + '</span></div>' +
+												'<span class="icon_danger"><img class="img" src="img/icon_select.png" alt="" /></span>' +
+												'</li>';
+										}
+										$(".tools_detail_content ol").append(tools_content);
+									}
+								}
+							}
+							if(false == data.success) {
+								mui.toast(data.msg)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							if(xhr.status != '0')
+								mui.toast('服务器走丢了')
+						}
+					});
+				} else {
+					mui.toast("未获取到信息，请返回试试吧")
+				}
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的闪POS收益</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link href="css/mui.picker.min.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.user_type_01,
+			.user_type_02,
+			.user_type_03 {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的闪POS收益</h1>
+			<!--<a id="monthly_bill" class="mui-icon mui-icon-right-nav mui-pull-right user_type_03" data-href="monthly_bill.html" style="font-size: .8em;">月账单</a>-->
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="agent_title overflow">
+				<div class="mark"><img class="img" src="img/icon_profit.png" alt="" /></div>
+				<div class="date1">
+					<span class="starttime" /></span>
+				</div>
+				<div class="mark_down"><img class="img" src="img/icon_down.png" alt="" /></div>
+				<div style="margin: 0 .2rem 0 .1rem;">— —</div>
+				<div class="date2">
+					<span class="endtime" /></span>
+				</div>
+				<div class="mark_down"><img class="img" src="img/icon_down.png" alt="" /></div>
+			</div>
+
+			<div class="line"></div>
+
+			<!--总收益-->
+			<div class="income">总收入：<span class="font_blue"><span id="customer_total_money"></span>元</span>
+			</div>
+			<div class="trade">交易：<span id="orderNumber"></span> 笔</div>
+
+			<!--我的收益-->
+			<div class="my_profit bg_white" id="customer_profit">
+				<div class="my_profit_title">
+					<div class="mark_portrait left"><img class="img" src="img/icon_profit_my.png" alt="" /></div>
+					<div class="my_profit_title_name left">我的收益:</div>
+					<div class="my_profit_title_price right"><span id="fuhao">+</span>
+						<sapn id="my_profit_total_money"></sapn>元</div>
+				</div>
+
+				<div class="my_profit_content">
+					<div>交易额：
+						<span id="customer_takeCardMoney"></span>元/
+						<span id="customer_orderNumber"></span>笔
+					</div>
+					<div>分润：<span id="customer_incomeMoney"></span>元</div>
+					<!--<div class="user_type_03">代理奖励金：<span id="subMoney"></span>元</div>
+					<div class="user_type_03">奖励金：<span id="addMoney"></span>元</div>-->
+					<div>激活费：
+						<span id="customer_activate_money"></span>元/
+						<span id="customer_activate"></span>台
+					</div>
+					<!--<div class="user_type_02">分销费：<span id="customer_fenxiao"></span>元</div>
+					<div class="user_type_02">公司分红：<span id="customer_bonus"></span>元</div>-->
+					<!--<div class="user_type_01">秒到费：<span id="customer_secondMoney"></span>元</div>-->
+				</div>
+			</div>
+			<!--代理收益-->
+			<div class="my_profit bg_white" id="lower_customer_profit">
+				<div class="my_profit_title">
+					<div class="mark_portrait left"><img class="img" src="img/icon_profit_agent.png" alt="" /></div>
+					<div class="my_profit_title_name left">代理收益:</div>
+					<div class="my_profit_title_price right">+<span id="lower_customer_total_money"></span>元</div>
+				</div>
+
+				<div class="my_profit_content">
+					<div>交易额：
+						<span id="lower_customer_takeCardMoney"></span>元/
+						<span id="lower_customer_orderNumber"></span>笔
+					</div>
+					<div>分润：<span id="lower_customer_incomeMoney"></span>元</div>
+					<!--<div class="user_type_02">分销费：<span id="lower_customer_tuijian"></span>元</div>-->
+					<div class="">激活费：
+						<span id="lower_customer_activate_money"></span>元/
+						<span id="lower_customer_activate_number"></span>台</div>
+					<!--<div class="user_type_01">秒到费：<span id="lower_customer_secondMoney"></span>元</div>-->
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/mui.picker.min.js"></script>
+		<script>
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色 
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			console.log(myStorage.getItem('Customer_info'))
+			//用户类型
+			if(1 == user_type) {
+				//合作伙伴
+				$(".user_type_01").show();
+			} else if(2 == user_type) {
+				//合伙人，显示运营小库收益
+				$(".user_type_02").show();
+				$("#reportCenter_profit").hide()
+			} else {
+				//全民代理，显示月账单，提示到账时间
+				$(".user_type_03").show();
+			}
+			//定义起始时间
+			var starttime = "",
+				endtime = "",
+				starttime_text = "",
+				endtime_text = "";
+			//默认时间
+			/**
+			 * 获取本月开端日期、停止日期
+			 */
+			var now = new Date(); //当前日期
+			var nowDayOfWeek = now.getDay(); //今天本周的第几天
+			var nowDay = now.getDate(); //当前日
+			var nowMonth = now.getMonth(); //当前月
+			var nowYear = now.getYear(); //当前年
+			nowYear += (nowYear < 2000) ? 1900 : 0; //
+
+			//格局化日期：yyyy-MM-dd
+			function formatDate(date) {
+				var myyear = date.getFullYear();
+				var mymonth = date.getMonth() + 1;
+				var myweekday = date.getDate();
+
+				if(mymonth < 10) {
+					mymonth = "0" + mymonth;
+				}
+				if(myweekday < 10) {
+					myweekday = "0" + myweekday;
+				}
+				return(myyear + "-" + mymonth + "-" + myweekday);
+			}
+
+			//获得某月的天数
+			function getMonthDays(myMonth) {
+				var monthStartDate = new Date(nowYear, myMonth, 1);
+				var monthEndDate = new Date(nowYear, myMonth + 1, 1);
+				var days = (monthEndDate - monthStartDate) / (1000 * 60 * 60 * 24);
+				return days;
+			}
+
+			//获得本月的开端日期
+			function getMonthStartDate() {
+				var monthStartDate = new Date(nowYear, nowMonth, 1);
+				return formatDate(monthStartDate);
+			}
+
+			//获得本月的停止日期
+			function getMonthEndDate() {
+				var monthEndDate = new Date(nowYear, nowMonth, getMonthDays(nowMonth));
+				return formatDate(monthEndDate);
+			}
+			//个人中心,首页点击进入，默认为本周时间
+			starttime = getMonthStartDate();
+			endtime = getMonthEndDate();
+			starttime_text = starttime.split("-")[0] + "年" + starttime.split("-")[1] + "月" + starttime.split("-")[2] + "日";
+			endtime_text = endtime.split("-")[0] + "年" + endtime.split("-")[1] + "月" + endtime.split("-")[2] + "日";
+			$(".starttime").text(starttime_text);
+			$(".endtime").text(endtime_text);
+
+			//获取会员明细收益
+			getCustomerIncomeAndLowerCustomerIncome();
+
+			function getCustomerIncomeAndLowerCustomerIncome() {
+				mui.ajax(ajax_url + 'appCustomer/getCustomerIncomeAndLowerCustomerIncome', {
+					data: {
+						customerId: customerId,
+						startTime: starttime,
+						endTime: endtime,
+						pos_type: 2
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							console.log(data.obj)
+							var profit = data.obj;
+							//我的收益
+							$("#customer_takeCardMoney").html(profit.customer_takeCardMoney);
+							$("#customer_orderNumber").html(profit.customer_orderNumber);
+							$("#customer_incomeMoney").html(profit.customer_incomeMoney);
+							$("#customer_activate_money").html(profit.customer_activate_money);
+							$("#customer_activate").html(profit.customer_activate);
+
+							//代理收益
+							$("#lower_customer_takeCardMoney").html(profit.lower_customer_takeCardMoney);
+							$("#lower_customer_orderNumber").html(profit.lower_customer_orderNumber);
+							$("#lower_customer_incomeMoney").html(profit.lower_customer_incomeMoney);
+							$("#lower_customer_activate_money").html(profit.lower_customer_activate_money);
+							$("#lower_customer_activate_number").html(profit.lower_customer_activate);
+
+							//部分合计
+							$("#my_profit_total_money").html(Number(profit.customer_income).toFixed(2))
+							$("#lower_customer_total_money").html(Number(profit.lower_customer_income).toFixed(2))
+
+							//总交易额、交易笔数
+							$("#customer_total_money").html(Number(profit.customer_total_money).toFixed(2));
+							$("#orderNumber").html(profit.customer_orderNumber + profit.lower_customer_orderNumber)
+						}
+						if(false == data.success) {
+							if("startTime_can_not_more_than_endTime" == data.msg) {
+								mui.toast("开始时间不能大于结束时间")
+							} else if("endTime_date_format_error" == data.msg) {
+								mui.toast("开始时间格式错误，请重新选择试试")
+							} else if("startTime_date_format_error" == data.msg) {
+								mui.toast("结束时间格式错误，请重新选择试试")
+							} else {
+								mui.toast("会员信息不明确")
+							}
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+
+			//时间选择器
+			$(".date1").click(function(e) {
+				var dtpicker = new mui.DtPicker({
+					type: "date", //设置日历初始视图模式 
+					beginDate: new Date(2010, 1, 1), //设置开始日期 
+					endDate: new Date(2050, 1, 1), //设置结束日期 
+					labels: ['年', '月', '日'], //设置默认标签区域提示语 
+				})
+				dtpicker.show(function(data) {
+					var y = data.y.text;
+					var m = data.m.text;
+					var d = data.d.text;
+					if(y < endtime.split("-")[0]) {
+						starttime = y + "-" + m + "-" + d;
+						$(".starttime").text(y + "年" + m + "月" + d + "日");
+						getCustomerIncomeAndLowerCustomerIncome();
+					}else if(y == endtime.split("-")[0]){
+						if(m < endtime.split("-")[1]) {
+							starttime = y + "-" + m + "-" + d;
+							$(".starttime").text(y + "年" + m + "月" + d + "日");
+							getCustomerIncomeAndLowerCustomerIncome();
+						}else if(m == endtime.split("-")[1]){
+							if(d <= endtime.split("-")[2]) {
+								starttime = y + "-" + m + "-" + d;
+								$(".starttime").text(y + "年" + m + "月" + d + "日");
+								getCustomerIncomeAndLowerCustomerIncome();
+							} else{
+								mui.toast("开始时间不可大于结束时间")
+							}
+						}else{
+							mui.toast("开始时间不可大于结束时间")
+						}
+					} else {
+						mui.toast("开始时间不可大于结束时间")
+					}
+				})
+			});
+
+			$(".date2").click(function(e) {
+				var dtpicker = new mui.DtPicker({
+					type: "date", //设置日历初始视图模式 
+					beginDate: new Date(2010, 01, 01), //设置开始日期 
+					endDate: new Date(2050, 01, 01), //设置结束日期 
+					labels: ['年', '月', '日'], //设置默认标签区域提示语 
+				})
+				dtpicker.show(function(data) {
+					var y = data.y.text;
+					var m = data.m.text;
+					var d = data.d.text;
+					if(y > starttime.split("-")[0]) {
+						endtime = y + "-" + m + "-" + d;
+						$(".endtime").text(y + "年" + m + "月" + d + "日");
+						getCustomerIncomeAndLowerCustomerIncome();
+					} else if(y == starttime.split("-")[0]){
+						if(m > starttime.split("-")[1]) {
+							endtime = y + "-" + m + "-" + d;
+							$(".endtime").text(y + "年" + m + "月" + d + "日");
+							getCustomerIncomeAndLowerCustomerIncome();
+						}else if(m == starttime.split("-")[1]){
+							if(d >= starttime.split("-")[2]) {
+								endtime = y + "-" + m + "-" + d;
+								$(".endtime").text(y + "年" + m + "月" + d + "日");
+								getCustomerIncomeAndLowerCustomerIncome();
+							}else{
+								mui.toast("结束时间不可小于开始时间")
+							}
+						}else{
+							mui.toast("结束时间不可小于开始时间")
+						}
+					}else{
+						mui.toast("结束时间不可小于开始时间")
+					}
+				})
+			});
+			//我的收益跳转至收益详情
+			mui('body').on('tap', '#customer_profit', function(e) {
+				var profit_time = [starttime, endtime]
+				myStorage.setItem('profit_time', profit_time);
+				location.href = "profit_detail_pos.html";
+				
+			});
+			//代理收益跳转至收益详情
+			mui('body').on('tap', '#lower_customer_profit', function(e) {
+				var profit_time = [starttime, endtime]
+				myStorage.setItem('profit_time', profit_time);
+				location.href = "profit_detail_pos.html?key=tab02";
+			});
+		</script>
+	</body>
+
+</html>

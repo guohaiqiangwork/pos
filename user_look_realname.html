@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>实名认证</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">实名认证 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="collect_title">
+				<div class="content_title bold" style="text-align: left;"><img class="realname_icon" src="img/icon_real_name.png" alt="" />身份证</div>
+				<!--身份证正面-->
+				<div id="front_IDcard">
+					<div class="realname_img" id="upload_front_IDcard">
+						<img id="front_IDcard_img" class="img" src="img/bg_realname.png" alt="" />
+					</div>
+					<div class="content_title bold">国徽面</div>
+					<div class="realname_text">身份证完整，有效期清晰</div>
+				</div>
+				<!--身份证背面-->
+				<div id="back_IDcard">
+					<div class="realname_img" id="upload_back_IDcard">
+						<img id="back_IDcard_img" class="img" src="img/bg_realname.png" alt="" />
+					</div>
+					<div class="content_title bold">人像面</div>
+					<div class="realname_text">身份证完整，身份证号清晰</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			console.log(myStorage.getItem('Customer_info').idImgString)
+			var front_IDcard_img = myStorage.getItem('Customer_info').idImgString.split(",")[0];
+			var back_IDcard_img = myStorage.getItem('Customer_info').idImgString.split(",")[1];
+			$("#front_IDcard_img").attr("src", img_url + front_IDcard_img);
+			if(back_IDcard_img != "") {
+				$("#back_IDcard_img").attr("src", img_url + back_IDcard_img);
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户身份</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_user" id="Identity">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-closeempty mui-pull-right icon_close"></a>
+		</header>
+		<div class="mui-content">
+			<div class="account_password">
+				<p class="user_title">请选择身份</p>
+				<div class="user_identity active" data-num="1">
+					<img src="img/icon_type_01.png" />
+					<span>汇爱代理商</span>
+				</div>
+				<div class="user_identity" data-num="3">
+					<img src="img/icon_type_02.png" />
+					<span>汇联盟</span>
+				</div>
+				<div class="user_identity" data-num="2">
+					<img src="img/icon_type_03.png" />
+					<span>汇爱合伙人</span>
+				</div>
+			</div>
+			<button type="button" class="btn_common_submit">登录</button>
+		</div>
+		<!--合伙人付款弹框-->
+		<div id="div"></div>
+		<div id="popover" class="mui-popover popup_index">
+			<div class="popup_title">您已注册成功<br />请将汇爱合伙人押金打入此账户</div>
+			<div class="popup_price">1980 <span>元</span></div>
+			<div class="popup_close"><img class="img" src="img/icon_profit_close.png" alt="" /></div>
+			<div class="popup_bank" style="border-bottom: 1px solid #ddd;padding: 6px 0;margin: 0.8rem 20px 0;">
+				耿萍 | 中国农业银行<br />
+				<span style="font-size: 1em;font-weight: bold;">6268 4808 8817 6957 577</span>
+			</div>
+			<div class="popup_text" style="font-size: 0.8em;">中国农业银行股份有限公司包头汇通支行</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/md5.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('dark');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//选择身份
+			var identity_num = 1;
+			$(".user_identity").click(function() {
+				$(".user_identity").removeClass("active");
+				$(this).addClass("active");
+				identity_num = $(this).attr("data-num")
+			})
+			if(customerId != null) {
+				//获取用户信息
+				mui.ajax(ajax_url + 'appCustomer/getCustomer', {
+					data: {
+						customerId: customerId
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							var Customer_info = data.obj;
+							if("2" == Customer_info.type) {
+								//合伙人付款弹框
+								mui("#popover").popover('toggle', document.getElementById("div"));
+								//合伙人支付弹框--关闭
+								$(".popup_close,.mui-backdrop,#div").click(function() {
+									mui("#popover").popover('toggle');
+									setTimeout(function() {
+										location.href = "Nav_Index.html?ad=1"
+									}, 500)
+								});
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+			//登录
+			mui('.btn_common_submit')[0].addEventListener('tap', function() {
+				var customerId = myStorage.getItem('customerId');
+				mui.ajax(ajax_url + 'appCustomer/choiceIdentity', {
+					data: {
+						customerId: customerId,
+						identity: identity_num
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							if(2 == identity_num) {
+								//合伙人付款弹框
+								mui("#popover").popover('toggle', document.getElementById("div"));
+								//合伙人支付弹框--关闭
+								$(".popup_close,.mui-backdrop,#div").click(function() {
+									mui("#popover").popover('toggle');
+									mui.toast("用户身份提交成功，即将前往首页");
+									setTimeout(function() {
+										location.href = "Nav_Index.html?ad=1"
+									}, 500)
+								});
+							} else {
+								mui.toast("用户身份提交成功，即将前往首页");
+								setTimeout(function() {
+									location.href = "Nav_Index.html?ad=1"
+								}, 500)
+							}
+
+						}
+						if(false == data.success) {
+							console.log(data.msg)
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

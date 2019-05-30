@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的推广码 </title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="erweima_linear">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的推广码 </h1>
+			<a class="mui-icon mui-icon-right-nav mui-pull-right" href="#share">分享</a>
+		</header>
+
+		<div class="mui-content">
+			<div class="erweima_content">
+				<div class="content_top bg_white">
+					<img id="saveImg" class="saveImg" src="" />
+					<div id="saveImg_btn" class="content_button">保存到手机</div>
+				</div>
+				<div class="content_bottom">
+					<div class="content_title">邀请会员人数</div>
+					<div class="content_number">
+						<img class="img" src="img/icon_erweima.png">
+						<span id="share_num"></span>
+					</div>
+				</div>
+
+			</div>
+			<!--分享弹框-->
+			<div id="share" class="mui-popover mui-popover-bottom mui-popover-action">
+				<div class="share_title">请选择分享平台</div>
+
+				<div class="share_content overflow">
+					<div class="share_img"><img class="img" src="img/icon_share_wechat.png" alt="" data_share="weixin" data_share_x="WXSceneSession"></div>
+					<div class="share_img"><img class="img" src="img/icon_share_friends.png" alt="" data_share="weixin" data_share_x="WXSceneTimeline"></div>
+					<!--<div class="share_img"><img class="img" src="img/icon_share_weibo.png" alt=""></div>-->
+					<!--<div class="share_img"><img class="img" src="img/icon_share_qq.png" alt="" data_share="qq" data_share_x=""></div>-->
+				</div>
+
+				<div class="share_cancel">取消</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				gestureConfig: {
+					tap: true, //默认为true
+					doubletap: true, //默认为false
+					longtap: true, //默认为false
+					swipe: true, //默认为true
+					drag: true, //默认为true
+					hold: true, //默认为false，不监听
+					release: false //默认为false，不监听
+				}
+			});
+			//二维码图片路径
+			$(".saveImg").attr("src", img_urlcode + customerId + ".png")
+			console.log(myStorage.getItem('Customer_info'))
+			//邀请人数
+			$("#share_num").html(myStorage.getItem('Customer_info').customerList.length + " 人");
+
+			//保存二维码到手机
+			var saveImgurl = document.getElementById('saveImg').src;
+			document.getElementById('saveImg_btn').addEventListener('tap', function() {
+				var imgDtask = plus.downloader.createDownload(saveImgurl, {
+					method: 'GET'
+				}, function(d, status) {
+					console.log(d)
+					if(status == 200) {
+						plus.gallery.save(d.filename, function() { //保存到相册
+							plus.io.resolveLocalFileSystemURL(d.filename, function(enpty) {
+								mui.toast('已保存到手机相册')
+							});
+						})
+					} else {
+						mui.toast('保存失败，请重试')
+					}
+				});
+				imgDtask.start();
+			});
+			var shareArray = null,
+				isNoshare = true;
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+				plus.share.getServices(function(ss) {
+					shareArray = {};
+					for(var i in ss) {
+						var s = ss[i];
+//						alert(s.id);
+						shareArray[s.id] = s;
+					} 
+					isNoshare = false;
+				}, function(e) {
+					isNoshare = true;
+				});
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+
+			//关闭分享
+			mui('#share').on('tap', '.share_cancel', function(e) {
+				mui('#share').popover('toggle');
+			});
+			$(document).off("click", '.share_img').on("click", '.share_img', function() {
+				var this_img = $(this).find("img");
+//				alert(shareArray[this_img.attr("data_share")]);
+//				alert(this_img.attr("data_share_x"));
+				shareAction(shareArray[this_img.attr("data_share")],this_img.attr("data_share_x"));
+			});
+			/**
+			 * 分享操作
+			 * @param {JSON} sb 分享操作对象s.s为分享通道对象(plus.share.ShareService)
+			 * @param {Boolean} bh 是否分享链接
+			 */
+			function shareAction(s, x) {
+				if(!s) {
+					console.log("无效的分享服务！");
+					return;
+				}
+				var msg = {
+					content: "只要你有创业梦想，加入汇爱天下，组建团队，就可以开启创业之旅！",
+					title : "总有一个领域 你比别人更专业",
+					href : ajax_url+"appCustomer/goShareLink?customerCode="+myStorage.getItem('Customer_info').code,
+					thumbs : ["_www/logo.png"],
+					pictures : ["_www/logo.png"],
+					extra: {
+						scene: x
+					}
+				};
+				// 发送分享
+				if(s.authenticated) {
+					console.log("---已授权---");
+					shareMessage(msg, s);
+				} else {
+					console.log("---未授权---");
+					s.authorize(function() {
+						shareMessage(msg, s);
+					}, function(e) {
+						console.log("认证授权失败：" + e.code + " - " + e.message);
+					});
+				}
+			}
+			/**
+           * 发送分享消息
+           * @param {JSON} msg
+           * @param {plus.share.ShareService} s
+           */
+			function shareMessage(msg, s) {
+				console.log(JSON.stringify(msg));
+				s.send(msg, function() {
+					console.log("分享到\"" + s.description + "\"成功！ ");
+				}, function(e) {
+					console.log("分享到\"" + s.description + "\"失败: " + JSON.stringify(e));
+				});
+			}
+		</script>
+	</body>
+
+</html>

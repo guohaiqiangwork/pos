@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的退货</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="return_goods">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的退货 </h1>
+			<div class="return_title">
+				<div data-href="return_apply.html" class="return_name">申请退货</div>
+			</div>
+		</header>
+
+		<div class="mui-content">
+
+			<!--暂无记录-->
+			<div class="list-none">
+				<img class="icon_none icon_none_mt" src="img/icon_none_address.png" style="margin-top: 2rem;">
+				<div class="fonts">空空如也</div>
+			</div>
+			<div class="return_goods_lists">
+
+			</div>
+
+			<!--<div class="return_goods_list border_orange overflow">
+				<div class="my_profit_pay_date left">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				<div class="state right" style="padding: 0;">●&nbsp;退货审核中</div>
+				<div class="apply_name left bold">申请POS机<span>&nbsp;&nbsp;<span class="font_blue">10</span>台</span>
+				</div>
+				<div class="right text_r"><span class="apply_button bg_blue disabled">发货</span></div>
+			</div>
+			<div class="return_goods_list border_orange overflow">
+				<div class="my_profit_pay_date left">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				<div class="state right" style="padding: 0;">●&nbsp;申请通过</div>
+				<div class="apply_name left bold">申请POS机<span>&nbsp;&nbsp;<span class="font_blue">10</span>台</span>
+				</div>
+				<div class="right text_r"><span class="apply_button bg_blue">发货</span></div>
+			</div>
+			<div class="return_goods_list border_orange overflow">
+				<div class="my_profit_pay_date left">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				<div class="state right" style="padding: 0;">●&nbsp;申请失败</div>
+				<div class="apply_name left bold">申请POS机<span>&nbsp;&nbsp;<span class="font_blue">10</span>台</span>
+				</div>
+				<div class="right text_r"><span class="apply_button bg_blue disabled">发货</span></div>
+			</div>
+			<div class="return_goods_list border_orange overflow">
+				<div class="my_profit_pay_date left">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				<div class="state right" style="padding: 0;">●&nbsp;退货成功</div>
+				<div class="apply_name left bold">申请POS机<span>&nbsp;&nbsp;<span class="font_blue">10</span>台</span>
+				</div>
+				<div class="right text_r"><span class="apply_button bg_blue disabled">发货</span></div>
+			</div>
+			<div class="return_goods_list border_orange overflow">
+				<div class="my_profit_pay_date left">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				<div class="state right" style="padding: 0;">●&nbsp;退货失败</div>
+				<div class="apply_name left bold">申请POS机<span>&nbsp;&nbsp;<span class="font_blue">10</span>台</span>
+				</div>
+				<div class="right text_r"><span class="apply_button bg_blue disabled">发货</span></div>
+			</div>-->
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/mui.pullToRefresh.js"></script>
+		<script src="js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.back = function() {
+				if(1 == user_type) {
+					location.href = "Nav_Personalcenter_Partners.html";
+				} else {
+					location.href = "Nav_Personalcenter_Agent.html";
+				}
+			}
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//加载更多初始化
+			var pageNo = 1,
+				flag = true;
+			mui('.mui-content').pullToRefresh({
+				up: {
+					callback: function() {
+						var _this = this;
+						setTimeout(function() {
+							console.log(flag)
+							if(flag) {
+								getPosAskRecord();
+							}
+							_this.endPullUpToRefresh(!flag);
+						}, 500);
+					}
+				}
+			});
+			//获取申请记录机具详情
+			if(customerId != null) {
+				getPosAskRecord();
+			} else {
+				check_log();
+			}
+
+			function getPosAskRecord() {
+				mui.ajax(ajax_url + 'appCustomer/getPosAskRecord', {
+					data: {
+						customerId: customerId,
+						type: 2,
+						"page.pageNo": pageNo
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							var apply_record = data.obj.results;
+							if(0 == data.obj.results.length) {
+								$(".list-none").show();
+								$(".mui-pull-bottom-tips").hide()
+								$("body").css("background", "#fff");
+								$(".mui-content").css("background", "#fff");
+							} else {
+								$(".list-none").hide();
+								//是否有下一页
+								if(apply_record.length < 10 && 1 == pageNo) {
+									$(".mui-pull-bottom-tips").hide()
+								}
+								pageNo++;
+								console.log(pageNo)
+								flag = data.obj.haveNextPage;
+								for(var i = 0; i < apply_record.length; i++) {
+									var posType = "";
+									if(apply_record[i].posType == 1) {
+										posType = "闪电宝";
+									} else if(apply_record[i].posType == 2) {
+										posType = "闪POS";
+									} else if(apply_record[i].posType == 3) {
+										posType = "智能终端";
+									}
+									var apply_content = '<div class="return_goods_list border_orange overflow" data-applyrecordid="' + apply_record[i].id + '" data-applynum="' + apply_record[i].number + '" data-state="' + apply_record[i].state + '" data-rejectReason="' + apply_record[i].rejectReason + '" data-returnReason="' + apply_record[i].returnReason + '" data-postype="' + apply_record[i].posType + '">' +
+										'<div class="my_profit_pay_date left">' + apply_record[i].ft + '</div>' +
+										'<div class="state right" style="padding: 0;">&nbsp;</div>' +
+										'<div class="apply_name left bold">申请退' + posType + '机具&nbsp;&nbsp;&nbsp;&nbsp;<span class="font_blue">' + apply_record[i].number + '</span>台</div>' +
+										'<div class="right text_r "><span class="apply_button bg_blue disabled">发货</span></div>' +
+										'</div>';
+									$(".return_goods_lists").append(apply_content);
+									var list_index = (pageNo - 2) * 10 + i;
+									if(apply_record[i].state == 1) {
+										$(".return_goods_list").eq(list_index).find(".state").html("● 待审核");
+									} else if(apply_record[i].state == 2) {
+										$(".return_goods_list").eq(list_index).find(".state").html("● 待旧机出库")
+										$(".apply_button").eq(list_index).removeClass("disabled");
+										mui('.apply_button')[list_index].addEventListener('tap', function() {
+											var applyrecordid = $(this).parent().parent()[0].dataset.applyrecordid;
+											myStorage.setItem('applyrecordid', applyrecordid);
+											location.href = "return_confirm_deliver_goods.html";
+										});
+									} else if(apply_record[i].state == 3) {
+										$(".return_goods_list").eq(list_index).find(".state").html("● 完成");
+									} else if(apply_record[i].state == 4) {
+										$(".return_goods_list").eq(list_index).find(".state").html("● 待收货");
+									} else if(apply_record[i].state == 5) {
+										$(".return_goods_list").eq(list_index).find(".state").html("● 待打款")
+									} else if(apply_record[i].state == 6) {
+										$(".return_goods_list").eq(list_index).find(".state").html("● 审核失败")
+									} else if(apply_record[i].state == 7) {
+										$(".return_goods_list").eq(list_index).find(".state").html("● 待发货");
+									} else if(apply_record[i].state == 8) {
+										$(".return_goods_list").eq(list_index).find(".state").html("● 未支付");
+									} else if(apply_record[i].state == 9) {
+										$(".apply_content").eq(list_index).find(".state").html("放弃")
+									}
+								}
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+			//申请退货跳转
+			mui('.return_title').on('tap', '.return_name', function() {
+				if(getQueryString("postype") == 1) {
+					location.href = "return_apply.html?key=apply&postype=1";
+				} else {
+					location.href = "return_apply.html?key=apply&postype=2";
+				}
+			});
+			//退货详情
+			mui('.mui-content').on('tap', '.return_goods_list', function() {
+				//申请记录id
+				var applyrecordid = this.dataset.applyrecordid;
+				//申请人信息
+				var asker = [this.dataset.applynum, this.dataset.state, this.dataset.rejectreason, this.dataset.returnreason, this.dataset.postype]
+				myStorage.setItem('applyrecordid', applyrecordid);
+				myStorage.setItem('asker', asker);
+				if(getQueryString("postype") == 1) {
+					location.href = "return_apply.html?key=look&postype=1";
+				} else {
+					location.href = "return_apply.html?key=look&postype=2";
+				}
+			});
+
+			//发货详情
+			mui('.mui-content').on('tap', '.apply_content', function() {
+				if(getQueryString("postype") == 1) {
+					location.href = "deliver_goods.html?postype=1";
+				} else {
+					location.href = "deliver_goods.html?postype=2";
+				}
+			});
+		</script>
+	</body>
+
+</html>

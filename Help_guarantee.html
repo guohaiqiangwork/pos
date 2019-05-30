@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>保修说明</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">保修说明 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="guarantee_content overflow">
+				<div class="guarantee_img left">01</div>
+				<div class="guarantee_text left">自购机之日起12个月内，若刷卡器在正常使用情况下出现质量问题，将免费享受维修服务</div>
+			</div>
+			<div class="guarantee_content overflow">
+				<div class="guarantee_img left">02</div>
+				<div class="guarantee_text left">保修不包含产品外壳，说明书，包装。保修期满后提供有偿维修服务</div>
+			</div>
+			<div class="guarantee_content overflow">
+				<div class="guarantee_img left">03</div>
+				<div class="guarantee_text left">以下情况不属于保修范围：
+					<div>a 因不可抗力(如：火灾、水灾、地震、雷击等)造成的损坏</div>
+					<div>b 因使用、维护、保管不当造成的损坏</div>
+					<div>c 自行拆装造成的人为损坏</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back = function() {
+				location.href = "Nav_Help.html?key=help"
+			}
+		</script>
+	</body>
+
+</html>

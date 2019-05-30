@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的申请记录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的申请记录</h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<!--暂无记录-->
+			<div class="list-none">
+				<img class="icon_none icon_none_mt" src="img/icon_none_address.png">
+				<div class="fonts">空空如也</div>
+			</div>
+			<div class="apply_content_box">
+
+			</div>
+			<!--<div class="apply_content overflow">
+				<div class="my_profit_pay_date left">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				<div class="state right">待发货</div>
+				<div class="apply_name left bold">申请POS机&nbsp;&nbsp;<span class="font_blue">10</span>台</div>
+				<div class="right text_r"><span class="apply_button" onclick="window.location='Tools_receive.html'">确认收货</span></div>
+				<span class="circular"></span>
+			</div>
+			<div class="apply_content overflow">
+				<div class="my_profit_pay_date left">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				<div class="state right">申请成功</div>
+				<div class="apply_name left bold">申请POS机&nbsp;&nbsp;<span class="font_blue">10</span>台</div>
+				<div class="right text_r"><span class="apply_button">确认收货</span></div>
+				<span class="circular"></span>
+			</div>
+			<div class="apply_content overflow">
+				<div class="my_profit_pay_date left">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				<div class="state right">申请失败</div>
+				<div class="apply_name left bold">申请POS机&nbsp;&nbsp;<span class="font_blue">10</span>台</div>
+				<div class="right text_r disabled"><span class="apply_button">确认收货</span></div>
+				<span class="circular"></span>
+			</div>-->
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/mui.pullToRefresh.js"></script>
+		<script src="js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.back = function() {
+				location.href = "Personalcenter_myMachine.html"
+			};
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//加载更多初始化
+			var pageNo = 1,
+				flag = true;
+			mui('.mui-content').pullToRefresh({
+				up: {
+					callback: function() {
+						var _this = this;
+						setTimeout(function() {
+							console.log(flag)
+							if(flag) {
+								getPosAskRecord();
+							}
+							_this.endPullUpToRefresh(!flag);
+						}, 500);
+					}
+				}
+			});
+			//获取申请记录机具详情
+			if(customerId != null) {
+				getPosAskRecord();
+			} else {
+				check_log();
+			}
+
+			function getPosAskRecord() {
+				mui.ajax(ajax_url + 'appCustomer/getPosAskRecord', {
+					data: {
+						customerId: customerId,
+						type: 1,
+						"page.pageNo": pageNo
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							var apply_record = data.obj.results
+							if(0 == apply_record.length) {
+								$(".list-none").show();
+								$(".mui-pull-bottom-tips").hide();
+							} else {
+								$(".list-none").hide();
+								//是否有下一页
+								if(apply_record.length < 10 && 1 == pageNo) {
+									$(".mui-pull-bottom-tips").hide();
+								} else {
+									$(".mui-pull-bottom-tips").show();
+								}
+								pageNo++;
+								console.log(pageNo)
+								flag = data.obj.haveNextPage;
+								for(var i = 0; i < apply_record.length; i++) {
+									var posType = "";
+									if(apply_record[i].posType == 1) {
+										posType = "闪电宝";
+									} else if(apply_record[i].posType == 2) {
+										posType = "闪POS";
+									} else if(apply_record[i].posType == 3) {
+										posType = "智能终端";
+									}
+									var apply_content = '<div class="apply_content overflow" data-applyrecordid="' + apply_record[i].id + '" data-state="' + apply_record[i].state + '">' +
+										'<div class="my_profit_pay_date left">' + apply_record[i].ft + '</div>' +
+										'<div class="state right">&nbsp;</div>' +
+										'<div class="apply_name left bold">申请' + posType + '机具&nbsp;&nbsp;<span class="font_blue">' + apply_record[i].number + '</span>台</div>' +
+										'<div class="right text_r disabled"><span class="apply_button bg_blue">确认收货</span></div>' +
+										'<span class="circular"></span>' +
+										'</div>';
+									$(".apply_content_box").append(apply_content);
+									var list_index = (pageNo - 2) * 10 + i;
+									if(apply_record[i].state == 1) {
+										$(".apply_content").eq(list_index).find(".state").html("待审核")
+									} else if(apply_record[i].state == 2) {
+										$(".apply_content").eq(list_index).find(".state").html("待审核")
+									} else if(apply_record[i].state == 3) {
+										$(".apply_content").eq(list_index).find(".state").html("完成");
+									} else if(apply_record[i].state == 4) {
+										$(".apply_content").eq(list_index).find(".state").html("待收货");
+										$(".apply_button").eq(list_index).parent(".disabled").removeClass("disabled");
+										//										mui('.apply_button')[list_index].addEventListener('tap', function() {
+										//											var applyrecordid = $(this).parent().parent()[0].dataset.applyrecordid;
+										//											myStorage.setItem('applyrecordid', applyrecordid);
+										//											location.href = "Tools_receive.html"
+										//										});
+									} else if(apply_record[i].state == 5) {
+										$(".apply_content").eq(list_index).find(".state").html("待打款")
+									} else if(apply_record[i].state == 6) {
+										$(".apply_content").eq(list_index).find(".state").html("审核失败")
+									} else if(apply_record[i].state == 7) {
+										$(".apply_content").eq(list_index).find(".state").html("待发货")
+									} else if(apply_record[i].state == 8) {
+										$(".apply_content").eq(list_index).find(".state").html("未支付");
+									} else if(apply_record[i].state == 9) {
+										$(".apply_content").eq(list_index).find(".state").html("放弃")
+									}
+								}
+								mui('body').on('tap', '.apply_content', function(e) {
+									var state = this.dataset.state;
+									var applyrecordid = this.dataset.applyrecordid;
+									myStorage.setItem('applyrecordid', applyrecordid);
+									if(state == 7) {
+										mui.toast("您的代理还未发货，请耐心等待")
+									} else {
+										location.href = "Tools_receive.html?state=" + state;
+									}
+								});
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

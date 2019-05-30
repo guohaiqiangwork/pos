@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>运营小库申请</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.apply_profit .mui-popover {
+				top: 22%!important;
+			}
+			
+			.user_row_02 {
+				margin-top: -0.02rem;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white apply_profit">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">运营小库申请</h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<form id="form_library_apply" class="user_form" action="" method="post">
+				<input id="input_customer" type="hidden" name="model.customer.id" id="" value="" />
+				<div class="profit_content" id='showCityPicker3'>
+					<div class="sopt_icon left"><img class="img" src="img/icon_profit_spot.png" alt="" /></div>
+					<div class="left main_title bold">所在城市</div>
+					<div class="user_row_02 left"><input id="cityResult3" type="text" placeholder="请选择您所在城市" readonly="readonly" /></div>
+					<div class="mark_down right"><img class="img" src="img/icon_down.png" alt="" /></div>
+				</div>
+				<input id="address_content" type="hidden" name="model.address" value="" />
+				<div class="profit_content">
+					<div class="sopt_icon left"><img class="img" src="img/icon_profit_spot.png" alt="" /></div>
+					<div class="left main_title bold">联系人</div>
+					<div class="user_row_02 left">
+						<input type="hidden" id="user_name" name="model.name" />
+						<input type="text" id="user_name_show" readonly="readonly" />
+					</div>
+				</div>
+				<div class="profit_content">
+					<div class="sopt_icon left"><img class="img" src="img/icon_profit_spot.png" alt="" /></div>
+					<div class="left main_title bold">手机号</div>
+					<div class="user_row_02 left">
+						<input type="hidden" id="phone" name="model.phone" maxlength="11" />
+						<input type="text" id="phone_show" readonly="readonly" maxlength="11" />
+					</div>
+				</div>
+				<div class="profit_content">
+					<div class="sopt_icon left"><img class="img" src="img/icon_profit_spot.png" alt="" /></div>
+					<div class="left main_title bold">微信号</div>
+					<div class="user_row_02 left"><input id="wechat_num" type="text" name="model.wechatCode" placeholder="请输入您的微信号" /></div>
+				</div>
+				<div class="textarea overflow">
+					<div class="sopt_icon left"><img class="img" src="img/icon_profit_spot.png" alt="" /></div>
+					<div class="left main_title bold">资源优势</div>
+					<textarea onblur="reg_remark(this)" class="left" id="apply_remark" name="model.remark" rows="1" cols="30" placeholder="请介绍一下您的团队规模（200字以内）" maxlength="200"></textarea>
+				</div>
+			</form>
+
+			<!--申请失败-->
+			<div class="appply_fail_box" style="display: none;">
+				<div class="appply_fail bold"><img src="img/icon_apply_fail.png" alt="" /> 申请失败</div>
+				<div class="fail_reason bold">失败原因：<span id="reason"></span></div>
+				<button id="reapply_btn" type="button" class="btn_common_submit">重新申请</button>
+			</div>
+
+			<button type="button" class="btn_common_submit" id="apply_submitReportCenterAsk" style="display: none;">提交</button>
+
+			<!--弹窗-->
+			<div id="bg_popover"></div>
+			<div id="popover" class="mui-popover popup_profit">
+				<div class="popup_close"><img class="img" src="img/icon_profit_close.png" alt="" /></div>
+				<div class="popup_text">您申请运营小库的信息<br />已经提交到公司<br />请您耐心等待工作人员联系！</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+
+		<script src="js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/textarea.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			mui.back = function() {
+				location.href = "Personalcenter_library.html"
+			}
+
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			var Customer_info = myStorage.getItem('Customer_info');
+			//判断查看、申请
+			var key = getQueryString("key");
+			var name = Customer_info.name;
+			var city_array = decodeURIComponent(getQueryString("city"), true);
+			var city = city_array.split(",")[6];
+			var wechatCode = decodeURIComponent(getQueryString("wechatCode"), true);
+			var remark = decodeURIComponent(getQueryString("remark"), true);
+			var phone = Customer_info.phone;
+			console.log(city_array)
+			$("#user_name,#user_name_show").val(name);
+			$("#cityResult3").val(city);
+			$("#wechat_num").val(wechatCode)
+			$("#phone,#phone_show").val(phone);
+			$("#apply_remark").html(remark);
+			$("#address_content").val(city_array.split(",")[0] + "-" + city_array.split(",")[1] + "-" + city_array.split(",")[2])
+			var cityResult_idvalue = "";
+			cityResult_idvalue = $("#address_content").val();
+			if("look" == key) {
+				var state = getQueryString("state");
+				var reason = decodeURIComponent(getQueryString("reason"), true);
+				$("#reason").html(reason);
+
+				$("input,textarea").attr("readonly", "readonly");
+				$(".btn_common_submit").hide();
+				$(".mark_down").hide();
+				if(3 == state) {
+					$(".appply_fail_box").show();
+					$("#reapply_btn").show();
+					mui('#reapply_btn')[0].addEventListener('tap', function() {
+						key = "";
+						var parameter = "name=" + name + "&city=" + city_array + "&remark=" + remark + "&wechatCode=" + wechatCode + "&phone=" + phone;
+						location.href = "library_apply.html?" + parameter;
+					})
+				}
+			} else {
+				//申请人ID
+				$("#input_customer").val(myStorage.getItem('Customer_info').id);
+				$(".btn_common_submit").show();
+				//申请
+				mui('#apply_submitReportCenterAsk')[0].addEventListener('tap', function() {
+					if(address_check() && name_check_01() && phone_check()) {
+						if("" == $("#wechat_num").val()) {
+							mui.toast("请输入您的微信号");
+						} else if(!reg_remark()) {
+
+						} else {
+							var formData = $('#form_library_apply').serialize();
+							formData = decodeURIComponent(formData, true);
+							console.log(formData);
+							mui.ajax(ajax_url + 'appCustomer/submitReportCenterAsk', {
+								data: formData,
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									if(true == data.success) {
+										mui("#popover").popover('toggle', document.getElementById("bg_popover"));
+									}
+									if(false == data.success) {
+										mui.toast(data.msg)
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+									if(xhr.status != '0')
+										mui.toast('服务器走丢了')
+								}
+							});
+						}
+					}
+				});
+				//关闭申请成功弹框
+				$(".popup_close").click(function() {
+					mui("#popover").popover('toggle');
+					mui.back();
+				});
+				//地区选择
+				mui('#showCityPicker3')[0].addEventListener('tap', function() {
+					$('input').blur();
+				});
+				(function($_, doc) {
+					$_.init();
+					$_.ready(function() {
+						//地区级联选择
+						var showCityPickerButton = doc.getElementById('showCityPicker3');
+						var cityResult3 = doc.getElementById('cityResult3');
+						showCityPickerButton.addEventListener('tap', function(event) {
+							$('input').blur();
+							var cityPicker3 = new $_.PopPicker({
+								layer: 3
+							});
+							cityPicker3.setData(cityData3);
+							cityPicker3.show(function(items) {
+								cityResult3.value = (items[0] || {}).text + (items[1] || {}).text + ((items[2] || {}).text ? (items[2] || {}).text : "");
+								cityResult_idvalue = (items[0] || {}).value + "-" + (items[1] || {}).value + "-" + ((items[2] || {}).value ? (items[2] || {}).value : "");
+								//返回 false 可以阻止选择框的关闭
+								cityResult3.style.color = "#4c4c4c";
+								//return false;
+							});
+						}, false);
+
+					});
+				})(mui, document);
+				//地址验证
+				function address_check() {
+					if("" == cityResult3.value) {
+						mui.toast("请选择您所在城市");
+						return false;
+					} else {
+						$("#address_content").val(cityResult_idvalue);
+						return true;
+					}
+				}
+			}
+			//textarea自适应高
+			var text = document.getElementById("apply_remark");
+			autoTextarea(text);
+
+			function reg_remark(e) {
+				var reg_remark_01 = /^(?!_)(?!.*?_$)[a-zA-Z0-9，。？！\u4e00-\u9fa5]+$/;
+				var apply_remark = mui('#apply_remark')[0].value;
+				if('' == apply_remark) {
+					mui.toast('资源优势不能为空');
+				} else if(!reg_remark_01.test(apply_remark)) {
+					mui.toast('资源优势格式不正确,只可输入汉字、英文和数字');
+					return false;
+				} else {
+					return true;
+				}
+			}
+		</script>
+	</body>
+
+</html>

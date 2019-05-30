@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>其他报错处理方法</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">其他报错处理方法</h1>
+		</header>
+
+		<div class="mui-content bg_white p30 font30">
+			<div class="bold pt25">其他报错处理方法</div>
+			
+			<div>如有客户端报错“交易失败，请稍后重试”，“刷卡失败，请重试”等，且后台未查询到交易记录的，可提供以下信息邮件至闪电宝运营组核实。</div>
+
+			<div class="overflow">
+				<div class="answer">答：</div>
+				<div class="answer_content">
+					<div>1 用户手机号</div>
+					<div>2 交易卡号</div>
+					<div>3 交易时间、交易金额</div>
+					<div>4 交易报错截图</div>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色
+			plus.navigator.setStatusBarBackground('#078ffe');
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+	</script>
+
+</html>

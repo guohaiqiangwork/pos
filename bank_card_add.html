@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加银行卡</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">添加银行卡 </h1>
+		</header>
+		<div class="mui-content bg_white">
+			<p class="bank_card_add_hint">* 请绑定持卡人本人的银行卡</p>
+			<!--<div class="bank_tab">
+				<div class="type active">个人账户</div>
+				<div class="type">公司账户</div>
+			</div>-->
+			<!--<div class="grey_line"></div>-->
+			<form id="user_new_bankcard_form" class="user_form" action="" method="post">
+				<input id="input_customer" type="hidden" name="model.customer.id" id="" value="" />
+				<div id="type_personal" class="user_row_01">
+					<span class="title">持卡人</span>
+					<input type="text" name="model.name" id="user_name" placeholder="请输入本人姓名" />
+				</div>
+				<!--<div id="type_company" class="user_row_01" style="display: none;">
+					<span class="title">企业名称</span>
+					<input type="text" name="" id="" placeholder="请输入企业名称" disabled="disabled"/>
+				</div>-->
+				<div class="user_row_01">
+					<span class="title">银行卡号</span>
+					<input type="text" name="model.code" id="code" placeholder="请输入银行卡号" />
+				</div>
+				<div id='choose_bank' class="user_row_01">
+					<span class="title">银行名称</span>
+					<input type="text" name="model.bankName" id="bankName" placeholder="请选择银行" readonly="readonly" />
+					<input type="hidden" name="model.bankCode" id="bankCode" />
+					<span class="mui-icon mui-icon-arrowright row_enter"></span>
+				</div>
+				<div id='showCityPicker3' class="user_row_01">
+					<span class="title">所在地区</span>
+					<input type="text" name="" id="cityResult3" placeholder="请选择所在地区" readonly="readonly" />
+					<input type="hidden" name="model.areaString" id="areaString" />
+					<span class="mui-icon mui-icon-arrowright row_enter"></span>
+				</div>
+			</form>
+			<button class="btn_common_submit">确定</button>
+			<!--银行卡选项-->
+			<div id="bankname_popover" class="bank_content mui-popover mui-popover-bottom mui-popover-action">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell" data_bankCode="01050000">中国建设银行</li>
+							<li class="mui-table-view-cell" data_bankCode="01020000">中国工商银行</li>
+							<li class="mui-table-view-cell" data_bankCode="01030000">中国农业银行</li>
+							<li class="mui-table-view-cell" data_bankCode="04030000">中国邮政储蓄银行</li>
+							<li class="mui-table-view-cell" data_bankCode="01040000">中国银行</li>
+							<!--<li class="mui-table-view-cell" data_bankCode="03050000">民生银行</li>-->
+							<li class="mui-table-view-cell" data_bankCode="03010000">交通银行</li>
+							<li class="mui-table-view-cell" data_bankCode="03080000">招商银行</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+
+		<script src="js/mui.picker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mui.poppicker.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/huifu.city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui('.mui-scroll-wrapper').scroll()
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back = function(){
+				location.href = "bank_card_list.html";
+			}
+			//选择公户私户
+			//			mui('.bank_tab').on('tap', '.type', function(e) {
+			//				$(".bank_tab .type").removeClass("active");
+			//				$(this).addClass("active");
+			//				if("公司账户" == this.innerHTML) {
+			//					$("#type_personal").hide();
+			//					$("#type_company").show();
+			//				} else {
+			//					$("#type_personal").show();
+			//					$("#type_company").hide();
+			//				}
+			//			});
+
+			//选择银行
+			mui('.user_form').on('tap', '#choose_bank', function(e) {
+				$("input").blur();
+				mui('#bankname_popover').popover('toggle');
+			});
+			mui('#bankname_popover').on('tap', '.mui-table-view-cell', function(e) {
+				mui('#bankname_popover').popover('toggle');
+				$(".mui-table-view-cell").removeClass("active");
+				$(this).addClass("active");
+				$("#choose_bank #bankName").val(this.innerHTML);
+				$("#choose_bank #bankCode").val($(this).attr("data_bankCode"));
+			});
+
+			//申请人ID
+			$("#input_customer").val(myStorage.getItem('Customer_info').id)
+			//新增银行卡
+			mui('.btn_common_submit')[0].addEventListener('tap', function() {
+				if(name_check_02() && bankCode_check($("#code").val().trim())) {
+					pay_loading();
+					var formData = $('#user_new_bankcard_form').serialize();
+					formData = decodeURIComponent(formData, true);
+					console.log(formData);
+					mui.ajax(ajax_url + 'appCustomer/addBankCard', {
+						data: formData,
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								isNeedSelectBankCardBandState = true;
+								selectNumber = 0
+								setTimeout(function() {
+									select_bankCard_band_state(data.msg);
+								}, 1000);
+								console.log(data.msg);
+							}
+							if(false == data.success) {
+								mui.toast(data.msg)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							if(xhr.status != '0')
+								mui.toast('服务器走丢了')
+						}
+					});
+				}
+			});
+			var isNeedSelectBankCardBandState = false, selectNumber = 0;
+			function select_bankCard_band_state(bankCardId) {
+				selectNumber++;
+				console.log(bankCardId)
+				mui.ajax(ajax_url + 'appCustomer/isBankCardSuccess', {
+					data: {
+						bankCardId: bankCardId
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						console.log(data);
+						if(data.success) {
+							isNeedSelectBankCardBandState = false;
+							location.href = "bank_card_list.html"
+						} else {
+							if("bankCardId_is_null" == data.msg){
+								// 银行卡ID不可为空
+								isNeedSelectBankCardBandState = false;
+								mui.toast("银行卡ID不可为空");
+							} else if("bankcard_is_not_have" == data.msg){
+								// 银行卡不存在
+								isNeedSelectBankCardBandState = false;
+								mui.toast("银行卡不存在");
+							} else if("need_select" == data.msg){
+								// 查询到汇付端为业务已受理状态，需要继续轮询
+								isNeedSelectBankCardBandState = true;
+							} else if(0 <= data.msg.indexOf("resp_code_")){
+								// 查询到绑卡失败，msg为绑卡失败code
+								isNeedSelectBankCardBandState = false;
+								var error_code = data.msg.replace("resp_code_","");
+								if("104601" == error_code){
+									//信用卡不可绑定
+									mui.toast("信用卡不可绑定！");
+								} else if("104319" == error_code){
+									//已绑定过或不支持绑定，提示会员更换卡再试
+									mui.toast("已绑定过或不支持绑定，请换一张卡再试！");
+								} else if("104308" == error_code){
+									// 省市地区非法
+									mui.toast("省市地区非法，请重新选择！");
+								} else {
+									mui.toast("绑卡失败，请稍后重试~");
+								}
+							} else {
+								isNeedSelectBankCardBandState = true;
+								mui.toast(data.msg);
+							}
+						}
+						if(30 < selectNumber)
+							isNeedSelectBankCardBandState = false;
+						if(isNeedSelectBankCardBandState){
+							setTimeout(function(){
+								select_bankCard_band_state(bankCardId);
+							},1000);
+						} else {
+							$(".open_box_loading").remove();
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						isNeedSelectBankCardBandState = true;
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了');
+						if(isNeedSelectBankCardBandState){
+							setTimeout(function(){
+								select_bankCard_band_state(bankCardId);
+							},1000);
+						} else {
+							$(".open_box_loading").remove();
+						}
+					}
+				});
+			}
+			//地区选择
+			mui('#showCityPicker3')[0].addEventListener('tap', function() {
+				$('input').blur();
+			});
+			(function($_, doc) {
+				$_.init();
+				$_.ready(function() {
+					//地区级联选择
+					var showCityPickerButton = doc.getElementById('showCityPicker3');
+					var cityResult3 = doc.getElementById('cityResult3');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						$('input').blur();
+						var cityPicker3 = new $_.PopPicker({
+							layer: 2
+						});
+						cityPicker3.setData(cityData);
+						cityPicker3.show(function(items) {
+							cityResult3.value = (items[0] || {}).text + (items[1] || {}).text;
+							//返回 false 可以阻止选择框的关闭
+							cityResult3.style.color = "#4c4c4c";
+							$("#areaString").val((items[0] || {}).value + "-" + (items[1] || {}).value);
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>月账单</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white profit_detail">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">月账单</h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div id="slider" class="mui-slider" style="z-index: inherit;">
+				<div class="library_content_date font_grey bg_gray p30">本月收益已发放到您的余额中</div>
+
+				<div id="segmentedControl1" class="bank_tab mui-segmented-control bg_white">
+					<a id="getBillListByCustomer_01" class="mui-control-item mui-active" href="#item1mobile">全民模式</a>
+					<a id="getBillListByCustomer_02" class="mui-control-item" href="#item2mobile">其他支付</a>
+				</div>
+
+				<div class="line"></div>
+
+				<div class="mui-content-padded bg_white" style="margin: 0;">
+					<!--全民模式-->
+					<div id="item1mobile" class="mui-control-content mui-active">
+						<!--<div class="bill_content overflow">
+							<div class="left font_orange">2018年7月账单</div>
+							<div class="left ml30">08-01&nbsp;00:47:01</div>
+							<div class="right bold">+<span>16000.00</span>元</div>
+						</div>
+						<div class="bill_content overflow">
+							<div class="left font_orange">2018年7月账单</div>
+							<div class="left ml30">08-01&nbsp;00:47:01</div>
+							<div class="right bold">+<span>16000.00</span>元</div>
+						</div>
+						<div class="bill_content overflow">
+							<div class="left font_orange">2018年7月账单</div>
+							<div class="left ml30">08-01&nbsp;00:47:01</div>
+							<div class="right bold">+<span>16000.00</span>元</div>
+						</div>-->
+					</div>
+					<!--其他支付-->
+					<div id="item2mobile" class="mui-control-content">
+						<!--<div class="bill_content overflow">
+							<div class="left font_orange">2018年6月账单</div>
+							<div class="left ml30">08-01&nbsp;00:47:01</div>
+							<div class="right bold">+<span>16000.00</span>元</div>
+						</div>
+						<div class="bill_content overflow">
+							<div class="left font_orange">2018年6月账单</div>
+							<div class="left ml30">08-01&nbsp;00:47:01</div>
+							<div class="right bold">+<span>16000.00</span>元</div>
+						</div>
+						<div class="bill_content overflow">
+							<div class="left font_orange">2018年6月账单</div>
+							<div class="left ml30">08-01&nbsp;00:47:01</div>
+							<div class="right bold">+<span>16000.00</span>元</div>
+						</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/mui.pullToRefresh.js"></script>
+		<script src="js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//选项卡切换
+			var type = 1,
+				tab_id = "item1mobile",
+				pageNo = 1,
+				flag = true;
+			//加载更多初始化
+			mui('.mui-content-padded').pullToRefresh({
+				up: {
+					callback: function() {
+						var _this = this;
+						console.log(this)
+						setTimeout(function() {
+							console.log(flag)
+							if(flag) {
+								if("item1mobile" == tab_id) {
+									getBillListByCustomer();
+								} else if("item2mobile" == tab_id) {
+									getBillListByCustomer();
+								}
+							}
+							_this.endPullUpToRefresh(!flag);
+						}, 500);
+					}
+				}
+			});
+			//切换选项卡
+			mui('body').on('tap', 'a', function(e) {
+				pageNo = 1;
+				flag = true;
+				if("getBillListByCustomer_01" == this.id) {
+					type = 1;
+					tab_id = "item1mobile";
+					$("#item1mobile").html("");
+				} else if("getBillListByCustomer_02" == this.id) {
+					type = 2;
+					tab_id = "item2mobile";
+					$("#item2mobile").html("");
+				}
+				getBillListByCustomer();
+				mui('.mui-content-padded').pullToRefresh().refresh(true);
+			});
+			getBillListByCustomer();
+			//获取会员收益明细列表
+			function getBillListByCustomer() {
+				mui.ajax(ajax_url + 'appCustomer/getBillListByCustomer', {
+					data: {
+						"model.customer.id": customerId,
+						"model.type": type,
+						"page.pageNo": pageNo
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							if(0 == data.obj.results.length) {
+								flag = data.obj.haveNextPage;
+								var listnone = '<div class="list-none" style="display:block">' +
+									'<img class="icon_none icon_none_mt" src="img/icon_none_address.png">' +
+									'<div class="fonts">空空如也</div>' +
+									'</div>';
+								if(1 == type) {
+									$("#item1mobile").append(listnone);
+								}else{
+									$("#item2mobile").append(listnone);
+								
+								}
+								$(".mui-pull-bottom-tips").hide();
+							} else {
+								if(data.obj.totalRecord > 10) {
+									$(".mui-pull-bottom-tips").show();
+								} else {
+									$(".mui-pull-bottom-tips").hide();
+								}
+								//是否有下一页
+								pageNo++;
+								flag = data.obj.haveNextPage;
+								var results = data.obj.results;
+								for(var i = 0; i < results.length; i++) {
+									var my_profitlist = '<div class="bill_content overflow">' +
+										'<div class="left font_orange">'+results[i].year+'年'+results[i].month+'月账单</div>' +
+										'<div class="left ml30">' + timestampToTime(results[i].createTime) + '</div>' +
+										'<div class="right bold">+<span>'+results[i].money+'</span>元</div>' +
+										'</div>';
+									if(1 == type) {
+										$("#item1mobile").append(my_profitlist);
+									} else {
+										$("#item2mobile").append(my_profitlist);
+									}
+								}
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

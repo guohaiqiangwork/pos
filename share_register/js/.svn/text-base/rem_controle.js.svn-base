@@ -1,0 +1,1 @@
+window.onresize=function(){document.documentElement.style.fontSize=document.documentElement.clientWidth/7.5+'px';var deviceWidth=document.documentElement.clientWidth;if(deviceWidth>640){deviceWidth=640}};onresize();

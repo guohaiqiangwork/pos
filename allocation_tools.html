@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>调拨机具</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.average_three_list div:nth-child(1) {
+				float: left;
+				width: 46%;
+				text-align: left;
+			}
+			
+			.average_three_list div:nth-child(2) {
+				float: left;
+				width: 30%;
+			}
+			.average_three_list div:nth-child(3) {
+				float: left;
+				width: 24%;
+			}
+			
+			.HigherUserProxy_hide {
+				display: none;
+			}
+			
+			.apply_content div:nth-child(odd) {
+				width: 70%;
+			}
+			
+			.apply_content div:nth-child(even) {
+				width: 30%;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">调拨机具</h1>
+		</header>
+
+		<div class="mui-content bg_white tools_allocation">
+			<div id="slider" class="mui-slider" style="z-index: inherit;">
+				<div id="segmentedControl1" class="bank_tab mui-segmented-control bg_white" style="height: 1rem;">
+					<a id="getCustomerProxy" class="mui-control-item mui-active" href="#item1mobile">
+						<div class="bg_white">调拨人选</div>
+					</a>
+					<a id="getAllotRecord_launch" class="mui-control-item" href="#item2mobile">
+						<div class="bg_white">发出调拨</div>
+					</a>
+					<a id="getAllotRecord_recive" class="mui-control-item" href="#item3mobile">
+						<div class="bg_white">接收调拨</div>
+					</a>
+				</div>
+
+				<div class="mui-content-padded bg_white" style="margin: 0;">
+					<!--调拨人选-->
+					<div id="item1mobile" class="mui-control-content mui-active">
+						<div class="serch">
+							<input id="search_CustomerProxy" type="search" placeholder="搜索您想找的盟友" />
+							<img class="mark_portrait" src="img/icon_serch.png" />
+						</div>
+						<div class="rate_title bold">我的上级盟友</div>
+						<div class="average_three_list text_c pt0">
+							<div>
+								<span id="HigherUserProxy"></span>
+								<img class="vip_icon HigherUserProxy_hide" src="img/icon_vip_4.png" alt="" />
+							</div>
+							<div id="HigherUserProxy_phone"></div>
+							<div class="text_r HigherUserProxy_hide" style="float: right;">
+								<span class="apply_button bg_blue" id="HigherUserProxy_button">调拨</span>
+							</div>
+						</div>
+
+						<div class="rate_title bold">我的盟友<span class="title_subtitle" id="customerList_length"></span></div>
+						<div class="customerList">
+						</div>
+					</div>
+					<!--发出调拨-->
+					<div id="item2mobile" class="mui-control-content">
+						<!--<div class="apply_content overflow">
+							<div class="my_profit_pay_date left">2018年07月23日&nbsp;&nbsp;21:47:01</div>
+							<div class="state right">申请失败&nbsp;&nbsp;<img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>
+							<div class="apply_name left bold">
+								<span class="left">李娜</span>
+								<span class="allocation left">调拨</span>王鑫&nbsp;&nbsp;<span class="font_blue">10</span>台机具
+							</div>
+							<span class="circular"></span>
+						</div>
+						<div class="apply_content overflow">
+							<div class="my_profit_pay_date left">2018年07月23日&nbsp;&nbsp;21:47:01</div>
+							<div class="state right">申请成功&nbsp;&nbsp;<img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>
+							<div class="apply_name left bold">
+								<span class="left">李娜</span>
+								<span class="allocation left">调拨</span>王鑫&nbsp;&nbsp;<span class="font_blue">10</span>台机具
+							</div>
+							<span class="circular"></span>
+						</div>-->
+					</div>
+					<!--接收调拨-->
+					<div id="item3mobile" class="mui-control-content">
+						<!--<div class="apply_content overflow">
+							<div class="my_profit_pay_date left">2018年07月23日&nbsp;&nbsp;21:47:01</div>
+							<div class="state right">待处理</div>
+							<div class="apply_name left bold">
+								<span class="left">李娜</span>
+								<span class="allocation left">调拨</span>王鑫&nbsp;&nbsp;<span class="font_blue">10</span>台机具
+							</div>
+							<div class="right text_r"><span class="apply_button bg_blue" style="border-radius: 19px;">接收机具</span></div>
+							<span class="circular"></span>
+						</div>
+						<div class="apply_content overflow">
+							<div class="my_profit_pay_date left">2018年07月23日&nbsp;&nbsp;21:47:01</div>
+							<div class="state right">申请成功</div>
+							<div class="apply_name left bold">
+								<span class="left">李娜</span>
+								<span class="allocation left">调拨</span>王鑫&nbsp;&nbsp;<span class="font_blue">10</span>台机具
+							</div>
+							<div class="right text_r"><span class="apply_button bg_blue" style="border-radius: 19px;">接收机具</span></div>
+							<span class="circular"></span>
+						</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/mui.pullToRefresh.js"></script>
+		<script src="js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back = function() {
+				location.href = "Nav_Personalcenter_Agent.html";
+			}
+
+			//选项卡切换
+			var type = "",
+				tab_id = "item1mobile",
+				pageNo = 1,
+				flag = true;
+			//加载更多初始化
+			mui('.mui-content-padded').pullToRefresh({
+				up: {
+					callback: function() {
+						var _this = this;
+						setTimeout(function() {
+							console.log(flag)
+							if(flag) {
+								if("item2mobile" == tab_id || "item3mobile" == tab_id) {
+									getAllotRecord();
+								}
+							}
+							_this.endPullUpToRefresh(!flag);
+						}, 500);
+					}
+				}
+			});
+			//切换选项卡
+			$(".mui-pull-bottom-tips").hide();
+			mui('body').on('tap', 'a', function(e) {
+				pageNo = 1;
+				flag = true;
+				if("getAllotRecord_launch" == this.id) {
+					type = 1;
+					tab_id = "item2mobile";
+					$("#item2mobile").html("");
+					$(".mui-pull-bottom-tips").show();
+					getAllotRecord();
+				} else if("getAllotRecord_recive" == this.id) {
+					type = 2;
+					tab_id = "item3mobile";
+					$("#item3mobile").html("");
+					$(".mui-pull-bottom-tips").show();
+					getAllotRecord();
+				} else if("getCustomerProxy" == this.id) {
+					$(".mui-pull-bottom-tips").hide();
+					getCustomerProxy();
+				}
+				mui('.mui-content-padded').pullToRefresh().refresh(true);
+			});
+			//获取上级代理商
+			var Customer_info = myStorage.getItem('Customer_info');
+			console.log(Customer_info)
+			if(null != Customer_info.customer) {
+				$(".HigherUserProxy_hide").show();
+				$("#HigherUserProxy_button").attr("data-customerid", Customer_info.customer.id)
+				$("#HigherUserProxy_button").attr("data-customername", Customer_info.customer.name)
+				$("#HigherUserProxy_button").attr("data-phone", Customer_info.customer.phone)
+				if(Customer_info.customer.address != null) {
+					$("#HigherUserProxy_button").attr("data-address", Customer_info.customer.address)
+				} else {
+					$("#HigherUserProxy_button").attr("data-address", "null")
+				}
+				if(Customer_info.customer.levelSet != null) {
+					$("#HigherUserProxy").html(Customer_info.customer.name + "<img class='vip_icon' src='" + img_url + Customer_info.customer.levelSet.imgUrl[0] + "'/>")
+				} else {
+					$("#HigherUserProxy").html(Customer_info.customer.name + "<img class='vip_icon' src='" + img_url + "level_v0.png'/>")
+				}
+				$("#HigherUserProxy_phone").html(Customer_info.customer.phone);
+				//等级图标
+				$(".vip_icon.HigherUserProxy_hide").hide()
+			} else {
+				mui.ajax(ajax_url + 'appCustomer/getHigherUserProxy', {
+					data: {
+						customerId: Customer_info.id,
+						posType:1
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							console.log(data)
+							$(".HigherUserProxy_hide").hide();
+							$("#HigherUserProxy_button").attr("data-customerid", data.attributes.ownerId)
+							$("#HigherUserProxy_button").attr("data-customername", data.obj)
+							$("#HigherUserProxy").html(data.obj)
+							$("#HigherUserProxy_phone").html(data.attributes.phone)
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+
+			//获取下级代理商
+			var name = "";
+			getCustomerProxy();
+			function getCustomerProxy() {
+				mui.ajax(ajax_url + 'appCustomer/getCustomerProxy', {
+					data: {
+						customerId: Customer_info.id,
+						name: name
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							var customerList_info = data.obj;
+							$(".customerList").html("");
+							$("#customerList_length").html("（" + customerList_info.length + "人）");
+							if(customerList_info.length == 0) {
+								var listnone = '<div class="list-none" style="display:block">' +
+									'<img class="icon_none" src="img/icon_none_address.png" style="margin-top:1.5rem">' +
+									'<div class="fonts">空空如也</div>' +
+									'</div>';
+								$(".customerList").append(listnone);
+							} else {
+								for(var i = 0; i < customerList_info.length; i++) {
+									console.log(customerList_info[i])
+									if(customerList_info[i].name == null) {
+										customerList_info[i].name = "未实名"
+									}
+									if(null !== customerList_info[i].address_moren) {
+										if(customerList_info[i].levelSet != null) {
+											var customerList = '<div class="average_three_list text_c b_none">' +
+												'<div>' + customerList_info[i].name + '<img class="vip_icon" src="' + img_url + customerList_info[i].levelSet.imgUrl[0] + '" alt="" /></div>' +
+												'<div>' + customerList_info[i].phone + '</div>' +
+												'<div class="text_r"><span class="apply_button bg_blue doAllot" data-customerid="' + customerList_info[i].id + '" data-phone="' + customerList_info[i].phone + '" data-address="' + customerList_info[i].address_moren.content + '" data-customername="' + customerList_info[i].name + '">调拨</span></div>' +
+												'</div>';
+										} else {
+											var customerList = '<div class="average_three_list text_c b_none">' +
+												'<div>' + customerList_info[i].name + '<img class="vip_icon" src="' + img_url + 'level_v0.png" alt="" /></div>' +
+												'<div>' + customerList_info[i].phone + '</div>' +
+												'<div class="text_r"><span class="apply_button bg_blue doAllot" data-customerid="' + customerList_info[i].id + '" data-phone="' + customerList_info[i].phone + '" data-address="' + customerList_info[i].address_moren.content + '" data-customername="' + customerList_info[i].name + '">调拨</span></div>' +
+												'</div>';
+										}
+										$(".customerList").append(customerList)
+									} else {
+										if(customerList_info[i].levelSet != null) {
+											var customerList = '<div class="average_three_list text_c b_none">' +
+												'<div>' + customerList_info[i].name + '<img class="vip_icon" src="' + img_url + customerList_info[i].levelSet.imgUrl[0] + '" alt="" /></div>' +
+												'<div>' + customerList_info[i].phone + '</div>' +
+												'<div class="text_r"><span class="apply_button bg_blue doAllot" data-customerid="' + customerList_info[i].id + '" data-phone="' + customerList_info[i].phone + '" data-address="null" data-customername="' + customerList_info[i].name + '">调拨</span></div>' +
+												'</div>';
+										} else {
+											var customerList = '<div class="average_three_list text_c b_none">' +
+												'<div>' + customerList_info[i].name + '<img class="vip_icon" src="' + img_url + 'level_v0.png" alt="" /></div>' +
+												'<div>' + customerList_info[i].phone + '</div>' +
+												'<div class="text_r"><span class="apply_button bg_blue doAllot" data-customerid="' + customerList_info[i].id + '" data-phone="' + customerList_info[i].phone + '" data-address="null" data-customername="' + customerList_info[i].name + '">调拨</span></div>' +
+												'</div>';
+										}
+										$(".customerList").append(customerList)
+									}
+								}
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+			//搜索下级代理
+			$("#search_CustomerProxy").blur(function() {
+				name = $(this).val();
+				getCustomerProxy();
+			});
+			$(document).on('keyup', '#search_CustomerProxy', function(event) {
+				if(event.keyCode == "13") {
+					name = $(this).val();
+					getCustomerProxy();
+					return false;
+				}
+			}).on('keypress', '#search_CustomerProxy', function(event) {
+				if(event.keyCode == "13") {
+					name = $(this).val();
+					getCustomerProxy();
+					return false;
+				}
+			}).on('keydown', '#search_CustomerProxy', function(event) {
+				if(event.keyCode == "13") {
+					name = $(this).val();
+					getCustomerProxy();
+					return false;
+				}
+			});
+			//发起调拨--操作
+			mui('body').on('tap', '.doAllot,#HigherUserProxy_button', function(e) {
+				console.log(this.dataset)
+				//调拨接收人信息
+				if("null" == this.dataset.address) {
+					mui.alert("您选择的调拨人还没有设置默认地址")
+				} else {
+					var allocation = [4, this.dataset.customerid, this.dataset.customername, this.dataset.phone, this.dataset.address];
+					myStorage.setItem('allocation', allocation);
+					location.href = "allocation_message.html";
+				}
+			});
+
+			//发出调拨、接收调拨记录
+			function getAllotRecord() {
+				mui.ajax(ajax_url + 'appCustomer/getAllotRecord', {
+					data: {
+						type: type,
+						customerId: customerId
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							var apply_content = data.obj.results;
+							if(0 == apply_content.length) {
+								flag = data.obj.haveNextPage;
+								var listnone = '<div class="list-none" style="display:block">' +
+									'<img class="icon_none icon_none_mt" src="img/icon_none_address.png">' +
+									'<div class="fonts">空空如也</div>' +
+									'</div>';
+								if(1 == type) {
+									$("#item2mobile").append(listnone);
+								} else {
+									$("#item3mobile").append(listnone);
+								}
+								$(".mui-pull-bottom-tips").hide();
+							} else {
+								$(".list-none").hide();
+								//是否有下一页
+								if(apply_content.length < 10 && 1 == pageNo) {
+									$(".mui-pull-bottom-tips").hide();
+								} else {
+									$(".mui-pull-bottom-tips").show();
+								}
+								pageNo++;
+								console.log(pageNo)
+								flag = data.obj.haveNextPage;
+								for(var i = 0; i < apply_content.length; i++) {
+									console.log(apply_content[i])
+									if(1 == type) {
+										//发出调拨记录
+										if(1 == apply_content[i].state) {
+											//待接收
+											var apply_content_list = '<div class="apply_content overflow" data-receivername="' + apply_content[i].receiver + '" data-phone="' + apply_content[i].getCustomer.phone + '" data-address="' + apply_content[i].getCustomer.address + '" data-number="' + apply_content[i].number + '" data-reason="' + apply_content[i].reason + '" data-id="' + apply_content[i].id + '">' +
+												'<div class="my_profit_pay_date left">' + timestampToTime(apply_content[i].createTime) + '</div>' +
+												'<div class="state right">待接收 <img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>' +
+												'<div class="apply_name left bold">' +
+												'<span class="left">' + apply_content[i].deliverier + '</span>' +
+												'<span class="allocation left">调拨</span>' + apply_content[i].receiver + '&nbsp;&nbsp;<span class="font_blue">' + apply_content[i].number + '</span>台机具' +
+												'</div>' +
+												'<span class="circular"></span>' +
+												'</div>';
+										} else {
+											//完成
+											var apply_content_list = '<div class="apply_content overflow"  data-receivername="' + apply_content[i].receiver + '" data-phone="' + apply_content[i].getCustomer.phone + '" data-address="' + apply_content[i].getCustomer.address + '" data-number="' + apply_content[i].number + '" data-reason="' + apply_content[i].reason + '" data-id="' + apply_content[i].id + '">' +
+												'<div class="my_profit_pay_date left">' + timestampToTime(apply_content[i].createTime) + '</div>' +
+												'<div class="state right">完成 <img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>' +
+												'<div class="apply_name left bold">' +
+												'<span class="left">' + apply_content[i].deliverier + '</span>' +
+												'<span class="allocation left">调拨</span>' + apply_content[i].receiver + '&nbsp;&nbsp;<span class="font_blue">' + apply_content[i].number + '</span>台机具' +
+												'</div>' +
+												'<span class="circular"></span>' +
+												'</div>';
+										}
+										$("#item2mobile").append(apply_content_list);
+									} else {
+										//接收调拨记录
+										if(1 == apply_content[i].state) {
+											//待接收
+											var apply_content_list = '<div class="apply_content overflow">' +
+												'<div class="my_profit_pay_date left">' + timestampToTime(apply_content[i].createTime) + '</div>' +
+												'<div class="state right">待接收</div>' +
+												'<div class="apply_name left bold">' +
+												'<span class="left">' + apply_content[i].deliverier + '</span>' +
+												'<span class="allocation left">调拨</span>' + apply_content[i].receiver + '&nbsp;&nbsp;<span class="font_blue">' + apply_content[i].number + '</span>台机具' +
+												'</div>' +
+												'<div class="right text_r"><span class="apply_button bg_blue Allot_receive" style="border-radius: 19px;" data-customername="' + apply_content[i].deliverier + '" data-phone="' + apply_content[i].phone + '" data-address="' + apply_content[i].address + '" data-number="' + apply_content[i].number + '" data-reason="' + apply_content[i].reason + '" data-id="' + apply_content[i].id + '">接收机具</span></div>' +
+												'<span class="circular"></span>' +
+												'</div>';
+										} else {
+											//完成
+											var apply_content_list = '<div class="apply_content overflow apply_content_enter" data-customername="' + apply_content[i].deliverier + '" data-phone="' + apply_content[i].phone + '" data-address="' + apply_content[i].address + '" data-number="' + apply_content[i].number + '" data-reason="' + apply_content[i].reason + '" data-id="' + apply_content[i].id + '">' +
+												'<div class="my_profit_pay_date left">' + timestampToTime(apply_content[i].createTime) + '</div>' +
+												'<div class="state right">完成</div>' +
+												'<div class="apply_name left bold">' +
+												'<span class="left">' + apply_content[i].deliverier + '</span>' +
+												'<span class="allocation left">调拨</span>' + apply_content[i].receiver + '&nbsp;&nbsp;<span class="font_blue">' + apply_content[i].number + '</span>台机具' +
+												'</div>' +
+												'<div class="right text_r"><span class="apply_button bg_blue disabled Allot_receive" style="border-radius: 19px;">接收机具</span></div>' +
+												'<span class="circular"></span>' +
+												'</div>';
+										}
+										$("#item3mobile").append(apply_content_list);
+									}
+								}
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+			//接收调拨--查看
+			mui('#item2mobile').on('tap', '.apply_content', function(e) {
+				var allocation_send_complete= [this.dataset.receivername, this.dataset.phone, this.dataset.address, this.dataset.number, this.dataset.reason, this.dataset.id];
+				myStorage.setItem('allocation_send_complete', allocation_send_complete);
+				location.href = "allocation_message_complete.html";
+			});
+			//接收调拨--操作
+			mui('#item3mobile').on('tap', '.Allot_receive', function(e) {
+				var allocation_recive = [this.dataset.customername, this.dataset.phone, this.dataset.address, this.dataset.number, this.dataset.reason, this.dataset.id];
+				myStorage.setItem('allocation_recive', allocation_recive);
+				location.href = "allocation_detail.html";
+			});
+			//接收调拨--查看
+			mui('#item3mobile').on('tap', '.apply_content_enter', function(e) {
+				var allocation_recive = [this.dataset.customername, this.dataset.phone, this.dataset.address, this.dataset.number, this.dataset.reason, this.dataset.id];
+				myStorage.setItem('allocation_recive', allocation_recive);
+				location.href = "allocation_detail.html?key=look";
+			});
+		</script>
+	</body>
+
+</html>

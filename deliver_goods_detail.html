@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>退货详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">退货详情 </h1>
+			<!--<a href="barcode_scan.html" class="mui-icon right scan_link"><img class="scan" src="img/icon_scan.png" alt="" /></a>-->
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="rate_title bold">代理商信息</div>
+
+			<div class="library_content_name overflow p30">
+				<div class="p30 left">发货人: <span id="asker_name"></span></div>
+				<div class="p30 left">电话: <span id="asker_phone"></span></div>
+			</div>
+
+			<div class="p30">
+				<div class="rate_title overflow">
+					<div class="left" style="width: 23%;">发货地址：</div>
+					<div id="asker_addrewss" class="left" style="width: 77%;"></div>
+				</div>
+			</div>
+
+			<div class="rate_title bold">申请退货台数: <span id="asker_num">0</span> 台</div>
+
+			<div class="rate_title bold">退货原因</div>
+
+			<div class="textarea1"><textarea id="textarea" rows="2" placeholder="请输入退货原因" readonly="readonly"></textarea></div>
+			<!--接收或已接收-->
+			<div id="return_receive_box">
+				<div class="line"></div>
+
+				<div class="rate_title overflow">
+					<div class="left bold">机具信息</div>
+					<div class="right content_titile" id="scan_details">详情&nbsp;<img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>
+				</div>
+
+				<div class="collect_content overflow">
+					<div class="tools_type_box">
+						<!--<div>UNIS:3台<img class="icon" src="img/icon_select.png" alt="" /></div>
+						<div>NIIER:1台<img class="icon" src="img/icon_danger.png" alt="" /></div>
+						<div>ANS:2台<img class="icon" src="img/icon_select.png" alt="" /></div>
+						<div>UNIS:3台<img class="icon" src="img/icon_danger.png" alt="" /></div>-->
+					</div>
+					<!--<div style="margin:8px 0;">总计:&nbsp;&nbsp;<span class="font_blue">6台</span></div>-->
+				</div>
+
+				<!--<div class="grey_line"></div>
+				<div class="rate_title bold">扫码确认</div>
+				<div class="font_blue collect_receive"><img class="head_icon" src="img/icon_tips_blue.png" alt="" />请点击右上角扫码确认收货</div>
+				<div class="font_blue collect_receive"><img class="head_icon" src="img/icon_typecheck.png" alt="" />机具接收成功！</div>
+				<div class="danger collect_receive"><img class="head_icon" src="img/icon_danger1.png" alt="" />待接收<span id="noscan_num"></span>台机具</div>-->
+				<button type="button" class="btn_common_submit">一键接收</button>
+			</div>
+			<!--审核-->
+			<div id="auditing_box" style="padding-top: 30px;">
+				<div class="textarea1"><textarea id="textarea_reason" rows="2" placeholder="请输入拒绝原因"></textarea></div>
+				<div class="two_button overflow" style="padding-top: 20px;">
+					<div class="bg_blue left" id="auditing_agree">同意</div>
+					<div class="bg_red right" id="auditing_refuse">拒绝</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/textarea.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			mui.back = function() {
+				location.href = "deliver_return_record.html"
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//代理商信息
+			var asker_info = myStorage.getItem('asker');
+			$("#asker_name").html(asker_info[0])
+			$("#asker_phone").html(asker_info[1])
+			if(asker_info[2] == "") {
+				$("#asker_addrewss").html("申请人还没有设置默认地址");
+				$("#asker_addrewss").css("color", "#a9a9a9")
+			} else {
+				$("#asker_addrewss").html(asker_info[2]);
+			}
+			$("#asker_num").html(asker_info[3]);
+			$("#textarea").html(asker_info[4]);
+			var applyrecordid = myStorage.getItem("applyrecordid");
+			if(1 == asker_info[5]) {
+				//审核
+				$("#return_receive_box").hide();
+				//同意
+				var approveState = "",
+					rejectReason = "";
+				mui('#auditing_agree')[0].addEventListener('tap', function() {
+					approveState = 1;
+					posAskDoApprove();
+				})
+				//拒绝
+				mui('#auditing_refuse')[0].addEventListener('tap', function() {
+					if($("#textarea_reason").val() != "") {
+						var btnArray = ['否', '是'];
+						mui.confirm("您确认拒绝吗？", ' ', btnArray, function(e) {
+							if(e.index == 1) {
+								approveState = 2;
+								rejectReason = $("#textarea_reason").val();
+								posAskDoApprove();
+							} else {
+
+							}
+						});
+					} else {
+						mui.toast("请输入拒绝原因")
+					}
+				})
+				//上级审核退机具
+				function posAskDoApprove() {
+					mui.ajax(ajax_url + 'appCustomer/posAskDoApprove', {
+						data: {
+							id: applyrecordid,
+							approveState: approveState,
+							rejectReason: rejectReason
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								location.href = "deliver_return_record.html"
+							}
+							if(false == data.success) {
+								mui.toast(data.msg)
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							if(xhr.status != '0')
+								mui.toast('服务器走丢了')
+						}
+					});
+				}
+
+			} else if(2 == asker_info[5] || 6 == asker_info[5]) {
+				$("#return_receive_box").hide();
+				$("#auditing_box").hide();
+			} else if(3 == asker_info[5]) {
+				$("#auditing_box").hide();
+				$(".btn_common_submit").hide();
+				console.log($(".rate_title").length)
+				$(".rate_title").eq(5).hide()
+				//获取机具详情
+				mui.ajax(ajax_url + 'appCustomer/getPosAskDatil', {
+					data: {
+						id: applyrecordid
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							if(0 == data.obj.length) {
+								$("#no_scan_box").show();
+								$("#has_scan_box").hide();
+								$("#return_receive_box .collect_receive").eq(0).show();
+							} else {
+								$("#no_scan_box").hide();
+								$("#has_scan_box").show();
+								//机具总数
+								var collect_content = '<div style="margin:8px 0;">总计:&nbsp;&nbsp;<span class="font_blue">' + data.obj.length + '台</span></div>';
+								$(".collect_content").append(collect_content);
+								//机具类型数组
+								var toolstype_num = 0;
+								var array_toolstype = new Array;
+								var array_toolstype_removal = "";
+								for(var i = 0; i < data.obj.length; i++) {
+									//机具类型数组（重复）
+									array_toolstype[toolstype_num] = data.obj[i].pos.posType.name;
+									toolstype_num++;
+								}
+								//机具类型数组（去重）
+								Array.prototype.distinct = function() {
+									var arr = this,
+										result = [],
+										j,
+										k,
+										len = arr.length;
+									for(j = 0; j < len; j++) {
+										for(k = j + 1; k < len; k++) {
+											if(arr[j] === arr[k]) {
+												k = ++j;
+											}
+										}
+										result.push(arr[j]);
+										array_toolstype_removal = result;
+									}
+									return result;
+								}
+								array_toolstype.distinct();
+								//拼接机具类型节点
+								for(var j = 0; j < array_toolstype_removal.length; j++) {
+									//该类型机具数量type_num；该类型已扫码机具type_scan_num
+									var type_num = 0,
+										type_scan_num = 0;
+									for(var i = 0; i < data.obj.length; i++) {
+										if(array_toolstype_removal[j] == data.obj[i].pos.posType.name) {
+											type_num++;
+											mui.each(scan_toolcode, function(index, item) {
+												if(item == data.obj[i].id) {
+													type_scan_num++;
+												}
+											})
+										}
+									}
+									var tools_type_list = '<div>' + array_toolstype_removal[j] + '：' + type_num + '台<span class="icon right"><img class="img" src="img/icon_select.png" alt="" /></span></div>';
+									$(".tools_type_box").append(tools_type_list);
+								}
+							}
+
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			} else {
+				//获取已扫码机具缓存
+				var scan_toolcode = new Array;
+				var removeindex = "";
+				console.log(applyrecordid)
+				$("#return_receive_box").show();
+				$("#auditing_box").hide();
+				//获取机具详情
+				mui.ajax(ajax_url + 'appCustomer/getPosAskDatil', {
+					data: {
+						id: applyrecordid
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							if(0 == data.obj.length) {
+								$("#no_scan_box").show();
+								$("#has_scan_box").hide();
+								$("#return_receive_box .collect_receive").eq(0).show();
+							} else {
+								$("#no_scan_box").hide();
+								$("#has_scan_box").show();
+								//机具总数
+								var collect_content = '<div style="margin:8px 0;">总计:&nbsp;&nbsp;<span class="font_blue">' + data.obj.length + '台</span></div>';
+								$(".collect_content").append(collect_content);
+								//已激活机具数量
+								var Activating_machinery_num = scan_toolcode.length;
+								//机具类型数组
+								var toolstype_num = 0;
+								var array_toolstype = new Array;
+								var array_toolstype_removal = "";
+								for(var i = 0; i < data.obj.length; i++) {
+									//机具类型数组（重复）
+									array_toolstype[toolstype_num] = data.obj[i].pos.posType.name;
+									toolstype_num++;
+								}
+								//机具类型数组（去重）
+								Array.prototype.distinct = function() {
+									var arr = this,
+										result = [],
+										j,
+										k,
+										len = arr.length;
+									for(j = 0; j < len; j++) {
+										for(k = j + 1; k < len; k++) {
+											if(arr[j] === arr[k]) {
+												k = ++j;
+											}
+										}
+										result.push(arr[j]);
+										array_toolstype_removal = result;
+									}
+									return result;
+								}
+								array_toolstype.distinct();
+								//拼接机具类型节点
+								for(var j = 0; j < array_toolstype_removal.length; j++) {
+									//该类型机具数量type_num
+									var type_num = 0;
+									for(var i = 0; i < data.obj.length; i++) {
+										if(array_toolstype_removal[j] == data.obj[i].pos.posType.name) {
+											type_num++;
+											scan_toolcode[i] = data.obj[i].id;
+										}
+									}
+									var tools_type_list = '<div>' + array_toolstype_removal[j] + '：' + type_num + '台<span class="icon right"><img class="img" src="img/icon_danger.png" alt="" /></span></div>';
+									$(".tools_type_box").append(tools_type_list);
+								}
+								console.log(scan_toolcode)
+							}
+
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+			//一键接收
+			mui('body').on('tap', '.btn_common_submit', function(e) {
+				var btnArray = ['返回', '确定'];
+				mui.confirm("点击确定后，此申请单包含所有机具将记入库存", '一键接收', btnArray, function(e) {
+					if(e.index == 1) {
+						//确认收货
+						mui.ajax(ajax_url + 'appCustomer/confirmTakeDelivery', {
+							data: {
+								type: 1,
+								askDatilIdList: scan_toolcode.join(","),
+								id: applyrecordid
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								if(true == data.success) {
+									location.href = "deliver_return_record.html"
+								}
+								if(false == data.success) {
+									mui.toast(data.msg)
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								if(xhr.status != '0')
+									mui.toast('服务器走丢了')
+							}
+						});
+					} else {
+
+					}
+				});
+			});
+
+			//textarea自适应高
+			var text = document.getElementById("textarea");
+			autoTextarea(text);
+			//扫码
+			//			mui('body').on('tap', '.scan_link', function(e) {
+			//				location.href = "barcode_scan.html?key=deliver_recive";
+			//			});
+			//机具详情
+			mui('#scan_details')[0].addEventListener('tap', function() {
+				location.href = 'Tools_details.html'
+			});
+		</script>
+	</body>
+
+</html>

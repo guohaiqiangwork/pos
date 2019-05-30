@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>实名认证</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			input[type=file] {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">实名认证 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="collect_title">
+				<div class="content_title bold" style="text-align: left;"><img class="realname_icon" src="img/icon_real_name.png" alt="" />上传身份证</div>
+				<!--表单-->
+				<form id="user_new_address_form" class="user_form" action="" method="post">
+					<!--用户id-->
+					<input id="input_customer" type="hidden" name="model.id" value="" />
+					<input id="idImgString" type="hidden" name="model.idImgString" value="" />
+					<!--身份证正面-->
+					<div id="front_IDcard">
+						<div class="realname_img" id="upload_front_IDcard">
+							<img id="front_IDcard_img" class="img" src="img/bg_realname.png" alt="" />
+							<img class="change_img" src="img/change_img.png" />
+						</div>
+						<input id="choose_front_IDcard" type="file" accept="image/*" />
+						<div class="content_title bold">国徽面</div>
+						<div class="realname_text">身份证完整，有效期清晰</div>
+					</div>
+					<!--身份证背面-->
+					<div id="back_IDcard">
+						<div class="realname_img" id="upload_back_IDcard">
+							<img id="back_IDcard_img" class="img" src="img/bg_realname.png" alt="" />
+							<img class="change_img" src="img/change_img.png" />
+						</div>
+						<!--<input type="file" accept="image/*"  style="display: block;background: #fcdd00;"/>-->
+						<input id="choose_back_IDcard" type="file" accept="image/*" />
+						<div class="content_title bold">人像面</div>
+						<div class="realname_text">身份证完整，身份证号清晰</div>
+					</div>
+				</form>
+				<button type="button" class="btn_common_submit">下一步</button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/NumberUtil.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//申请人ID
+			$("#input_customer").val(customerId);
+			mui('.btn_common_submit')[0].addEventListener('tap', function() {
+				if($("#idImgString").val() == "") {
+					mui.toast("请上传身份证照片");
+				} else if("" == ImgString_front) {
+					mui.toast("请上传身份证正面照片");
+				} else if("" == ImgString_back) {
+					mui.toast("请上传身份证反面照片");
+				} else {
+					var formData = $('#user_new_address_form').serialize();
+					formData = decodeURIComponent(formData, true);
+					console.log(formData)
+					pay_loading();
+					mui.ajax(ajax_url + 'appCustomer/certification', {
+						data: formData,
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							if(true == data.success) {
+								if(customerId != null) {
+									//获取用户信息
+									mui.ajax(ajax_url + 'appCustomer/getCustomer', {
+										data: {
+											customerId: customerId
+										},
+										dataType: 'json', //服务器返回json格式数据
+										type: 'post', //HTTP请求类型
+										timeout: 10000, //超时时间设置为10秒；
+										success: function(data) {
+											$(".open_box_loading").remove();
+											if(true == data.success) {
+												mui.toast("实名认证成功")
+												location.href='user_Face_recognition.html';
+//												var Customer_info = data.obj;
+//												if(null == Customer_info.type || "" == Customer_info.type) {
+//													location.href = "user_identity.html"
+//												} else if("2" == Customer_info.type) {
+//													location.href = "user_identity.html"
+//												} else {
+//													location.href = "Nav_Index.html"
+//												}
+											}
+											if(false == data.success) {
+												mui.toast(data.msg)
+											}
+										},
+										error: function(xhr, type, errorThrown) {
+											$(".open_box_loading").remove();
+											if(xhr.status != '0')
+												mui.toast('服务器走丢了')
+										}
+									});
+								}
+							}
+							if(false == data.success) {
+								mui.toast("实名认证失败，请重新上传试试")
+								console.log(data)
+								$(".open_box_loading").remove();
+								$("#idImgString").val("");
+								ImgString_front = "";
+								ImgString_back = "";
+								$("#front_IDcard_img").attr("src", "img/bg_realname.png");
+								$("#back_IDcard_img").attr("src", "img/bg_realname.png");
+								$("#choose_front_IDcard").val("");
+								$("#choose_back_IDcard").val("");
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							if(xhr.status != '0')
+								mui.toast('服务器走丢了')
+							$(".open_box_loading").remove();
+						}
+					});
+				}
+			})
+
+			//上传图片js 开始
+			//图片字符串
+			var ImgString_front = "",
+				ImgString_back = "";
+			//用于压缩图片的canvas
+			var canvas = document.createElement("canvas");
+			var ctx = canvas.getContext('2d');
+			//瓦片canvas
+			var tCanvas = document.createElement("canvas");
+			var tctx = tCanvas.getContext("2d");
+			var maxsize = 1572864; //  1.5M
+
+			//上传证件正面
+			document.getElementById('upload_front_IDcard').addEventListener('tap', function() {
+				if(mui.os.plus) {
+					var buttonTit = [{
+						title: "拍照"
+					}, {
+						title: "从手机相册选择"
+					}];
+
+					plus.nativeUI.actionSheet({
+						//						title: "上传图片",
+						cancel: "取消",
+						buttons: buttonTit
+					}, function(b) { /*actionSheet 按钮点击事件*/
+						switch(b.index) {
+							case 0:
+								break;
+							case 1:
+								getImage(true); /*拍照*/
+								break;
+							case 2:
+								galleryImg(true); /*打开相册*/
+								break;
+							default:
+								break;
+						}
+					})
+				}
+			}, false);
+			//上传证件背面
+			document.getElementById('upload_back_IDcard').addEventListener('tap', function() {
+				if(mui.os.plus) {
+					var buttonTit = [{
+						title: "拍照"
+					}, {
+						title: "从手机相册选择"
+					}];
+
+					plus.nativeUI.actionSheet({
+						//						title: "上传图片",
+						cancel: "取消",
+						buttons: buttonTit
+					}, function(b) { /*actionSheet 按钮点击事件*/
+						switch(b.index) {
+							case 0:
+								break;
+							case 1:
+								getImage(false); /*拍照*/
+								break;
+							case 2:
+								galleryImg(false); /*打开相册*/
+								break;
+							default:
+								break;
+						}
+					})
+				}
+			}, false);
+
+			// 拍照获取图片
+			function getImage(isfront) {
+				var c = plus.camera.getCamera();
+				c.captureImage(function(e) {
+					plus.io.resolveLocalFileSystemURL(e, function(entry) {
+							var imgSrc = entry.toLocalURL(); //拿到图片路径
+							//图片显示
+							var img = "";
+							if(isfront) {
+								img = document.getElementById("front_IDcard_img");
+							} else {
+								img = document.getElementById("back_IDcard_img");
+							}
+							img.src = imgSrc;
+
+							entry.file(function(file) {
+									reader = new plus.io.FileReader();
+									reader.onloadend = function(e) {
+										console.log(file.size)
+										file.type = "image/jpeg";
+										var image_ = new Image();
+										image_.src = imgSrc;
+										imgSrc = getBase64ImgData(image_, file);
+										
+										//e.target.result;//base64字符串
+										//如果图片大小小于1000kb，则直接上传
+										if(file.size <= maxsize) {
+											img = null;
+											if(isfront) {
+												upload(imgSrc, file.type, true);
+											} else {
+												upload(imgSrc, file.type, false);
+											}
+											return;
+										}
+										img = null;
+										//图片加载完毕之后进行压缩，然后上传
+										if(image_.complete) {
+											callback();
+										} else {
+											image_.onload = callback;
+										}
+
+										function callback() {
+											var data = compress(image_, file);
+											if(isfront) {
+												upload(data, file.type, true);
+											} else {
+												upload(data, file.type, false);
+											}
+											image_ = null;
+										}
+									};
+									reader.readAsDataURL(file);
+								},
+								function(e) {
+									alert(e.message);
+								});
+						},
+						function(e) {
+							console.log("读取拍照文件错误：" + e.message);
+						});
+				}, function(s) {
+					console.log("error" + s);
+				}, {
+					filename: "_doc/camera/"
+				})
+			}
+			// 从相册中选择图片 
+			function galleryImg(isfront) {
+				// 从相册中选择图片
+				plus.gallery.pick(function(e) {
+					for(var i in e.files) {
+						var fileSrc = e.files[i];
+						//						console.log(e.files[i])
+						//						var img = "";
+						//						if(isfront) {
+						//							img = document.getElementById("front_IDcard_img");
+						//						} else {
+						//							img = document.getElementById("back_IDcard_img");
+						//						}
+						//						img.src = fileSrc;
+
+						plus.io.resolveLocalFileSystemURL(fileSrc, function(entry) {
+							var imgSrc = entry.toLocalURL() ; //拿到图片路径
+							//图片显示
+							var img = "";
+							if(isfront) {
+								img = document.getElementById("front_IDcard_img");
+							} else {
+								img = document.getElementById("back_IDcard_img");
+							}
+							img.src = imgSrc;
+							// 可通过entry对象操作test.html文件 
+							entry.file(function(file) {
+									reader = new plus.io.FileReader();
+									reader.onloadend = function(e) {
+										console.log(file.type)
+										file.type = "image/jpeg";
+										var image_ = new Image();
+										image_.src = imgSrc;
+										imgSrc = getBase64ImgData(image_, file);
+										
+										//e.target.result;//base64字符串
+										//如果图片大小小于1000kb，则直接上传
+										if(file.size <= maxsize) {
+											img = null;
+											if(isfront) {
+												upload(imgSrc, file.type, true);
+											} else {
+												upload(imgSrc, file.type, false);
+											}
+											return;
+										}
+										img = null;
+										//图片加载完毕之后进行压缩，然后上传
+										if(image_.complete) {
+											callback();
+										} else {
+											image_.onload = callback;
+										}
+
+										function callback() {
+											var data = compress(image_, file);
+											if(isfront) {
+												upload(data, file.type, true);
+											} else {
+												upload(data, file.type, false);
+											}
+											image_ = null;
+										}
+									};
+									reader.readAsDataURL(file);
+								},
+								function(e) {
+									alert(e.message);
+								});
+						}, function(e) {
+							alert("Resolve file URL failed: " + e.message);
+						});
+					}
+				}, function(e) {
+					console.log("取消选择图片");
+				}, {
+					filter: "image",
+					multiple: true,
+					maximum: 1,
+					system: false,
+					onmaxed: function() {
+						plus.nativeUI.alert('最多只能选择1张图片');
+					}
+				});
+			}
+
+			// 使用canvas对大图片进行压缩
+			function compress(img, file) {
+				//console.log(file)
+				var w = img.width,
+					h = img.height,
+					scale = w / h,
+					initSize = file.size;
+				var quality = 1; // 默认图片质量为1
+				//生成canvas
+				var canvas = document.createElement('canvas');
+				var ctx = canvas.getContext('2d');
+				// 创建属性节点
+				var anw = document.createAttribute("width");
+				anw.nodeValue = w;
+				var anh = document.createAttribute("height");
+				anh.nodeValue = h;
+				canvas.setAttributeNode(anw);
+				canvas.setAttributeNode(anh);
+				ctx.drawImage(img, 0, 0, w, h);
+				// 图像质量
+				quality = accDiv(maxsize, initSize) - 0;
+				// quality值越小，所绘制出的图像越模糊
+				console.log(file.type)
+				var ndata = canvas.toDataURL(file.type, quality);
+				//				console.log('压缩前：' + initSize);
+				//				console.log('压缩后：' + ndata.length);
+				//				console.log('压缩率：' + ~~(100 * (initSize - ndata.length) / initSize) + "%");
+				return ndata;
+			}
+			//图片上传，将base64的图片转成二进制对象，塞进formdata上传
+			function upload(basestr, type, isfront) {
+				console.log(isfront)
+				console.log(basestr.split(",")[1])
+				if(basestr.split(",")[1] == undefined) {
+					mui.toast("请更换图片试试")
+					if(isfront){
+						ImgString_front = "";
+						$("#front_IDcard_img").attr("src", "img/bg_realname.png");
+						$("#choose_front_IDcard").val("");
+					}else{
+						ImgString_back = "";
+						$("#back_IDcard_img").attr("src", "img/bg_realname.png");
+						$("#choose_back_IDcard").val("");
+					}
+				} else {
+					var text = window.atob(basestr.split(",")[1]);
+					var buffer = new Uint8Array(text.length);
+					var pecent = 0,
+						loop = null;
+					for(var i = 0; i < text.length; i++) {
+						buffer[i] = text.charCodeAt(i);
+					}
+					var blob = getBlob([buffer], type);
+					var xhr = new XMLHttpRequest();
+					var formdata = getFormData();
+					formdata.append('file', blob);
+					formdata.append('fileType', type);
+					xhr.open('post', ajax_url + 'appCustomer/saveUploadFile');
+					xhr.onreadystatechange = function() {
+						if(xhr.readyState == 4 && xhr.status == 200) {
+							console.log(xhr)
+							var jsonData = JSON.parse(xhr.responseText);
+							console.log(jsonData)
+							var imagedata = jsonData[0] || {};
+							var text = jsonData.success ? '上传成功' : '上传失败';
+							console.log(text + '：' + jsonData.success);
+							clearInterval(loop);
+							//当收到该消息时上传完毕
+							if(!jsonData.success) return;
+							console.log(isfront)
+							console.log(jsonData.msg)
+							if(isfront) {
+								ImgString_front = jsonData.msg;
+							} else {
+								ImgString_back = jsonData.msg;
+							}
+							$("#idImgString").val(ImgString_front + "," + ImgString_back);
+							$(".pic-list").append('<a href="' + jsonData.success + '">' + imagedata.name + '（' + imagedata.size + '）<img src="' + imagedata.path + '" /></a>');
+						}
+					};
+					xhr.send(formdata);
+				}
+
+			}
+			/**
+			 * 获取blob对象的兼容性写法
+			 * @param buffer
+			 * @param format
+			 * @returns {*}
+			 */
+			function getBlob(buffer, format) {
+				try {
+					return new Blob(buffer, {
+						type: format
+					});
+				} catch(e) {
+					var bb = new(window.BlobBuilder || window.WebKitBlobBuilder || window.MSBlobBuilder);
+					buffer.forEach(function(buf) {
+						bb.append(buf);
+					});
+					return bb.getBlob(format);
+				}
+			}
+			/**
+			 * 获取formdata
+			 */
+			function getFormData() {
+				var isNeedShim = ~navigator.userAgent.indexOf('Android') &&
+					~navigator.vendor.indexOf('Google') &&
+					!~navigator.userAgent.indexOf('Chrome') &&
+					navigator.userAgent.match(/AppleWebKit\/(\d+)/).pop() <= 534;
+				return isNeedShim ? new FormDataShim() : new FormData()
+			}
+			/**
+			 * formdata 补丁, 给不支持formdata上传blob的android机打补丁
+			 * @constructor
+			 */
+			function FormDataShim() {
+				console.warn('using formdata shim');
+				var o = this,
+					parts = [],
+					boundary = Array(21).join('-') + (+new Date() * (1e16 * Math.random())).toString(36),
+					oldSend = XMLHttpRequest.prototype.send;
+				this.append = function(name, value, filename) {
+					parts.push('--' + boundary + '\r\nContent-Disposition: form-data; name="' + name + '"');
+					if(value instanceof Blob) {
+						parts.push('; filename="' + (filename || 'blob') + '"\r\nContent-Type: ' + value.type + '\r\n\r\n');
+						parts.push(value);
+					} else {
+						parts.push('\r\n\r\n' + value);
+					}
+					parts.push('\r\n');
+				};
+				// Override XHR send()
+				XMLHttpRequest.prototype.send = function(val) {
+					var fr,
+						data,
+						oXHR = this;
+					if(val === o) {
+						// Append the final boundary string
+						parts.push('--' + boundary + '--\r\n');
+						// Create the blob
+						data = getBlob(parts);
+						// Set up and read the blob into an array to be sent
+						fr = new FileReader();
+						fr.onload = function() {
+							oldSend.call(oXHR, fr.result);
+						};
+						fr.onerror = function(err) {
+							throw err;
+						};
+						fr.readAsArrayBuffer(data);
+						// Set the multipart content type and boudary
+						this.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+						XMLHttpRequest.prototype.send = oldSend;
+					} else {
+						oldSend.call(this, val);
+					}
+				};
+			}
+			function getBase64ImgData(img,file) {
+				var w = img.width,
+					h = img.height,
+					scale = w / h,
+					initSize = file.size;
+				var quality = 1; // 默认图片质量为1
+				//生成canvas
+				var canvas = document.createElement('canvas');
+				var ctx = canvas.getContext('2d');
+				// 创建属性节点
+				var anw = document.createAttribute("width");
+				anw.nodeValue = w;
+				var anh = document.createAttribute("height");
+				anh.nodeValue = h;
+				canvas.setAttributeNode(anw);
+				canvas.setAttributeNode(anh);
+				ctx.drawImage(img, 0, 0, w, h);
+				var ndata = canvas.toDataURL(file.type, quality);
+				return ndata;
+			}
+		</script>
+	</body>
+
+</html>

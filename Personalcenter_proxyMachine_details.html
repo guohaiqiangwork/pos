@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white profit_detail">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">详情</h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<!--机具信息-->
+			<div class="proxy_machine_detailslist">
+
+			</div>
+			<div class="line"></div>
+			<!--本机器交易订单列表-->
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/mui.pullToRefresh.js"></script>
+		<script src="js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back=function(){
+				location.href="Personalcenter_proxyMachine.html?type="+getQueryString("postype");
+			}
+			var posicon = "";
+			if(getQueryString("postype") == 1) {
+				posicon = '<img class="proxy_machine_details_icon" src="img/post_ype01.png" />'
+			} else {
+				posicon = '<img class="proxy_machine_details_icon" src="img/post_ype02.png" />'
+			}
+			//机具信息
+			var proxy_machine_detailslist = posicon +
+				'<p class="info">' +
+				'<span class="proxyname">' + decodeURIComponent(getQueryString("name"), true) + '</span><br />' +
+				'<span>' + decodeURIComponent(getQueryString("poscode"), true) + '<br />' +
+				'今日交易额：&yen;' + getQueryString("todaymoney") + '<br />' +
+				'总交易额：&yen;' + getQueryString("totalmoney") + '</span>' +
+				'</p>';
+			$(".proxy_machine_detailslist").append(proxy_machine_detailslist)
+			var posId = getQueryString("id")
+			getPosOrderList();
+			//拉取本机器交易订单列表
+			function getPosOrderList() {
+				mui.ajax(ajax_url + 'appCustomer/getPosOrderList', {
+					data: {
+						posId: posId,
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 120000, //超时时间设置为120秒；
+					success: function(data) {
+						if(true == data.success) {
+							console.log(data.obj)
+							if(data.obj == "null" || data.obj.length == 0) {
+								var listnone = '<div class="list-none" style="display:block"><img class="icon_none" src="img/icon_none_address.png" style="margin-top:1.5rem"><div class="fonts">空空如也</div></div>'
+								$(".mui-content").append(listnone)
+							} else {
+								for(var i = 0; i < data.obj.length; i++) {
+									var tradetime = "",
+										merchantname = "",
+										merchantNo = "",
+										crdNo = "";
+									if(data.obj[i].tradeTime == null) {
+										tradetime = timestampToTime(data.obj[i].createTime);
+									} else {
+										tradetime = timestampToTime(data.obj[i].tradeTime);
+									}
+									if(data.obj[i].merchantName != null) {
+										merchantname = data.obj[i].merchantName;
+									} else {
+										merchantname = "暂无";
+									}
+									if(data.obj[i].merchantName != null) {
+										merchantNo = data.obj[i].merchantNo;
+									} else {
+										merchantNo = "暂无";
+									}
+									if(data.obj[i].crdNo != null) {
+										crdNo = data.obj[i].crdNo;
+									} else {
+										crdNo = "暂无";
+									}
+									if(getQueryString("postype") == 1) {
+										var proxy_profit_list = '<div class="proxy_profit_list">' +
+											'<span class="proxy_profit_bold">' + merchantname + ' <span class="right">&yen;' + data.obj[i].tradeAmt + '</span></span><br />' +
+											'<p class="info">商户号：' + merchantNo + '<br />订单号: ' + data.obj[i].orderNo + '<br />交易日期：' + tradetime + '</p>' +
+											'</div>';
+									}else{
+										var proxy_profit_list = '<div class="proxy_profit_list">' +
+											'<span class="proxy_profit_bold">' + merchantname + ' <span class="right">&yen;' + data.obj[i].tradeAmt + '</span></span><br />' +
+											'<p class="info">商户号：' + merchantNo + '<br />银行卡号：' + crdNo + '<br />订单号: ' + data.obj[i].orderNo + '<br />交易日期：' + tradetime + '</p>' +
+											'</div>';
+									}
+									$(".mui-content").append(proxy_profit_list)
+								}
+							}
+
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

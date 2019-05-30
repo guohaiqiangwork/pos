@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>下载方式</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">下载方式 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="library_content_name collect_title bold">IOS和Android用户可通过以下两种方式下载客户端:</div>
+
+			<div class="library_content_name collect_title pt0" style="word-break: break-all;">1 手机登陆：https://shandianbao.chinapnr.com/supm/TRD101/index</div>
+
+			<div class="library_content_name collect_title pt0">2 手机扫描二维码下载</div>
+
+			<div class="download_img"><img class="img" src="img/bg_download.png" alt="" /></div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back = function() {
+				location.href = "Nav_Help.html?key=help"
+			}
+		</script>
+	</body>
+
+</html>

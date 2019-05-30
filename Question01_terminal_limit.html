@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>如提醒“终端交易限制”</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">如提醒“终端交易限制”</h1>
+		</header>
+
+		<div class="mui-content bg_white p30 font30">
+			<div class="bold pt25">终端交易限制，请稍后再试</div>
+			
+			<div>描述：交易金额超出发卡行限制的可交易额度</div>
+			
+			<div class="transaction_overrun_img">
+				<img class="transaction_img" src="img/img_terminal_limit.jpg" alt="" />
+			</div>
+
+			<div class="overflow">
+				<div class="answer">答：</div>
+				<div class="answer_content">
+					<div>1 请勿频繁交易，建议商户间隔 10-20 分钟刷卡交易；</div>
+					<div>2 请确认闪电宝在大陆境内使用，如带出境（包含港澳台）则会报错；</div>
+					<div>3 以上均不符，请提供终端号、交易时间、报错截图，邮件至闪电宝运营组核实。</div>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色
+			plus.navigator.setStatusBarBackground('#078ffe');
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+	</script>
+
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>个人中心</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_personalcenter">
+		<div class="mui-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<div class="personal_title">
+						<div class="overflow">
+							<span class="type left">账户余额</span>
+							<div class="message_box right go_url" data-url="message.html">
+								<img class="icon_message " src="img/icon_message.png" />
+								<span class="red_dot message_dot" style="display: none;"></span>
+							</div>
+						</div>
+						<div class="overflow">
+							<span class="money">&yen; 0.00</span>
+							<button class="btn_withdraw right go_url" type="button" data-url="bank_withdrawal.html" data-name="btn_withdraw">我要提现</button>
+						</div>
+					</div>
+					<div class="personal_box_top">
+						<div class="user_info">
+							<img class="user_head" src="img/user_head.png" />
+							<span id="user_name">
+								<span class="go_url" data-url="user_login.html" data-name="Personalcenter_login">登录</span>
+							</span>
+							<img id="reportCenter_profit_icon" style="display:none;float: right;width: 0.34rem;margin: 0.4rem 0.5rem 0 0;" src="img/icon_profitlibrary.png"/>
+						</div>
+						<div class="boxtop_flex">
+							<div id="my_agent" class="go_url" data-url="Personalcenter_myagent.html">
+								<img src="img/icon_personal_top05.png" />
+								<span>我的盟友</span>
+							</div>
+							<div class="go_url" data-url="Personalcenter_erweima.html">
+								<img src="img/icon_personal_top02.png" />
+								<span>推广码</span>
+							</div>
+							<div class="go_url" data-url="Personalcenter_myprofit.html" data-name="Personalcenter_myprofit">
+								<img src="img/icon_personal_top04.png" />
+								<span>我的收益</span>
+							</div>
+						</div>
+					</div>
+					<div class="personal_box_bottom">
+						<div class="personal_box_bottom_title">
+							<span>闪POS机具管理</span>
+						</div>
+						<div class="personal_link go_url" data-url="return_goods.html?postype=2">
+							<span>闪POS机具退货</span>
+						</div>
+						<div class="personal_link go_url" data-url="deliver_apply_record.html" style="position: relative;">
+							<span>闪POS申请机具记录</span>
+							<div id="posAskNumber" class="pos_dot"></div>
+						</div>
+						<div class="personal_link go_url" data-url="deliver_return_record.html" style="position: relative;">
+							<span class="border_none">闪POS申请退货记录</span>
+							<div id="returnPosAskNumber" class="pos_dot"></div>
+						</div>
+						<div style="background: #f0f0f3;height: 8px;"></div>
+						<div class="personal_box_bottom_title">
+							<span>关于我的</span>
+						</div>
+						<div class="personal_link go_url" data-url="bank_card_list.html">
+							<!--<img src="img/icon_personal_01.png" />-->
+							<span>银行卡</span>
+						</div>
+						<div class="personal_link go_url" data-url="Personalcenter_myMachine.html">
+							<!--<img src="img/icon_personal_02.png" />-->
+							<span>我的机具</span>
+						</div>
+						<div class="personal_link go_url" data-url="Personalcenter_proxyMachine.html">
+							<!--<img src="img/icon_personal_09.png" />-->
+							<span>下属机具</span>
+						</div>
+						<div class="personal_link go_url" data-url="user_address.html">
+							<!--<img src="img/icon_personal_03.png" />-->
+							<span>我的地址</span>
+						</div>
+						<div class="personal_link go_url" data-url="Nav_Help.html">
+							<span>帮助中心</span>
+						</div>
+						<div id="transfers_machine" class="personal_link go_url" data-url="allocation_tools.html">
+							<!--<img src="img/icon_personal_06.png" />-->
+							<span>调拨机具</span>
+						</div>
+						<div class="personal_link go_url" data-url="Personalcenter_Setting.html" data-name="Personalcenter_Setting">
+							<!--<img src="img/icon_personal_04.png" />-->
+							<span>设置中心</span>
+						</div>
+						<div id="library" class="personal_link go_url" data-url="Personalcenter_library.html">
+							<!--<img src="img/icon_personal_05.png" />-->
+							<span>运营小库</span>
+						</div>
+						<div id="statistics" class="personal_link go_url" data-url="Personalcenter_statistics.html" data-name="Personalcenter_statistics">
+							<!--<img src="img/icon_personal_08.png" />-->
+							<span>查看汇总</span>
+						</div>
+						<!--<div id="tools_account" class="personal_link go_url" data-url="personal_tools_collect_account.html">
+							<img src="img/icon_personal_07.png" />
+							<span>机具收款账户</span>
+						</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item tab" href="Nav_Index.html?ad=1">
+				<span class="mui-icon"><img src="img/icon_index.png"/></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item tab" href="Nav_Applytools.html" data-name="Nav_Applytools">
+				<span class="mui-icon"><img src="img/icon_apply.png"/></span>
+				<span class="mui-tab-label">申请机具</span>
+			</a>
+			<a class="mui-tab-item tab" href="Nav_Card.html">
+				<span class="mui-icon"><img src="img/icon_card.png"/></span>
+				<span class="mui-tab-label">信用卡办理</span>
+			</a>
+			<!--<a class="mui-tab-item tab" href="Nav_Help.html">
+				<span class="mui-icon"><img src="img/icon_help.png"/></span>
+				<span class="mui-tab-label">帮助中心</span>
+			</a>-->
+			<a class="mui-tab-item tab active" href="#">
+				<span class="mui-icon"><img src="img/icon_user_active.png"/></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		/**
+		 * 重写mui.back()，一秒内连续点击两次，退出应用，仅安卓有效；
+		 */
+		var first = null;
+		mui.back = function() {
+			if(!first) {
+				first = new Date().getTime();
+				/**
+				 * 自动消失提示信息
+				 * http://www.html5plus.org/doc/zh_cn/nativeui.html#plus.nativeUI.toast
+				 */
+				plus.nativeUI.toast("再按一次退出应用");
+				setTimeout(function() {
+					first = null;
+				}, 1000);
+			} else {
+				if(new Date().getTime() - first < 1000) {
+					/**
+					 * 退出应用，仅安卓有效；
+					 * http://www.html5plus.org/doc/zh_cn/runtime.html#plus.runtime.quit
+					 */
+					plus.runtime.quit();
+				}
+			}
+		};
+		//滚动条滚动
+		(function($) {
+			$(".mui-scroll-wrapper").scroll({});
+		})(mui);
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色，颜色
+			plus.navigator.setStatusBarBackground('#078ffe');
+			plus.navigator.setStatusBarStyle('light');
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		console.log(customerId)
+		//获取用户信息
+		if(customerId != null) {
+			mui.ajax(ajax_url + 'appCustomer/getCustomer', {
+				data: {
+					customerId: customerId,
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if(true == data.success) {
+						var Customer_info = data.obj;
+						myStorage.setItem('Customer_info', Customer_info);
+						//用户名
+						if(data.obj.name == "" || data.obj.name == null) {
+							$("#user_name").html("<span class='go_url' data-url='user_real_name.html'>去实名认证</span>")
+						} else {
+							$("#user_name").html(data.obj.name)
+						}
+						//运营小库、调拨机具显示与否
+						if(2 == data.obj.type) {
+							$("#my_agent span").html("我的合伙人");
+							$("#my_agent img").attr("src","img/icon_personal_top06.png");
+							$("#library").show();
+							$("#transfers_machine").hide();
+							validatorReportCenterExistByCustomer();
+						} else if(3 == data.obj.type) {
+							$("#my_agent span").html("我的盟友");
+							$("#my_agent img").attr("src","img/icon_personal_top05.png");
+							$("#transfers_machine").show();
+//							$("#tools_account").show();
+							$("#library").hide();
+							if(Customer_info.levelSet != null) {
+								$("#user_name").after("<img class='user_head_icon' src='" + img_url + Customer_info.levelSet.imgUrl[0] + "'/>")
+							} else {
+								$("#user_name").after("<img class='user_head_icon' src='" + img_url + "level_v0.png'/>")
+							}
+							mui('.user_head_icon')[0].addEventListener('tap', function() {
+								location.href = "grade_rule.html"
+							});
+						} //账户金额
+						if(myStorage.getItem('Customer_info').money != null) {
+							$(".money").html(myStorage.getItem('Customer_info').money)
+						}
+						//消息条数
+						var message_num=data.obj.lestMagCreateTime;
+						if(message_num>0){
+							$(".red_dot").show();
+							$(".red_dot").html(message_num);
+						}
+						//最新一条消息时间
+//						var message_look_time = "";
+//						if(myStorage.getItem('message_look_time') != null) {
+//							message_look_time = myStorage.getItem('message_look_time');
+//						} else {
+//							message_look_time = timestampToTime(Customer_info.lestReadMsgTime)
+//						}
+//						console.log(message_look_time)
+//						var message_new_time = timestampToTime(Customer_info.lestMagCreateTime);
+//						console.log(message_new_time)
+//						compareTime(message_new_time, message_look_time)
+					}
+					if(false == data.success) {
+						mui.toast(data.msg)
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+			console.log(myStorage.getItem('Customer_info'))
+		}
+
+//		function compareTime(startDate, endDate) {
+//			if(endDate == null) {
+//				if(startDate != "1970-01-01 08:00:00") {
+//					$(".red_dot").show();
+//				}
+//			} else if(startDate.length > 0 && endDate.length > 0) {
+//				if(startDate == "1970-01-01 08:00:00") {
+//
+//				} else {
+//					var startDateTemp = startDate.split(" ");
+//					var endDateTemp = endDate.split(" ");
+//
+//					var arrStartDate = startDateTemp[0].split("-");
+//					var arrEndDate = endDateTemp[0].split("-");
+//
+//					var arrStartTime = startDateTemp[1].split(":");
+//					var arrEndTime = endDateTemp[1].split(":");
+//
+//					var allStartDate = new Date(arrStartDate[0], arrStartDate[1], arrStartDate[2], arrStartTime[0], arrStartTime[1], arrStartTime[2]);
+//					var allEndDate = new Date(arrEndDate[0], arrEndDate[1], arrEndDate[2], arrEndTime[0], arrEndTime[1], arrEndTime[2]);
+//
+//					if(allStartDate.getTime() > allEndDate.getTime()) {
+//						$(".red_dot").show();
+//						return false;
+//					} else {
+//						return true;
+//					}
+//				}
+//
+//			}
+//		}
+		//判断会员是不是运营小库
+		function validatorReportCenterExistByCustomer() {
+			mui.ajax(ajax_url + 'appCustomer/validatorReportCenterExistByCustomer', {
+				data: {
+					customerId: customerId
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if(true == data.success) {
+						console.log(data.obj)
+						if(true == data.obj) {
+							$("#reportCenter_profit_icon").show();
+						} else {
+							$("#reportCenter_profit_icon").hide();
+						}
+					}
+					if(false == data.success) {
+						mui.toast("会员信息不明确")
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+		}
+	</script>
+
+</html>

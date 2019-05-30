@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>运营小库明细</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">运营小库明细 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<!--暂无收益-->
+			<div class="list-none">
+				<img class="icon_none_small" src="img/bg_library.png">
+				<div class="fonts">您的运营小库还没有收益呢！<br />要加油哦~</div>
+			</div>
+
+			<!--<div class="library_content">
+				<div class="left">
+					<div class="library_content_name">机具奖励</div>
+					<div class="library_content_date">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				</div>
+				<div class="library_content_right"><span>+200.00</span>元</div>
+			</div>
+			<div class="library_content">
+				<div class="left">
+					<div class="library_content_name">机具奖励</div>
+					<div class="library_content_date">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				</div>
+				<div class="library_content_right"><span>+80.00</span>元</div>
+			</div>
+			<div class="library_content">
+				<div class="left">
+					<div class="library_content_name">报单费<span class="subname">交易<span>+80.00</span>元</span>
+					</div>
+					<div class="library_content_date">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				</div>
+				<div class="library_content_right"><span>+100.00</span>元</div>
+			</div>
+			<div class="library_content">
+				<div class="left">
+					<div class="library_content_name">报单费<span class="subname">交易<span>2000.00</span>元</span>
+					</div>
+					<div class="library_content_date">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				</div>
+				<div class="library_content_right"><span>+100.00</span>元</div>
+			</div>
+			<div class="library_content">
+				<div class="left">
+					<div class="library_content_name">报单费<span class="subname">交易<span>2000.00</span>元</span>
+					</div>
+					<div class="library_content_date">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				</div>
+				<div class="library_content_right"><span>+100.00</span>元</div>
+			</div>
+			<div class="library_content">
+				<div class="left">
+					<div class="library_content_name">报单费<span class="subname">交易<span>2000.00</span>元</span>
+					</div>
+					<div class="library_content_date">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				</div>
+				<div class="library_content_right"><span>+100.00</span>元</div>
+			</div>
+			<div class="library_content">
+				<div class="left">
+					<div class="library_content_name">报单费<span class="subname">交易<span>2000.00</span>元</span>
+					</div>
+					<div class="library_content_date">2018-07-23&nbsp;&nbsp;21:47:01</div>
+				</div>
+				<div class="library_content_right"><span>+100.00</span>元</div>
+			</div>-->
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/mui.pullToRefresh.js"></script>
+		<script src="js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//加载更多初始化
+			var pageNo = 1,
+				flag = true;
+			mui('.mui-content').pullToRefresh({
+				up: {
+					callback: function() {
+						var _this = this;
+						setTimeout(function() {
+							console.log(flag)
+							if(flag) {
+								getReportCenterMoney();
+							}
+							_this.endPullUpToRefresh(!flag);
+						}, 500);
+					}
+				}
+			});
+			//获取运营小库报单费和激活费记录
+			if(customerId != null) {
+				//时间范围
+				var starttime = myStorage.getItem('profit_time')[0];
+				var endtime = myStorage.getItem('profit_time')[1];
+				console.log(customerId, starttime, endtime)
+				getReportCenterMoney();
+			} else {
+				check_log();
+			}
+
+			function getReportCenterMoney() {
+				mui.ajax(ajax_url + 'appCustomer/getReportCenterMoney', {
+					data: {
+						"model.customer_id": customerId,
+						"model.startTime": starttime,
+						"model.endTime": endtime,
+						"page.pageNo": pageNo
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							var library_content = data.obj.results;
+							console.log(library_content)
+							if(0 == library_content.length) {
+								$(".list-none").show();
+								$(".mui-pull-bottom-tips").hide();
+							} else {
+								$(".list-none").hide();
+								//是否有下一页
+								if(library_content.length < 10 && 1 == pageNo) {
+									$(".mui-pull-bottom-tips").hide();
+								} else {
+									$(".mui-pull-bottom-tips").show();
+								}
+								pageNo++;
+								console.log(pageNo)
+								flag = data.obj.haveNextPage;
+								for(var i = 0; i < library_content.length; i++) {
+									if(1 == library_content[i].type) {
+										var library_content_list = '<div class="library_content">' +
+											'<div class="left">' +
+											'<div class="library_content_name">机具奖励</div>' +
+											'<div class="library_content_date">'+timestampToTime(library_content[i].createTime) +'</div>' +
+											'</div>' +
+											'<div class="library_content_right"><span>+'+library_content[i].money+'</span>元</div>' +
+											'</div>';
+									}else{
+										var library_content_list = '<div class="library_content">' +
+											'<div class="left">' +
+											'<div class="library_content_name">报单费</span>' +
+											'</div>' +
+											'<div class="library_content_date">'+timestampToTime(library_content[i].createTime) +'</div>' +
+											'</div>' +
+											'<div class="library_content_right"><span>+'+library_content[i].money+'</span>元</div>' +
+											'</div>';
+									}
+									$(".mui-content").append(library_content_list);
+								}
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

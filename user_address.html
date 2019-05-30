@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>地址管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">地址管理 </h1>
+			<a class="mui-pull-right newaddress_btn">添加新地址</a>
+		</header>
+		<div class="mui-content bg_white">
+			<!--暂无地址-->
+			<div class="list-none">
+				<img class="icon_none_lead" src="img/icon_none_lead.png" />
+				<div class="fonts">点击这里添加地址</div>
+				<img class="icon_none" src="img/icon_none_address.png">
+				<div class="fonts">空空如也</div>
+			</div>
+			<!--地址列表-->
+			<ul class="address_lists">
+				<!--<li class="address_list">
+					<div class="overflow">
+						<span class="name">某某某</span>
+						<span class="tel">18844067460</span>
+						<span class="delete_btn">删除</span>
+						<span class="edit_btn">编辑</span>
+					</div>
+					<div class="address_details">地址：内蒙古自治区包头市昆都仑区白云路与校园路交叉口和平村</div>
+				</li>-->
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+
+			//获取用户信息
+			mui.ajax(ajax_url + 'appCustomer/getCustomer', {
+				data: {
+					customerId: customerId
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if(true == data.success) {
+						var Customer_info = data.obj;
+						myStorage.setItem('Customer_info', Customer_info);
+						//地址列表获取
+						if(0 == Customer_info.addressList.length) {
+							$(".list-none").show();
+						} else {
+							$(".list-none").hide();
+							for(var i = 0; i < Customer_info.addressList.length; i++) {
+								console.log(Customer_info.addressList[i])
+								var address_list = '<li class="address_list" data-id="' + Customer_info.addressList[i].id + '" data-content="' + Customer_info.addressList[i].content + '" data-isDefault="' + Customer_info.addressList[i].isDefault + '">' +
+									'<div class="overflow">' +
+									'<span class="name">' + Customer_info.addressList[i].receiver + '</span>' +
+									'<span class="tel">' + Customer_info.addressList[i].phone + '</span>&nbsp;&nbsp;' +
+									'<span class="Default_tab hint" style="display:none;">默认</span>' +
+									'<span class="delete_btn">删除</span><span class="edit_btn">编辑</span>' +
+									'</div>' +
+									'<div class="address_details">' + (Customer_info.addressList[i].content).replace("-", "") + '</div>' +
+									'</li>';
+								$(".address_lists").append(address_list)
+								if(1 == Customer_info.addressList[i].isDefault) {
+									$(".address_list").eq(i).find(".Default_tab").show();
+								}
+							}
+						}
+					}
+					if(false == data.success) {
+						mui.toast(data.msg)
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+			//新建、编辑地址
+			mui('body').on('tap', '.newaddress_btn', function(e) {
+				location.href = "user_new_address.html"
+			});
+			mui('body').on('tap', '.edit_btn', function(e) {
+				var edit_userinfo_id = $(this).parents("li").attr("data-id"),
+					edit_userinfo_name = $(this).parents("li").find(".name").html(),
+					edit_userinfo_phone = $(this).parents("li").find(".tel").html(),
+					edit_userinfo_address_01 = $(this).parents("li").attr("data-content").split("-")[0],
+					edit_userinfo_address_02 = $(this).parents("li").attr("data-content").split("-")[1],
+					edit_userinfo_isdefault = $(this).parents("li").attr("data-isdefault")
+				var edit_userinfo = [edit_userinfo_id, edit_userinfo_name, edit_userinfo_phone, edit_userinfo_address_01, edit_userinfo_address_02, edit_userinfo_isdefault]
+				myStorage.setItem('edit_userinfo', edit_userinfo);
+				location.href = "user_new_address.html?key=edit";
+			});
+			//删除地址
+			mui('body').on('tap', '.delete_btn', function(e) {
+				var del_addressId = $(this).parent().parent(".address_list")[0].dataset.id;
+				var btnArray = ['取消', '删除'];
+				mui.confirm(" ", '确认要删除地址吗？', btnArray, function(e) {
+					if(e.index == 1) {
+						mui.ajax(ajax_url + 'appCustomer/removeAddress', {
+							data: {
+								addressId: del_addressId
+							},
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								if(true == data.success) {
+									mui.toast("删除地址成功");
+									location.reload();
+								}
+								if(false == data.success) {
+									mui.toast(data.msg)
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								if(xhr.status != '0')
+									mui.toast('服务器走丢了')
+							}
+						});
+					} else {
+
+					}
+				});
+			});
+			mui.back = function() {
+				var user_type = myStorage.getItem('Customer_info').type;
+				if(1 == user_type) {
+					location.href = "Nav_Personalcenter_Partners.html";
+				} else if(2 == user_type || 3 == user_type) {
+					location.href = "Nav_Personalcenter_Agent.html";
+				}
+			}
+		</script>
+	</body>
+
+</html>

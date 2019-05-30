@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>机具收款账户</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">机具收款账户</h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="bill_content overflow">
+				<div class="left main_title bold">公司名称:</div>
+				<div class="left">包头市致成达网络科技有限公司</div>
+			</div>
+			<div class="bill_content overflow">
+				<div class="left main_title bold">开户行:</div>
+				<div class="left">兴业银行包头分行营业部</div>
+			</div>
+			<div class="bill_content overflow">
+				<div class="left main_title bold">银行卡号:</div>
+				<div class="left">593010 1001 0059 7396</div>
+			</div>
+			<div class="bill_content overflow">
+				<div class="left main_title bold">银行联行号:</div>
+				<div class="left">309192003010</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色，颜色
+			plus.navigator.setStatusBarStyle('dark');
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		mui.back = function() {
+			location.href = "Nav_Personalcenter_Agent.html";
+		}
+	</script>
+
+</html>

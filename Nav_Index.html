@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>首页</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			table {
+				/* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+				table-layout: fixed;
+			}
+			
+			.notice_content {
+				width: 4.5rem;
+				padding: 0 0.2rem;
+				/*超出部分隐藏*/
+				overflow: hidden;
+				/* 强制在同一行内显示所有文本，直到文本结束或者遭遇 br 对象。不换行 */
+				word-break: keep-all;
+				/* 内容超出宽度时隐藏超出部分的内容 */
+				white-space: nowrap;
+				/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+				text-overflow: ellipsis
+			}
+		</style>
+	</head>
+
+	<body style="background: #fff;">
+		<header class="mui-bar mui-bar-header"></header>
+		<div class="mui-content" style="opacity:1;padding-bottom: 60px;">
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="img/banner.jpg">
+						</a>
+					</div>
+					<!-- 第一张 -->
+					<!--<div class="mui-slider-item">
+						<a href="#">
+							<img src="img/no_reg_index_banner.png">
+						</a>
+					</div>-->
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="img/banner.jpg">
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-indicator">
+					<!--<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>-->
+				</div>
+			</div>
+			<!--公告-->
+			<div class="index_notice">
+				<div class="left">
+					<img class="icon_notice" src="img/icon_notice.png" />
+					<span class="text_notice">【公告】</span>
+				</div>
+				<div id="demoleft" class="notice_list" style="overflow: hidden;">
+					<table>
+						<tr>
+							<td id="demo1left">
+								<table>
+									<tr>
+
+									</tr>
+								</table>
+							</td>
+							<td id="demo2left"></td>
+						</tr>
+
+					</table>
+				</div>
+			</div>
+			<!--统计-->
+			<div class="usertype_02_hide">
+				<div class="today_statistics">
+					<div class="statistics_left">
+						<img class="icon" src="img/icon_today_statistics.png" />
+						<p class="type">闪电宝月收益</p>
+					</div>
+					<div class="statistics_right">
+						<p id="today_total_price" class="total_price">0.00</p>
+						<p id="today_takeCardMoney">刷卡 0.00元</p>
+						<p id="today_incomeMoney">分润 0.00元</p>
+						<p id="today_order_num">交易0笔，激活0台</p>
+					</div>
+				</div>
+				<div class="yesterday_statistics">
+					<div class="statistics_left">
+						<img class="icon" src="img/icon_yesterday_statistics.png" />
+						<p class="type">闪POS月收益</p>
+					</div>
+					<div class="statistics_right">
+						<p class="total_price" id="yesterday_total_price">0.00</p>
+						<p id="yesterday_takeCardMoney">刷卡0.00元</p>
+						<p id="yesterday_incomeMoney">分润0.00元</p>
+						<p id="yesterday_order_num">交易0笔，激活0台</p>
+					</div>
+				</div>
+				<img style="width: 2.8rem;margin: 0.55rem auto;display: block;" src="img/index_expect.png" />
+			</div>
+			<div class="usertype_02_show" style="display: none;">
+				<div class="today_statistics">
+					<div class="statistics_left">
+						<img class="icon" src="img/icon_today_statistics.png" />
+						<p class="type">闪电宝月收益</p>
+						<p style="color: #fff;font-size: 0.8em;margin-top: -0.16rem;">
+							交易<span id="hehuo_today_orderNumber">0</span>笔
+						</p>
+					</div>
+					<div class="statistics_right">
+						<p id="hehuo_today_money" class="total_price">0.00</p>
+						<p id="hehuo_today_incomeMoney">分润 0.00元</p>
+						<p id="hehuo_today_activateMoney">激活费 0.00元</p>
+						<p id="hehuo_today_fenxiao">分销费0.00元</p>
+						<p id="hehuo_today_bonus">公司分红0.00元</p>
+					</div>
+				</div>
+				<div class="yesterday_statistics">
+					<div class="statistics_left">
+						<img class="icon" src="img/icon_yesterday_statistics.png" />
+						<p class="type">闪POS月收益</p>
+					</div>
+					<div class="statistics_right">
+						<p id="hehuo_yestoday_money" class="total_price">0.00</p>
+						<p id="hehuo_yesterday_takeCardMoney">刷卡0.00元</p>
+						<p id="hehuo_yestoday_incomeMoney">分润 0.00元</p>
+						<p id="hehuo_yestoday_activateMoney">激活费 0.00元</p>
+						<p>交易<span id="hehuo_yestoday_orderNumber">0</span>笔,激活<span id="hehuo_yestoday_activate">0</span>台</p>
+						
+						<!--<p id="hehuo_yestoday_fenxiao">分销费0.00元</p>
+						<p id="hehuo_yestoday_bonus">公司分红0.00元</p>-->
+					</div>
+				</div>
+				<img style="width: 2.8rem;margin: 0.55rem auto;display: block;" src="img/index_expect.png" />
+			</div>
+
+		</div>
+
+		<nav class="mui-bar mui-bar-tab" style="opacity: 0;">
+			<a class="mui-tab-item tab active" href="#">
+				<span class="mui-icon"><img src="img/icon_index_active.png"/></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item tab" href="Nav_Applytools.html" data-name="Nav_Applytools">
+				<span class="mui-icon"><img src="img/icon_apply.png"/></span>
+				<span class="mui-tab-label">申请机具</span>
+			</a>
+			<a class="mui-tab-item tab" href="Nav_Card.html">
+				<span class="mui-icon"><img src="img/icon_card.png"/></span>
+				<span class="mui-tab-label">信用卡办理</span>
+			</a>
+			<!--<a class="mui-tab-item tab" href="Nav_Help.html">
+				<span class="mui-icon"><img src="img/icon_help.png"/></span>
+				<span class="mui-tab-label">帮助中心</span>
+			</a>-->
+			<a class="mui-tab-item tab" href="" data-name="Nav_Personalcenter">
+				<span class="mui-icon"><img src="img/icon_user.png"/></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		/**
+		 * 重写mui.back()，一秒内连续点击两次，退出应用，仅安卓有效；
+		 */
+		var myDate = new Date(),
+			first = null;
+		mui.back = function() {
+			if(!first) {
+				first = new Date().getTime();
+				/**
+				 * 自动消失提示信息
+				 * http://www.html5plus.org/doc/zh_cn/nativeui.html#plus.nativeUI.toast
+				 */
+				plus.nativeUI.toast("再按一次退出应用");
+				setTimeout(function() {
+					first = null;
+				}, 1000);
+			} else {
+				if(new Date().getTime() - first < 1000) {
+					/**
+					 * 退出应用，仅安卓有效；
+					 * http://www.html5plus.org/doc/zh_cn/runtime.html#plus.runtime.quit
+					 */
+					plus.runtime.quit();
+				}
+			}
+		};
+		// H5 plus事件处理
+		var user_type = "";
+
+		function plusReady() {
+			// 设置系统状态栏背景色，颜色
+			plus.navigator.setStatusBarBackground('#078ffe');
+			plus.navigator.setStatusBarStyle('dark');
+			//禁止横屏显示
+			plus.screen.lockOrientation("portrait-primary");
+			//启动页
+			var launchFlag = plus.storage.getItem("launchFlag"),
+				ADFlag = plus.storage.getItem("ADFlag");
+
+			if(launchFlag) {
+				if(getQueryString("ad")==1) {
+					$("body").css("background", "#f0f0f0");
+					$(".mui-content,.mui-bar").css("opacity", "1");
+				} else {
+					getAdvertisementList();
+				}
+			} else {
+				$("body").css("background", "#fff")
+				location.href = "guide.html";
+			}
+			// APP更新
+			var oldversion = plus.runtime.version;
+			var current_time = myDate.getFullYear() + "" + myDate.getMonth() + "" + myDate.getDate();
+			var last_time = plus.storage.getItem("last_time");
+			if(current_time == last_time) {
+				//当天只检查提醒一次
+			} else {
+				mui.post(ajax_url + 'appCustomer/getUpdateMsg', {
+					oldversion: oldversion
+				}, function(data) {
+					if(data.success) {
+						//需要更新
+						if("need_upload" == data.msg) {
+							var btnArray = ['取消', '立即更新'];
+							//IOS
+							if(mui.os.ios) {
+								var url = data.obj.iosUrl;
+								if(null != url && "" != url) {
+									mui.confirm("新版本在线升级自动检测", '【版本更新提示】', btnArray, function(e) {
+										if(e.index == 1) {
+											//var url = 'itms-apps://itunes.apple.com/cn/app/hello-h5+/id682211190?l=zh&mt=8'; // HelloH5应用在appstore的地址
+											plus.runtime.openURL(url);
+										} else {
+											plus.storage.setItem("last_time", current_time);
+										}
+									});
+								}
+							} else {
+								var url = img_url + data.obj.appUrl; // 下载文件地址
+								console.log(url)
+								mui.confirm("新版本在线升级自动检测", '【版本更新提示】', btnArray, function(e) {
+									if(e.index == 1) {
+										var dtask = plus.downloader.createDownload(url, {}, function(d, status) {
+											if(status == 200) { // 下载成功
+												var path = d.filename;
+												console.log(d.filename);
+												plus.runtime.install(path, {},
+													function() {},
+													function(DOMException) {
+														console.log(JSON.stringify(DOMException));
+													}
+												);
+											} else { //下载失败
+												mui.alert('版本更新失败:' + status);
+											}
+											console.log(data.obj.version);
+										});
+										dtask.start();
+									} else {
+										plus.storage.setItem("last_time", current_time);
+									}
+								});
+							}
+						}
+					}
+				}, 'json');
+			}
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+
+		function getAdvertisementList() {
+			//获取广告图
+			mui.ajax(ajax_url + 'appCustomer/getAdvertisementList', {
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					console.log(data.obj.length)
+					if(data.obj.length == 0) {
+						$("body").css("background", "#f0f0f0");
+						$(".mui-content,.mui-bar").css("opacity", "1");
+					} else {
+						location.href = "Advertisement.html"
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					customerId = "";
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+		}
+
+		console.log("customerId:" + customerId)
+		if(customerId != null) {
+			//获取用户信息
+			mui.ajax(ajax_url + 'appCustomer/getCustomer', {
+				data: {
+					customerId: customerId
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					console.log(data)
+					if(true == data.success) {
+						var Customer_info = data.obj;
+						myStorage.setItem('Customer_info', Customer_info);
+						console.log(myStorage.getItem('Customer_info'));
+						user_type = myStorage.getItem('Customer_info').type;
+						getprofit();
+						console.log("user_type:" + user_type);
+					}
+					if(false == data.success) {
+						mui.toast(data.msg)
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					//					myStorage.clear();
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+
+		}
+
+		function getprofit() {
+			//首页刷卡金额，单数，分润金额 ,激活数量--闪电宝
+			mui.ajax(ajax_url + 'appCustomer/getTakeCardList', {
+				data: {
+					customerId: customerId,
+					pos_type: 1
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if(true == data.success) {
+						console.log(data.obj)
+						if(1 == user_type || 3 == user_type) {
+							$(".usertype_02_hide").show();
+							$(".usertype_02_show").hide();
+							//闪电宝
+							$("#today_total_price").html(Number(data.obj.today_total_money).toFixed(2));
+							$("#today_takeCardMoney").html("刷卡 " + Number(data.obj.takeCardMoney).toFixed(2) + "元");
+							$("#today_incomeMoney").html("分润 " + Number(data.obj.incomeMoney).toFixed(2) + "元");
+							$("#today_order_num").html("交易" + data.obj.orderNumber + "笔，激活" + data.obj.today_activate + "台");
+						} else if(2 == user_type) {
+							//合伙人收益
+							$(".usertype_02_hide").hide();
+							$(".usertype_02_show").show();
+							$(".statistics_right p").css("margin-bottom", "0.15rem")
+							//闪电宝
+							$("#hehuo_today_orderNumber").html(Number(data.obj.hehuo_today_orderNumber));
+							$("#hehuo_today_money").html(Number(data.obj.hehuo_today_money).toFixed(2));
+							$("#hehuo_today_incomeMoney").html("分润 " + Number(data.obj.hehuo_today_incomeMoney).toFixed(2) + "元");
+							$("#hehuo_today_activateMoney").html("激活费 " + Number(data.obj.hehuo_today_activateMoney).toFixed(2) + "元");
+							$("#hehuo_today_fenxiao").html("分销费 " + Number(data.obj.hehuo_today_fenxiao).toFixed(2) + "元");
+							$("#hehuo_today_bonus").html("公司分红 " + Number(data.obj.hehuo_today_bonus).toFixed(2) + "元");
+						} else {
+
+						}
+					}
+					if(false == data.success) {
+						mui.toast(data.msg)
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+			//首页刷卡金额，单数，分润金额 ,激活数量--闪POS
+			mui.ajax(ajax_url + 'appCustomer/getTakeCardList', {
+				data: {
+					customerId: customerId,
+					pos_type: 2
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if(true == data.success) {
+						console.log(data.obj)
+						user_type = myStorage.getItem('Customer_info').type;
+						if(1 == user_type || 3 == user_type) {
+							$(".usertype_02_hide").show();
+							$(".usertype_02_show").hide();
+							//闪pos
+							$("#yesterday_total_price").html(Number(data.obj.today_total_money).toFixed(2));
+							$("#yesterday_takeCardMoney").html("刷卡 " + Number(data.obj.takeCardMoney).toFixed(2) + "元");
+							$("#yesterday_incomeMoney").html("分润 " + Number(data.obj.incomeMoney).toFixed(2) + "元");
+							$("#yesterday_order_num").html("交易" + data.obj.orderNumber + "笔，激活" + data.obj.today_activate + "台");
+						} else if(2 == user_type) {
+							//合伙人收益
+							$(".usertype_02_hide").hide();
+							$(".usertype_02_show").show();
+							//闪pos
+							$("#hehuo_yestoday_money").html(Number(data.obj.hehuo_today_money).toFixed(2));
+							$("#hehuo_yesterday_takeCardMoney").html("刷卡 " +Number(data.obj.hehuo_today_takeCardMoney).toFixed(2)+ "元");
+							$("#hehuo_yestoday_incomeMoney").html("分润 " + Number(data.obj.hehuo_today_incomeMoney).toFixed(2) + "元");
+							$("#hehuo_yestoday_activateMoney").html("激活费 " + Number(data.obj.hehuo_today_activateMoney).toFixed(2) + "元");
+							$("#hehuo_yestoday_orderNumber").html(Number(data.obj.hehuo_today_orderNumber));
+							$("#hehuo_yestoday_activate").html(Number(data.obj.hehuo_today_activateNumber));
+							//							$("#hehuo_yestoday_fenxiao").html("分销费 " + Number(data.obj.hehuo_today_fenxiao).toFixed(2) + "元");
+							//							$("#hehuo_yestoday_bonus").html("公司分红 " + Number(data.obj.hehuo_today_bonus).toFixed(2) + "元");
+						} else {
+
+						}
+					}
+					if(false == data.success) {
+						mui.toast(data.msg)
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+		}
+
+		//获取轮播图、公告
+		mui.post(ajax_url + 'appCustomer/getBannerList', function(data) {
+			if(data.success) {
+				console.log(data)
+				$('.mui-slider-item-duplicate').first().find('a img')[0].src = img_url + data.obj[data.obj.length - 1].imgUrl[0];
+				$('.mui-slider-item-duplicate').last().find('a img')[0].src = img_url + data.obj[0].imgUrl[0];
+				mui.each(data.obj, function(index, item) {
+					if(1 == item.checkType) {
+						//可跳转链接
+						var banner = '<div class="mui-slider-item" data-type="' + item.checkType + '" data-httpurl="' + item.httpurl + '">' +
+							'<a href="#">' +
+							'<img src="' + img_url + '' + item.imgUrl[0] + '">' +
+							'</a>' +
+							'</div>';
+					} else {
+						//可跳转图文
+						var banner = '<div class="mui-slider-item" data-type="' + item.checkType + '" data-id="' + item.id + '">' +
+							'<a href="#">' +
+							'<img src="' + img_url + '' + item.imgUrl[0] + '">' +
+							'</a>' +
+							'</div>';
+					}
+					$('.mui-slider-item-duplicate').last().before(banner);
+					var lunbo_dian = '<div class="mui-indicator"></div>';
+					$('.mui-slider-indicator').append(lunbo_dian);
+					$('.mui-indicator').first().addClass('mui-active')
+				});
+				//设置轮播图自动轮播
+				if(data.obj.length >= 2) {
+					var slider = mui("#slider");
+					slider.slider({
+						interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+					});
+				}
+			}
+		}, 'json');
+		//轮播跳转页面
+		mui('body').on('tap', '.mui-slider-item', function(e) {
+			console.log(this.dataset.type)
+			if(1 == this.dataset.type) {
+				var url = this.dataset.httpurl;
+				console.log(url)
+				myStorage.setItem('banner_httpurl', url);
+				location.href = "nav_Index_banner.html";
+			} else {
+				location.href = "nav_Index_banner.html?id=" + this.dataset.id;
+			}
+		});
+		//公告
+		var notice_list_success01 = false,
+			notice_list_success02 = false;
+		mui.post(ajax_url + 'appCustomer/getNoticeList', function(data) {
+			if(data.success) {
+				notice_list_success01 = true;
+				var getNoticeList = data.obj.obj.results;
+				console.log(getNoticeList)
+				var max = getNoticeList ? (getNoticeList.length > 3 ? 3 : getNoticeList.length) : 0;
+				for(i = 0; i < max; i++) {
+					var notice_list_01 = '<td class="notice_content" data-noticetype="1">' + getNoticeList[i].title + '</td>';
+					$('#demo1left table tr').append(notice_list_01);
+				}
+			}
+		}, 'json');
+		mui.post(ajax_url + 'appCustomer/getPosAskList', function(data) {
+			if(data.success) {
+				notice_list_success02 = true;
+				var getPosAskList = data.obj.results;
+				var max = getPosAskList ? (getPosAskList.length > 5 ? 5 : getPosAskList.length) : 0;
+				for(i = 0; i < max; i++) {
+					var notice_list_02 = '<td class="notice_content" data-noticetype="2">' + getPosAskList[i].split(",")[0] + '</td>';
+					$('#demo1left table tr').append(notice_list_02);
+				}
+			}
+		}, 'json');
+		var interval = setInterval(function() {
+			if(notice_list_success01 && notice_list_success02) {
+				var speed = 20 //越大速度越慢,demo2.offsetWidth=demo1.offsetWidth=固定值
+				demo2left.innerHTML = demo1left.innerHTML
+
+				function Marquee() {
+					if(demo2left.offsetWidth - demoleft.scrollLeft <= 0)
+						demoleft.scrollLeft -= demo1left.offsetWidth
+					else {
+						demoleft.scrollLeft++;
+					}
+				}
+				var MyMarleft = setInterval(Marquee, speed);
+				clearInterval(interval);
+			}
+		}, 1000);
+		//公告详情
+		mui('body').on('tap', '.notice_content', function(e) {
+			var noticetype = this.dataset.noticetype;
+			console.log(noticetype)
+			location.href = 'nav_Index_noticelist.html?noticetype=' + noticetype;
+		});
+		//今日收益、昨日收益--详情页传参
+		mui('body').on('tap', '.yesterday_statistics,.today_statistics', function(e) {
+			if(check_log()) {
+				user_name = myStorage.getItem('Customer_info').name;
+				if(user_name == null) {
+					var btnArray = ['取消', '去实名'];
+					mui.confirm('您还没有实名认证', '未实名', btnArray, function(e) {
+						if(1 == e.index) {
+							location.href = "user_real_name.html";
+						} else {
+
+						}
+					});
+				} else if(user_type == null) {
+					//实名，判断是否有类型
+					var btnArray = ['取消', '去选择'];
+					mui.confirm('您还没有选择身份类型', '无身份类型', btnArray, function(e) {
+						if(1 == e.index) {
+							location.href = "user_identity.html";
+						} else {
+
+						}
+					});
+				} else {
+					var today_time = myDateToTime(myDate);
+					if("today_statistics" == $(this).attr("class")) {
+						location.href = "Personalcenter_myprofit.html"
+					} else if("yesterday_statistics" == $(this).attr("class")) {
+						location.href = "Personalcenter_myprofit_pos.html"
+					}
+				}
+			}
+		});
+	</script>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>机具问题反馈</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">机具问题反馈 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="transaction_list overflow" onclick="window.location.href='Question03_bindings_failure.html';">
+				<div class="left">一、</div>
+				<div class="left">设备绑定失败、设备无法绑定</div>
+				<div class="right"><img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>
+			</div>
+			<div class="transaction_list overflow" onclick="window.location.href='Question03_signin_fail.html';">
+				<div class="left">二、</div>
+				<div class="left">签到失败、刷卡器连接失败</div>
+				<div class="right"><img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>
+			</div>
+			<div class="transaction_list overflow" onclick="window.location.href='Question03_undetected_equipment.html';">
+				<div class="left">三、</div>
+				<div class="left">未检测到设备</div>
+				<div class="right"><img class="tail_icon" src="img/icon_personal_enter.png" alt="" /></div>
+			</div>
+		</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色
+			plus.navigator.setStatusBarBackground('#078ffe');
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		mui.back = function() {
+			location.href = "Nav_Help.html?key=question"
+		}
+	</script>
+
+</html>

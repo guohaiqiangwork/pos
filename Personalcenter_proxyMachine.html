@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>下属机具</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white profit_detail">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">下属机具</h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="serch" id="Equipment_serach">
+				<input type="search" placeholder="搜索您想找的机具号" style="margin: 0;" />
+				<img class="mark_portrait" src="img/icon_serch.png" />
+			</div>
+			<div id="slider" class="mui-slider" style="z-index: inherit;">
+				<div id="segmentedControl1" class="bank_tab mui-segmented-control bg_white">
+					<a id="getNextProxyPosList_01" class="mui-control-item mui-active" href="#item1mobile">闪电宝</a>
+					<a id="getNextProxyPosList_02" class="mui-control-item" href="#item2mobile">闪POS</a>
+				</div>
+
+				<div class="line"></div>
+
+				<div class="mui-content-padded bg_white" style="margin: 0;">
+					<!--闪电宝-->
+					<div id="item1mobile" class="mui-control-content mui-active">
+
+					</div>
+					<!--闪POS-->
+					<div id="item2mobile" class="mui-control-content">
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/mui.pullToRefresh.js"></script>
+		<script src="js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back = function() {
+				if(1 == myStorage.getItem('Customer_info').type) {
+					location.href = "Nav_Personalcenter_Partners.html"
+				} else {
+					location.href = "Nav_Personalcenter_Agent.html"
+				}
+			};
+			//选项卡切换
+			var type = 1,
+				tab_id = "item1mobile",
+				pageNo = 1,
+				flag = true;
+			//加载更多初始化
+			mui('.mui-content-padded').pullToRefresh({
+				up: {
+					callback: function() {
+						var _this = this;
+						console.log(this)
+						setTimeout(function() {
+							console.log(flag)
+							if(flag) {
+								if("item1mobile" == tab_id) {
+									getNextProxyPosList();
+								} else if("item2mobile" == tab_id) {
+									getNextProxyPosList();
+								}
+							}
+							_this.endPullUpToRefresh(!flag);
+						}, 500);
+					}
+				}
+			});
+			if(getQueryString("type") == 2) {
+				$("#item1mobile").removeClass("mui-active");
+				$("#item2mobile").addClass("mui-active");
+				$(".mui-control-item").eq(0).removeClass("mui-active")
+				$(".mui-control-item").eq(1).addClass("mui-active")
+				type = 2;
+				tab_id = "item2mobile";
+				$("#item2mobile").html("");
+			}
+			//切换选项卡
+			mui('body').on('tap', 'a', function(e) {
+				pageNo = 1;
+				flag = true;
+				if("getNextProxyPosList_01" == this.id) {
+					type = 1;
+					tab_id = "item1mobile";
+					$("#item1mobile").html("");
+				} else if("getNextProxyPosList_02" == this.id) {
+					type = 2;
+					tab_id = "item2mobile";
+					$("#item2mobile").html("");
+				}
+				getNextProxyPosList();
+				mui('.mui-content-padded').pullToRefresh().refresh(true);
+			});
+			getNextProxyPosList();
+			//获取下属机具列表
+			function getNextProxyPosList() {
+				mui.ajax(ajax_url + 'appCustomer/getNextProxyPosList', {
+					data: {
+						customerId: customerId,
+						type: type,
+						pageNo: pageNo
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 120000, //超时时间设置为120秒；
+					success: function(data) {
+						if(true == data.success) {
+							if(0 == data.obj.length) {
+								flag = data.obj.haveNextPage;
+								var listnone = '<div class="list-none" style="display:block">' +
+									'<img class="icon_none icon_none_mt" src="img/icon_none_address.png">' +
+									'<div class="fonts">空空如也</div>' +
+									'</div>';
+								if(1 == type) {
+									$("#item1mobile").append(listnone);
+								} else {
+									$("#item2mobile").append(listnone);
+
+								}
+								$(".mui-pull-bottom-tips").hide();
+							} else {
+								if(data.obj.totalRecord > 10) {
+									$(".mui-pull-bottom-tips").show();
+								} else {
+									$(".mui-pull-bottom-tips").hide();
+								}
+								//是否有下一页
+								pageNo++;
+								flag = data.obj.haveNextPage;
+								var results = data.obj;
+								console.log(results)
+								for(var i = 0; i < results.length; i++) {
+									var state = "",
+										boxclass = "",
+										posicon = "";
+									if(results[i].state == 1) {
+										state = "<span class='danger'>" + results[i].stateValue + "</span>";
+										boxclass = "proxy_machine_list";
+									} else {
+										state = "<span class='font_blue'>" + results[i].stateValue + " <img width='6' src='img/icon_personal_enter.png'/></span>";
+										boxclass = "proxy_machine_list proxy_details";
+									}
+									if(results[i].type == 1) {
+										posicon = '<img class="proxy_machine_icon" src="img/post_ype01.png" />'
+									} else if(results[i].type == 2) {
+										posicon = '<img class="proxy_machine_icon" src="img/post_ype02.png" />'
+									} else if(results[i].type == 3) {
+										posicon = '<img class="proxy_machine_icon" src="img/post_ype03.png" />'
+									}
+									var my_machinelist = '<div class="' + boxclass + '" data-id="' + results[i].id + '" data-postype="' + results[i].type + '" data-poscode="' + results[i].posType.name + '：' + results[i].code + '" data-name="' + results[i].customerName + '" data-todaymoney="' + results[i].todayTrudeMoney + '" data-totalmoney="' + results[i].allTrudeMoney + '">' + posicon +
+										'<p class="info"><span class="proxyname">' + results[i].customerName +
+										'</span><span class="right">状态：' + state +
+										'</span><br /><span>' + results[i].posType.name + '：' + results[i].code +
+										'<br />今日交易额：&yen;' + results[i].todayTrudeMoney +
+										'<br />总交易额：&yen;' + results[i].allTrudeMoney +
+										'</span></p></div>';
+									if(1 == type) {
+										$("#item1mobile").append(my_machinelist);
+									} else {
+										$("#item2mobile").append(my_machinelist);
+									}
+								}
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+			//机具搜索
+			mui('body').on('tap', '#Equipment_serach', function(e) {
+				location.href = 'Personalcenter_Machine_search.html?key=proxy';
+			});
+			//机具详情
+			mui('body').on('tap', '.proxy_details', function(e) {
+				location.href = 'Personalcenter_proxyMachine_details.html?id=' + this.dataset.id + "&name=" + this.dataset.name + "&postype=" + this.dataset.postype + "&poscode=" + this.dataset.poscode + "&todaymoney=" + this.dataset.todaymoney + "&totalmoney=" + this.dataset.totalmoney;
+			});
+		</script>
+	</body>
+
+</html>

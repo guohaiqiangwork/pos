@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的费率</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.ratebox_01,.ratebox_02{
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的费率 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="library_content_date font_blue bg_gray p30"><img class="head_icon" src="img/icon_tips_blue.png" alt="" />修改费率后24小时生效！</div>
+			<!--闪电宝费率-->
+			<div class="ratebox_01">
+				<div class="bold" style="padding: 0.3rem 0 0 0.3rem;">闪电宝费率</div>
+				<div class="my_profit">
+					<div class="my_profit_title">
+						<div class="mark_pay"><img class="img" src="img/icon_profit_vip1.png" alt="" /></div>
+						<div class="my_profit_pay_name">VIP刷卡</div>
+					</div>
+
+					<div class="my_profit_list">
+						<div class="library_content_name">分润：<input id="vip_scan_ratio" name="model.vip_scan_ratio" type="text" placeholder="请输入" value="" /></div>
+						<div class="library_content_name left">激活费：<input id="vip_scan_activate" name="model.vip_scan_activate" type="text" placeholder="请输入" value="" /></div>
+					</div>
+				</div>
+				<div class="my_profit">
+					<div class="my_profit_title">
+						<div class="mark_pay"><img class="img" src="img/icon_profit_vip.png" alt="" /></div>
+						<div class="my_profit_pay_name">VIP云闪付</div>
+					</div>
+
+					<div class="my_profit_list">
+						<div class="library_content_name">分润：<input id="vip_cloud_ratio" name="model.vip_cloud_ratio" type="text" placeholder="请输入" value="" /></div>
+						<div class="library_content_name left">激活费：<input id="vip_cloud_activate" name="model.vip_cloud_activate" type="text" placeholder="请输入" value="" /></div>
+					</div>
+				</div>
+				<div class="my_profit">
+					<div class="my_profit_title">
+						<div class="mark_pay"><img class="img" src="img/icon_profit_cloud.png" alt="" /></div>
+						<div class="my_profit_pay_name">云闪付</div>
+					</div>
+
+					<div class="my_profit_list">
+						<div class="library_content_name">分润：<input id="cloudRatio" name="model.cloudRatio" type="text" placeholder="请输入" /></div>
+						<div class="library_content_name">激活费：<input id="cloudActivate" name="model.cloudActivate" type="text" placeholder="请输入" /></div>
+						<!--<div class="library_content_name">秒到费：<input id="cloudSecond" name="model.cloudSecond" type="text" placeholder="请输入" /></div>-->
+					</div>
+				</div>
+				<div class="my_profit" style="border: none;">
+					<div class="my_profit_title">
+						<div class="mark_pay"><img class="img" src="img/icon_profit_card.png" alt="" /></div>
+						<div class="my_profit_pay_name">刷卡支付</div>
+					</div>
+
+					<div class="my_profit_list">
+						<div class="library_content_name">分润：<input id="scanRatio" name="model.scanRatio" type="text" placeholder="请输入" /></div>
+						<div class="library_content_name">激活费：<input id="scanActivate" name="model.scanActivate " type="text" placeholder="请输入" /></div>
+						<div class="library_content_name">秒到费：<input id="scanSecond" name="model.scanSecond" type="text" placeholder="请输入" /></div>
+					</div>
+				</div>
+				<div class="line"></div>
+			</div>
+			<!--闪POS费率-->
+			<div class="ratebox_02">
+				<div class="bold" style="padding: 0.3rem 0 0 0.3rem;">闪POS费率</div>
+				<div class="my_profit">
+					<div class="my_profit_title">
+						<div class="mark_pay"><img class="img" src="img/icon_profit_cloud.png" alt="" /></div>
+						<div class="my_profit_pay_name">云闪付</div>
+					</div>
+
+					<div class="my_profit_list">
+						<div class="library_content_name">分润：<input id="flash_cloud_ratio" name="model.flash_cloud_ratio" type="text" placeholder="请输入" />%</div>
+						<div class="library_content_name hide">激活费：<input id="flash_cloud_activate" name="model.flash_cloud_activate" type="text" placeholder="请输入" /></div>
+					</div>
+				</div>
+				<div class="my_profit" style="border: none;">
+					<div class="my_profit_title">
+						<div class="mark_pay"><img class="img" src="img/icon_profit_card.png" alt="" /></div>
+						<div class="my_profit_pay_name">刷卡支付</div>
+					</div>
+
+					<div class="my_profit_list">
+						<div class="library_content_name">分润：<input id="flash_scan_ratio" name="model.flash_scan_ratio" type="text" placeholder="请输入" />%</div>
+						<div class="library_content_name hide">激活费：<input id="flash_scan_activate" name="model.flash_scan_activate" type="text" placeholder="请输入" /></div>
+					</div>
+				</div>
+			</div>
+
+			<!--<div class="my_profit">
+				<div class="my_profit_title">
+					<div class="mark_pay"><img class="img" src="img/icon_profit_quick.png" alt="" /></div>
+					<div class="my_profit_pay_name">快捷支付</div>
+				</div> 
+
+				<div class="my_profit_list">
+					<div class="library_content_name">分润：<input type="text" placeholder="请输入" /></div>
+					<div class="library_content_name">激活费：<input type="text" placeholder="请输入" /></div>
+					<div class="library_content_name">秒到费：<input type="text" placeholder="请输入" /></div>
+				</div>
+			</div>-->
+
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			$("#input_customer").val(customerId);
+			$("input").attr("readonly", "readonly");
+			var Customer_info = myStorage.getItem('Customer_info');
+			console.log(user_type)
+			if(user_type==1){
+				$(".ratebox_01,.ratebox_02").show();
+			}else{
+				$(".ratebox_02").show();
+			}
+			if(Customer_info.scanActivate != null) {
+				//闪电宝费率已经设置过费率
+				$("#first_hide").show();
+				$("#vip_scan_ratio").val(Customer_info.vip_scan_ratio + "%");
+				$("#vip_scan_activate").val(Customer_info.vip_scan_activate + "元");
+				$("#vip_cloud_ratio").val(Customer_info.vip_cloud_ratio + "%");
+				$("#vip_cloud_activate").val(Customer_info.vip_cloud_activate + "元");
+				$("#cloudRatio").val(Customer_info.cloudRatio + "%");
+				$("#cloudActivate").val(Customer_info.cloudActivate + "元");
+				//$("#cloudSecond").val(Customer_info.cloudSecond+"元");
+				$("#scanRatio").val(Customer_info.scanRatio + "%");
+				$("#scanActivate").val(Customer_info.scanActivate + "元");
+				$("#scanSecond").val(Customer_info.scanSecond + "元");
+			} else {
+				//闪电宝费率未设置过费率
+				$("#first_hide").show();
+				$("#vip_scan_ratio").val("0%");
+				$("#vip_scan_activate").val("0.00元");
+				$("#vip_cloud_ratio").val("0%");
+				$("#vip_cloud_activate").val("0.00元");
+				$("#cloudRatio").val("0%");
+				$("#cloudActivate").val("0.00元");
+				//$("#cloudSecond").val("0.00元");
+				$("#scanRatio").val("0%");
+				$("#scanActivate").val("0.00元");
+				$("#scanSecond").val("0.00元");
+			}
+			if(Customer_info.flash_cloud_ratio != null) {
+				//闪电宝费率已经设置过费率
+				$("#flash_cloud_ratio").val(Customer_info.flash_cloud_ratio);
+				$("#flash_cloud_activate").val(Customer_info.flash_cloud_activate);
+				$("#flash_scan_ratio").val(Customer_info.flash_scan_ratio);
+				$("#flash_scan_activate").val(Customer_info.flash_scan_activate);
+			}else{
+				$("#flash_cloud_ratio").val("0%");
+				$("#flash_cloud_activate").val("0.00元");
+				$("#flash_scan_ratio").val("0%");
+				$("#flash_scan_activate").val("0.00元");
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>收益明细</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white profit_detail">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">收益明细 </h1>
+		</header>
+
+		<div class="mui-content">
+			<div id="slider" class="mui-slider" style="z-index: inherit;">
+				<div id="segmentedControl1" class="bank_tab mui-segmented-control bg_white">
+					<a id="getCustomerIncome" class="mui-control-item mui-active" href="#item1mobile">我的明细</a>
+					<a id="getHezuoLowerCustomerMoney" class="mui-control-item" href="#item2mobile">代理明细</a>
+				</div>
+
+				<div class="line"></div>
+
+				<div class="mui-content-padded bg_white" style="margin: 0;">
+					<!--我的明细-->
+					<div id="item1mobile" class="mui-control-content mui-active">
+						<!--<div class="my_profit bg_white">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_vip.png" alt="" /></div>
+								<div class="my_profit_pay_name">VIP云闪付</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">交易：<span>1600.00</span>元</div>
+									<div class="library_content_name">分润：<span>2000.00</span>元</div>
+								</div>
+
+								<div class="pay_detail_right left">+<span>200.00</span>元</div>
+							</div>
+						</div>
+						<div class="my_profit bg_white">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_activate.png" alt="" /></div>
+								<div class="my_profit_pay_name">激活费</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">机具编号：zfhhh0000123456</div>
+								</div>
+								<div class="pay_detail_right left">+<span>200.00</span>元</div>
+							</div>
+						</div>
+						<div class="my_profit bg_white">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_card.png" alt="" /></div>
+								<div class="my_profit_pay_name">刷卡支付</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">交易：<span>1600.00</span>元</div>
+									<div class="library_content_name">分润：<span>200.00</span>元</div>
+									<div class="library_content_name">秒到费：<span>100.00</span>元</div>
+								</div>
+
+								<div class="pay_detail_right left">+<span>200.00</span>元</div>
+							</div>
+						</div>
+						<div class="my_profit bg_white">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_vip1.png" alt="" /></div>
+								<div class="my_profit_pay_name">VIP刷卡支付</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">交易额：<span>1600.00</span>元</div>
+									<div class="library_content_name">分润：<span>2000.00</span>元</div>
+								</div>
+
+								<div class="pay_detail_right left">+<span>200.00</span>元</div>
+							</div>
+						</div>
+						<div class="my_profit bg_white">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_cloud.png" alt="" /></div>
+								<div class="my_profit_pay_name">云闪付</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">交易额：<span>1600.00</span>元</div>
+									<div class="library_content_name">分润：<span>2000.00</span>元</div>
+								</div>
+								<div class="pay_detail_right left">+<span>300.00</span>元</div>
+							</div>
+						</div>
+						<div class="my_profit bg_white" style="border: 0;">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_quick.png" alt="" /></div>
+								<div class="my_profit_pay_name">快捷支付</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">交易额：<span>1600.00</span>元</div>
+									<div class="library_content_name">分润：<span>2000.00</span>元</div>
+									<div class="library_content_name">秒到费：<span>100.00</span>元</div>
+								</div>
+								<div class="pay_detail_right left">+<span>300.00</span>元</div>
+							</div>
+						</div>-->
+					</div>
+					<!--代理明细-->
+					<div id="item2mobile" class="mui-control-content">
+						<!--<div class="my_profit bg_white">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_vip.png" alt="" /></div>
+								<div class="my_profit_pay_name">张鑫&nbsp;VIP云闪付</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">交易：<span>1600.00</span>元</div>
+									<div class="library_content_name">分润：<span>2000.00</span>元</div>
+								</div>
+
+								<div class="pay_detail_right left">+<span>200.00</span>元</div>
+							</div>
+						</div>
+						<div class="my_profit bg_white">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_activate.png" alt="" /></div>
+								<div class="my_profit_pay_name">王璐&nbsp;激活费</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">机具编号：zfhhh0000123456</div>
+								</div>
+								<div class="pay_detail_right left">+<span>200.00</span>元</div>
+							</div>
+						</div>
+						<div class="my_profit bg_white">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_card.png" alt="" /></div>
+								<div class="my_profit_pay_name">王璐&nbsp;刷卡支付</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">交易：<span>1600.00</span>元</div>
+									<div class="library_content_name">分润：<span>200.00</span>元</div>
+									<div class="library_content_name">秒到费：<span>100.00</span>元</div>
+								</div>
+
+								<div class="pay_detail_right left">+<span>200.00</span>元</div>
+							</div>
+						</div>
+						<div class="my_profit bg_white">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_vip1.png" alt="" /></div>
+								<div class="my_profit_pay_name">王璐&nbsp;VIP刷卡支付</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">交易额：<span>1600.00</span>元</div>
+									<div class="library_content_name">分润：<span>2000.00</span>元</div>
+								</div>
+								<div class="pay_detail_right left">+<span>200.00</span>元</div>
+							</div>
+						</div>
+						<div class="my_profit bg_white">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_cloud.png" alt="" /></div>
+								<div class="my_profit_pay_name">王璐&nbsp;云闪付</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">交易额：<span>1600.00</span>元</div>
+									<div class="library_content_name">分润：<span>2000.00</span>元</div>
+								</div>
+								<div class="pay_detail_right left">+<span>300.00</span>元</div>
+							</div>
+						</div>
+						<div class="my_profit bg_white" style="border: 0;">
+							<div class="my_profit_title">
+								<div class="mark_pay"><img class="img" src="img/icon_profit_quick.png" alt="" /></div>
+								<div class="my_profit_pay_name">李娜&nbsp;快捷支付</div>
+								<div class="my_profit_pay_date right">2018-07-23&nbsp;&nbsp;21:47:01</div>
+							</div>
+
+							<div class="my_pay_detail overflow">
+								<div class="pay_detail_left left">
+									<div class="library_content_name">交易额：<span>1600.00</span>元</div>
+									<div class="library_content_name">分润：<span>2000.00</span>元</div>
+									<div class="library_content_name">秒到费：<span>100.00</span>元</div>
+								</div>
+								<div class="pay_detail_right left">+<span>300.00</span>元</div>
+							</div>
+						</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/mui.pullToRefresh.js"></script>
+		<script src="js/mui.pullToRefresh.material.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//选项卡切换
+			var state = 2,
+				tab_id = "item1mobile",
+				pageNo = 1,
+				flag = true;
+			//加载更多初始化
+			mui('.mui-content-padded').pullToRefresh({
+				up: {
+					callback: function() {
+						var _this = this;
+						console.log(this)
+						setTimeout(function() {
+							console.log(flag)
+							if(flag) {
+								if("item1mobile" == tab_id) {
+									getCustomerIncome();
+								} else if("item2mobile" == tab_id) {
+									getHezuoLowerCustomerMoney();
+								}
+							}
+							_this.endPullUpToRefresh(!flag);
+						}, 500);
+					}
+				}
+			});
+			//切换选项卡
+			mui('body').on('tap', 'a', function(e) {
+				pageNo = 1;
+				flag = true;
+				if("getCustomerIncome" == this.id) {
+					tab_id = "item1mobile";
+					$("#item1mobile").html("");
+					getCustomerIncome();
+				} else if("getHezuoLowerCustomerMoney" == this.id) {
+					tab_id = "item2mobile";
+					$("#item2mobile").html("");
+					getHezuoLowerCustomerMoney();
+				}
+				mui('.mui-content-padded').pullToRefresh().refresh(true);
+			});
+			//时间范围
+			var starttime = myStorage.getItem('profit_time')[0];
+			var endtime = myStorage.getItem('profit_time')[1];
+			console.log(starttime, endtime)
+			var key = getQueryString("key");
+			if(key == "tab02") {
+				$(".mui-control-item").eq(0).removeClass("mui-active")
+				$(".mui-control-item").eq(1).addClass("mui-active")
+				tab_id = "item2mobile";
+				$("#item1mobile").removeClass("mui-active");
+				$("#item2mobile").addClass("mui-active");
+				$("#item2mobile").html("");
+				getHezuoLowerCustomerMoney();
+			} else {
+				getCustomerIncome();
+			}
+			//获取会员收益明细列表
+			function getCustomerIncome() {
+				mui.ajax(ajax_url + 'appCustomer/getCustomerIncome', {
+					data: {
+						"model.customer_id": customerId,
+						"model.type": 1,
+						"model.startTime": starttime,
+						"model.endTime": endtime,
+						"model.pos_type": '2',
+						"page.pageNo": pageNo
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							if(0 == data.obj.results.length) {
+								flag = data.obj.haveNextPage;
+								var listnone = '<div class="list-none" style="display:block">' +
+									'<img class="icon_none icon_none_mt" src="img/icon_none_address.png">' +
+									'<div class="fonts">空空如也</div>' +
+									'</div>';
+								$("#item1mobile").append(listnone);
+								$(".mui-pull-bottom-tips").hide();
+							} else {
+								if(data.obj.totalRecord > 10) {
+									$(".mui-pull-bottom-tips").show();
+								} else {
+									$(".mui-pull-bottom-tips").hide();
+								}
+								//是否有下一页
+								pageNo++;
+								flag = data.obj.haveNextPage;
+								var results = data.obj.results;
+								for(var i = 0; i < results.length; i++) {
+									if(2 == results[i].type) {
+										//激活机具记录
+										var my_profitlist = '<div class="my_profit bg_white">' +
+											'<div class="my_profit_title">' +
+											'<div class="mark_pay"><img class="img" src="img/icon_profit_activate.png" alt="" /></div>' +
+											'<div class="my_profit_pay_name">&nbsp;激活费</div>' +
+											'<div class="my_profit_pay_date right">' + timestampToTime(results[i].createTime) + '</div>' +
+											'</div>' +
+											'<div class="my_pay_detail overflow">' +
+											'<div class="pay_detail_left left">' +
+											'<div class="library_content_name">机具编号：' + results[i].posCode + '</div>' +
+											'</div>' +
+											'<div class="pay_detail_right left">+<span>' + results[i].money + '</span>元</div>' +
+											'</div>' +
+											'</div>';
+										$("#item1mobile").append(my_profitlist);
+									} else {
+										console.log(results[i])
+										//刷卡记录
+										if(1001 == results[i].tradeType && 1 == results[i].isVipTrade) {
+											//刷卡支付收款--VIP
+											var my_profitlist = '<div class="my_profit bg_white">' +
+												'<div class="my_profit_title">' +
+												'<div class="mark_pay"><img class="img" src="img/icon_profit_vip1.png" alt="" /></div>' +
+												'<div class="my_profit_pay_name">VIP刷卡支付</div>' +
+												'<div class="my_profit_pay_date right">' + timestampToTime(results[i].createTime) + '</div>' +
+												'</div>' +
+												'<div class="my_pay_detail overflow">' +
+												'<div class="pay_detail_left left">' +
+												'<div class="library_content_name">交易额：<span>' + results[i].tradeAmt + '</span>元</div>' +
+												'<div class="library_content_name">分润：<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'<div class="pay_detail_right left">+<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'</div>';
+											$("#item1mobile").append(my_profitlist)
+										}
+										if(1001 == results[i].tradeType && 2 == results[i].isVipTrade) {
+											//刷卡支付收款--非VIP
+											var my_profitlist = '<div class="my_profit bg_white">' +
+												'<div class="my_profit_title">' +
+												'<div class="mark_pay"><img class="img" src="img/icon_profit_card.png" alt="" /></div>' +
+												'<div class="my_profit_pay_name">刷卡支付</div>' +
+												'<div class="my_profit_pay_date right">' + timestampToTime(results[i].createTime) + '</div>' +
+												'</div>' +
+												'<div class="my_pay_detail overflow">' +
+												'<div class="pay_detail_left left">' +
+												'<div class="library_content_name">交易额：<span>' + results[i].tradeAmt + '</span>元</div>' +
+												'<div class="library_content_name">分润：<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'<div class="pay_detail_right left">+<span>' + (Number(results[i].money) + Number(results[i].second)).toFixed(2) + '</span>元</div>' +
+												'</div>' +
+												'</div>';
+											$("#item1mobile").append(my_profitlist)
+										} else if(1013 == results[i].tradeType && 1 == results[i].isVipTrade) {
+											//云闪付支付收款--VIP
+											var my_profitlist = '<div class="my_profit bg_white">' +
+												'<div class="my_profit_title">' +
+												'<div class="mark_pay"><img class="img" src="img/icon_profit_vip.png" alt="" /></div>' +
+												'<div class="my_profit_pay_name">VIP云闪付</div>' +
+												'<div class="my_profit_pay_date right">' + timestampToTime(results[i].createTime) + '</div>' +
+												'</div>' +
+												'<div class="my_pay_detail overflow">' +
+												'<div class="pay_detail_left left">' +
+												'<div class="library_content_name">交易额：<span>' + results[i].tradeAmt + '</span>元</div>' +
+												'<div class="library_content_name">分润：<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'<div class="pay_detail_right left">+<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'</div>';
+											$("#item1mobile").append(my_profitlist)
+										} else if(1013 == results[i].tradeType && 2 == results[i].isVipTrade) {
+											//云闪付支付收款--非VIP
+											var my_profitlist = '<div class="my_profit bg_white">' +
+												'<div class="my_profit_title">' +
+												'<div class="mark_pay"><img class="img" src="img/icon_profit_cloud.png" alt="" /></div>' +
+												'<div class="my_profit_pay_name">云闪付</div>' +
+												'<div class="my_profit_pay_date right">' + timestampToTime(results[i].createTime) + '</div>' +
+												'</div>' +
+												'<div class="my_pay_detail overflow">' +
+												'<div class="pay_detail_left left">' +
+												'<div class="library_content_name">交易额：<span>' + results[i].tradeAmt + '</span>元</div>' +
+												'<div class="library_content_name">分润：<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'<div class="pay_detail_right left">+<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'</div>';
+											$("#item1mobile").append(my_profitlist)
+										} else if(1010 == results[i].tradeType) {
+											//支付宝支付收款--此处不处理
+										} else if(1002 == results[i].tradeType) {
+											//微信支付收款--此处不处理
+										} else if(2001 == results[i].tradeType) {
+											//取现--此处不处理
+										} else if(1014 == results[i].tradeType) {
+											//银联二维码--此处不处理
+										}
+									}
+								}
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+			//获取下级代理刷单给上级代理的分润还有机具分润列表
+			function getHezuoLowerCustomerMoney() {
+				mui.ajax(ajax_url + 'appCustomer/getHezuoLowerCustomerMoney', {
+					data: {
+						"model.customer_id": customerId,
+						"model.startTime": starttime,
+						"model.endTime": endtime,
+						"model.pos_type": '2',
+						"page.pageNo": pageNo
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							flag = data.obj.haveNextPage;
+							if(0 == data.obj.results.length) {
+								var listnone = '<div class="list-none" style="display:block">' +
+									'<img class="icon_none icon_none_mt" src="img/icon_none_address.png">' +
+									'<div class="fonts">空空如也</div>' +
+									'</div>';
+								$("#item2mobile").append(listnone);
+								$(".mui-pull-bottom-tips").hide();
+							} else {
+								if(data.obj.totalRecord > 10) {
+									$(".mui-pull-bottom-tips").show();
+								} else {
+									$(".mui-pull-bottom-tips").hide();
+								}
+								//是否有下一页
+								pageNo++;
+								flag = data.obj.haveNextPage;
+								var results = data.obj.results;
+								for(var i = 0; i < results.length; i++) {
+									console.log(results[i])
+									if(2 == results[i].type) {
+										//激活机具记录
+										var my_profitlist = '<div class="my_profit bg_white">' +
+											'<div class="my_profit_title">' +
+											'<div class="mark_pay"><img class="img" src="img/icon_profit_activate.png" alt="" /></div>' +
+											'<div class="my_profit_pay_name">' + results[i].name + '&nbsp;激活费</div>' +
+											'<div class="my_profit_pay_date right">' + timestampToTime(results[i].createTime) + '</div>' +
+											'</div>' +
+											'<div class="my_pay_detail overflow">' +
+											'<div class="pay_detail_left left">' +
+											'<div class="library_content_name">机具编号：' + results[i].posCode + '</div>' +
+											'</div>' +
+											'<div class="pay_detail_right left">+<span>' + results[i].money + '</span>元</div>' +
+											'</div>' +
+											'</div>';
+									} else {
+										//刷卡记录
+										if(1001 == results[i].tradeType && 1 == results[i].isVipTrade) {
+											//刷卡支付收款--VIP
+											var my_profitlist = '<div class="my_profit bg_white">' +
+												'<div class="my_profit_title">' +
+												'<div class="mark_pay"><img class="img" src="img/icon_profit_vip1.png" alt="" /></div>' +
+												'<div class="my_profit_pay_name">' + results[i].name + ' VIP刷卡支付</div>' +
+												'<div class="my_profit_pay_date right">' + timestampToTime(results[i].createTime) + '</div>' +
+												'</div>' +
+												'<div class="my_pay_detail overflow">' +
+												'<div class="pay_detail_left left">' +
+												'<div class="library_content_name">交易额：<span>' + results[i].tradeAmt + '</span>元</div>' +
+												'<div class="library_content_name">分润：<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'<div class="pay_detail_right left">+<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'</div>';
+											$("#item1mobile").append(my_profitlist)
+										}
+										if(1001 == results[i].tradeType && 2 == results[i].isVipTrade) {
+											//刷卡支付收款--非VIP
+											var my_profitlist = '<div class="my_profit bg_white">' +
+												'<div class="my_profit_title">' +
+												'<div class="mark_pay"><img class="img" src="img/icon_profit_card.png" alt="" /></div>' +
+												'<div class="my_profit_pay_name">' + results[i].name + ' 刷卡支付</div>' +
+												'<div class="my_profit_pay_date right">' + timestampToTime(results[i].createTime) + '</div>' +
+												'</div>' +
+												'<div class="my_pay_detail overflow">' +
+												'<div class="pay_detail_left left">' +
+												'<div class="library_content_name">交易额：<span>' + results[i].tradeAmt + '</span>元</div>' +
+												'<div class="library_content_name">分润：<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'<div class="pay_detail_right left">+<span>' + (Number(results[i].money) + Number(results[i].second)).toFixed(2) + '</span>元</div>' +
+												'</div>' +
+												'</div>';
+											$("#item1mobile").append(my_profitlist)
+										} else if(1013 == results[i].tradeType && 1 == results[i].isVipTrade) {
+											//云闪付支付收款--VIP
+											var my_profitlist = '<div class="my_profit bg_white">' +
+												'<div class="my_profit_title">' +
+												'<div class="mark_pay"><img class="img" src="img/icon_profit_vip.png" alt="" /></div>' +
+												'<div class="my_profit_pay_name">' + results[i].name + ' VIP云闪付</div>' +
+												'<div class="my_profit_pay_date right">' + timestampToTime(results[i].createTime) + '</div>' +
+												'</div>' +
+												'<div class="my_pay_detail overflow">' +
+												'<div class="pay_detail_left left">' +
+												'<div class="library_content_name">交易额：<span>' + results[i].tradeAmt + '</span>元</div>' +
+												'<div class="library_content_name">分润：<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'<div class="pay_detail_right left">+<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'</div>';
+											$("#item1mobile").append(my_profitlist)
+										} else if(1013 == results[i].tradeType && 2 == results[i].isVipTrade) {
+											//云闪付支付收款--非VIP
+											var my_profitlist = '<div class="my_profit bg_white">' +
+												'<div class="my_profit_title">' +
+												'<div class="mark_pay"><img class="img" src="img/icon_profit_cloud.png" alt="" /></div>' +
+												'<div class="my_profit_pay_name">' + results[i].name + ' 云闪付</div>' +
+												'<div class="my_profit_pay_date right">' + timestampToTime(results[i].createTime) + '</div>' +
+												'</div>' +
+												'<div class="my_pay_detail overflow">' +
+												'<div class="pay_detail_left left">' +
+												'<div class="library_content_name">交易额：<span>' + results[i].tradeAmt + '</span>元</div>' +
+												'<div class="library_content_name">分润：<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'<div class="pay_detail_right left">+<span>' + results[i].money + '</span>元</div>' +
+												'</div>' +
+												'</div>';
+											$("#item1mobile").append(my_profitlist)
+										} else if(1010 == results[i].tradeType) {
+											//支付宝支付收款--此处不处理
+										} else if(1002 == results[i].tradeType) {
+											//微信支付收款--此处不处理
+										} else if(2001 == results[i].tradeType) {
+											//取现--此处不处理
+										} else if(1014 == results[i].tradeType) {
+											//银联二维码--此处不处理
+										}
+									}
+									$("#item2mobile").append(my_profitlist);
+								}
+							}
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

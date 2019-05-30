@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>我的机具</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			* {
+				touch-action: none;
+			}
+			
+			.list-none {
+				display: block;
+			}
+			
+			.list-none .icon_none_mt {
+				display: block;
+				margin: 1.8rem auto 0.3rem;
+				padding-bottom: 0.3rem;
+			}
+			
+			.mui-pull-bottom-tips {
+				position: relative;
+				z-index: 999;
+				width: 6rem;
+				margin: -30px auto 0;
+				background: #fff;
+			}
+			
+			img {
+				vertical-align: sub;
+			}
+		</style>
+	</head>
+
+	<body class="bg_gradient">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的机具 </h1>
+			<a href="Tools_apply_record.html" class="mui-icon mui-pull-right goTools_applyrecord" style="font-size: 0.8em;margin-top: 0.1rem;">我的申请记录</a>
+		</header>
+		<div class="mui-content">
+			<div class="mui-segmented-control Equipment_tab">
+				<a class="mui-control-item mui-active" href="#item1">
+					激活机具
+				</a>
+				<a class="mui-control-item" href="#item2">
+					未激活机具
+				</a>
+				<a class="mui-control-item" href="#item3">
+					全部机具
+				</a>
+			</div>
+			<img id="Equipment_serach" class="Equipment_serachicon" src="img/icon_whiteserach.png" />
+			<div class="Equipment_content">
+				<!--tab1--激活机具-->
+				<div id="item1" class="mui-control-content mui-active">
+					<div class="Equipment_box">
+						<div class="Equipment_sum"></div>
+						<div class="mui-scroll-wrapper">
+							<ul>
+								<!--<li>
+								<span class="left">机具编号：zfhhh0000123456</span>
+								<span class="right">状态：<span class="font_blue">激活</span></span>
+								<span class="left">机具类型：UNIS</span>
+								<span class="right font_grey">2018年6月20日</span>
+							</li>
+							<li>
+								<span class="left">机具编号：zfhhh0000123456</span>
+								<span class="right">状态：<span class="font_blue">激活</span></span>
+								<span class="left">机具类型：UNIS</span>
+								<span class="right font_grey">2018年6月20日</span>
+							</li>
+							<li>
+								<span class="left">机具编号：zfhhh0000123456</span>
+								<span class="right">状态：<span class="font_blue">激活</span></span>
+								<span class="left">机具类型：UNIS</span>
+								<span class="right font_grey">2018年6月20日</span>
+							</li>
+							<li>
+								<span class="left">机具编号：zfhhh0000123456</span>
+								<span class="right">状态：<span class="font_blue">激活</span></span>
+								<span class="left">机具类型：UNIS</span>
+								<span class="right font_grey">2018年6月20日</span>
+							</li>
+							<li>
+								<span class="left">机具编号：zfhhh0000123456</span>
+								<span class="right">状态：<span class="font_blue">激活</span></span>
+								<span class="left">机具类型：UNIS</span>
+								<span class="right font_grey">2018年6月20日</span>
+							</li>
+							<li>
+								<span class="left">机具编号：zfhhh0000123456</span>
+								<span class="right">状态：<span class="font_blue">激活</span></span>
+								<span class="left">机具类型：UNIS</span>
+								<span class="right font_grey">2018年6月20日</span>
+							</li>
+							<li>
+								<span class="left">机具编号：zfhhh0000123456</span>
+								<span class="right">状态：<span class="font_blue">激活</span></span>
+								<span class="left">机具类型：UNIS</span>
+								<span class="right font_grey">2018年6月20日</span>
+							</li>
+							<li>
+								<span class="left">机具编号：zfhhh0000123456</span>
+								<span class="right">状态：<span class="font_blue">激活</span></span>
+								<span class="left">机具类型：UNIS</span>
+								<span class="right font_grey">2018年6月20日</span>
+							</li>-->
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--tab2--未激活机具-->
+				<div id="item2" class="mui-control-content">
+					<div class="Equipment_box">
+						<div class="Equipment_sum"></div>
+						<div class="mui-scroll-wrapper">
+							<ul>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!--tab3--全部机具-->
+				<div id="item3" class="mui-control-content">
+					<div class="Equipment_box">
+						<div class="Equipment_sum"></div>
+						<div class="mui-scroll-wrapper">
+							<ul>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.pullToRefresh.js"></script>
+	<script src="js/mui.pullToRefresh.material.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		mui.back = function() {
+			if(1 == myStorage.getItem('Customer_info').type) {
+				location.href = "Nav_Personalcenter_Partners.html"
+			} else {
+				location.href = "Nav_Personalcenter_Agent.html"
+			}
+		};
+
+		//滚动条滚动
+		(function($) {
+			$(".mui-scroll-wrapper").scroll({});
+		})(mui);
+		// H5 plus事件处理
+		function plusReady() {
+			var h = plus.screen.resolutionHeight;
+			var sh = plus.navigator.getStatusbarHeight();
+			$(".Equipment_box").height(h - sh - 210);
+			$(".Equipment_box .mui-scroll-wrapper").height(h -sh - 280);
+			// 设置系统状态栏背景色，颜色
+			plus.navigator.setStatusBarBackground('#078ffe');
+			plus.navigator.setStatusBarStyle('light');
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		//选项卡切换
+		var state = 2,
+			tab_id = "item1",
+			pageNo = 1,
+			flag = true;
+		//加载更多初始化
+		mui('.Equipment_content').pullToRefresh({
+			up: {
+				callback: function() {
+					var _this = this;
+					console.log(this)
+					setTimeout(function() {
+						console.log(flag)
+						if(flag) {
+							getPosByCustomer();
+						}
+						_this.endPullUpToRefresh(!flag);
+					}, 500);
+				}
+			}
+		});
+		getPosByCustomer();
+		mui('body').on('tap', 'a', function() {
+			pageNo = 1;
+			flag = true;
+			$(".mui-control-content").removeClass("mui-active");
+			$('.mui-control-content').eq($(this).index()).addClass("mui-active");
+			//机具列表传参state
+			if(0 == $(this).index()) {
+				state = 2;
+				tab_id = "item1"
+			} else if(1 == $(this).index()) {
+				state = 1;
+				tab_id = "item2"
+			} else {
+				state = "";
+				tab_id = "item3"
+			}
+			$("#" + tab_id).find("ul").html("");
+			mui('.Equipment_content').pullToRefresh().refresh(true);
+			getPosByCustomer();
+		})
+		//获取机具列表
+		function getPosByCustomer() {
+			mui.ajax(ajax_url + 'appCustomer/getPosByCustomer', {
+				data: {
+					customerId: customerId,
+					state: state,
+					"page.pageNo": pageNo
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if(true == data.success) {
+						var Equipment_lists = data.obj.results;
+						$("#" + tab_id).find(".Equipment_sum").html(data.obj.totalRecord + " 台");
+						if(0 == data.obj.totalRecord) {
+							flag = data.obj.haveNextPage;
+							var listnone = '<div class="list-none">' +
+								'<img class="icon_none icon_none_mt" src="img/icon_none_address.png">' +
+								'<div class="fonts">空空如也</div>' +
+								'</div>';
+							$("#" + tab_id).find("ul").append(listnone);
+							$(".mui-pull-bottom-tips").hide();
+						} else {
+							if(data.obj.totalRecord > 10) {
+								$(".mui-pull-bottom-tips").show();
+							} else {
+								$(".mui-pull-bottom-tips").hide();
+							}
+							//是否有下一页
+							pageNo++;
+							flag = data.obj.haveNextPage;
+							for(var i = 0; i < Equipment_lists.length; i++) {
+								var posicon = "";
+								if(Equipment_lists[i].type == 1) {
+									posicon = "<img width='12' src='img/post_ype01.png'/><span>&nbsp;闪电宝&nbsp;&nbsp;</span>";
+								} else if(Equipment_lists[i].type == 2) {
+									posicon = "<img width='12' src='img/post_ype02.png'/><span>&nbsp;闪POS&nbsp;&nbsp;</span>";
+								} else {
+									posicon = "<img width='12' src='img/post_ype03.png'/><span>&nbsp;智能终端&nbsp;&nbsp;</span>";
+								}
+								if(state == 2) {
+									var Equipment_list = '<li>' +
+										'<span class="left clearboth">类型：' + posicon + Equipment_lists[i].posType.name + '</span>' +
+										'<span class="right"><span class="font_blue">' + Equipment_lists[i].stateValue + '</span></span>' +
+										'<span class="left clearboth">编号：' + Equipment_lists[i].code + '</span>' +
+										'<span class="right time">' + (timestampToTime(Equipment_lists[i].activationTime)).split(" ")[0] + '</span>' +
+										'</li>';
+								} else {
+									if(Equipment_lists[i].code != null) {
+										var Equipment_list = '<li>' +
+											'<span class="left">类型：' + posicon + Equipment_lists[i].posType.name + '</span>' +
+											'<span class="right"><span class="font_blue">' + Equipment_lists[i].stateValue + '</span></span>' +
+											'<span class="left clearboth">编号：' + Equipment_lists[i].code + '</span>' +
+											'<span class="right time">' + (timestampToTime(Equipment_lists[i].lestLogisticsTime)).split(" ")[0] + '</span>' +
+											'</li>';
+									} else {
+										var Equipment_list = '<li>' +
+											'<span class="left">类型：暂无</span>' +
+											'<span class="right">状态：<span class="font_blue">' + Equipment_lists[i].stateValue + '</span></span>' +
+											'<span class="left clearboth">编号：' + Equipment_lists[i].code + '</span>' +
+											'<span class="right time">' + timestampToTime(Equipment_lists[i].lestLogisticsTime) + '</span>' +
+											'</li>';
+									}
+								}
+								$("#" + tab_id).find("ul").append(Equipment_list)
+							}
+						}
+
+					}
+					if(false == data.success) {
+						mui.toast(data.msg)
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+		}
+
+		//我的申请记录
+		mui('body').on('tap', '.goTools_applyrecord', function(e) {
+			var url = this.href;
+			location.href = url;
+		});
+		//机具搜索
+		mui('body').on('tap', '#Equipment_serach', function(e) {
+			location.href = 'Personalcenter_Machine_search.html?key=mine';
+		});
+	</script>
+
+</html>

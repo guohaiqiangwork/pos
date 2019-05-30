@@ -1,0 +1,2929 @@
+* {
+	/*touch-action: none;*/
+}
+
+html,
+body {
+	height: 100%;
+	-webkit-tap-highlight-color: transparent;
+	margin: 0;
+}
+
+div,
+p,
+span,
+textarea {
+	text-overflow: ellipsis;
+	word-break: break-all;
+	word-wrap: break-word;
+	/*换行*/
+}
+
+@media screen and (max-width:321px) {
+	html,
+	body,
+	p {
+		font-size: 14px;
+		line-height: 20px;
+	}
+	.hint {
+		font-size: 10px;
+		line-height: 14px;
+	}
+	.btn_common_submit {
+		font-size: 16px;
+	}
+}
+
+@media screen and (min-width:321px) and (max-width:400px) {
+	html,
+	body,
+	p {
+		font-size: 16px;
+		line-height: 22px;
+	}
+	.hint {
+		font-size: 12px;
+		line-height: 16px;
+	}
+	.btn_common_submit {
+		font-size: 18px;
+	}
+}
+
+@media screen and (min-width:400px) {
+	html,
+	body,
+	p {
+		font-size: 18px;
+		line-height: 24px;
+	}
+	.hint {
+		font-size: 14px;
+		line-height: 18px;
+	}
+	.btn_common_submit {
+		font-size: 20px;
+	}
+}
+
+
+/*公共样式*/
+
+.bg_white {
+	background: #fff;
+}
+
+.bg_gray {
+	background: #f0f0f3;
+}
+
+.bg_red {
+	background: #f73c3c;
+}
+
+.bg_blue {
+	background: #078ffe;
+}
+
+.overflow {
+	overflow: hidden;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.font_blue {
+	color: #078ffe;
+}
+
+.font_grey {
+	color: #999;
+}
+
+.font_orange {
+	color: #f87541;
+}
+
+.border_none {
+	border: none!important;
+}
+
+.grey_line {
+	width: 100%;
+	height: .14rem;
+	background: #f0f0f3;
+}
+
+.btn_common_submit {
+	display: block;
+	background: #078ffe;
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	width: 5.6rem;
+	height: 47px;
+	margin: 42px auto 80px;
+	letter-spacing: 2px;
+	box-shadow: 0 8px 20px -8px #45abfe;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.text_r {
+	text-align: right;
+}
+
+.text_l {
+	text-align: left;
+}
+
+.text_c {
+	text-align: center;
+}
+
+.disabled {
+	opacity: .5;
+}
+
+.clearboth {
+	clear: both;
+}
+
+
+/*全屏渐变背景*/
+
+.bg_gradient {
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(to right, rgb(33, 153, 252), rgb(47, 111, 255));
+}
+
+.bg_gradient header {
+	box-shadow: none;
+	background: linear-gradient(to right, rgb(33, 153, 252), rgb(47, 111, 255));
+}
+
+.bg_gradient .mui-content {
+	background: linear-gradient(to right, rgb(33, 153, 252), rgb(47, 111, 255));
+}
+
+
+/*银行卡列表--背景*/
+
+.bg_bankcard_list header {
+	box-shadow: none;
+	background: #fff;
+	color: #333;
+}
+
+.bg_bankcard_list header .mui-title {
+	color: #333;
+}
+
+.bg_bankcard_list header .mui-icon {
+	color: #333!important;
+}
+
+
+/*用户--登录、注册等*/
+
+.bg_user {
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	padding: 0 0.94rem;
+}
+
+.bg_user header {
+	box-shadow: none;
+	background: #fff;
+}
+
+.bg_user .mui-content {
+	background: #fff;
+}
+
+.bg_user header .icon_close {
+	color: #999!important;
+	font-size: 0.6rem;
+}
+
+.user_title {
+	margin: 0.68rem auto 1.2rem;
+	font-size: 0.63rem;
+	font-weight: bold;
+	color: #078ffe;
+}
+
+.user_row {
+	padding-bottom: 1px;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.user_row .title {
+	color: #078ffe;
+	margin-top: 0.4rem;
+}
+
+.user_row .title img {
+	width: 0.38rem;
+	margin-right: 0.14rem;
+	vertical-align: text-bottom;
+}
+
+.user_row input {
+	border: none;
+	margin: 0;
+	font-size: 0.9em;
+	padding: 6px 0 6px 0.58rem;
+	height: 0.7rem;
+}
+
+.user_row .auth_code {
+	font-size: 0.8em;
+	height: 0.48rem;
+	line-height: 0.48rem;
+	border-radius: 30px;
+	padding: 0 12px;
+}
+
+.login_hint {
+	padding: 0 1.27rem;
+	margin-top: -26px;
+	font-size: 0.9em;
+}
+
+.login_hint span {
+	text-decoration: underline;
+}
+
+.user_identity {
+	font-weight: bold;
+	padding: 0.36rem 0;
+}
+
+.user_identity.active {
+	background: url(../img/icon_typecheck.png) center no-repeat;
+	background-size: 0.36rem;
+}
+
+.user_identity span {
+	display: inline-block;
+}
+
+.user_identity img {
+	width: 0.54rem;
+	vertical-align: middle;
+	margin-right: 0.24rem;
+	margin-top: -4px;
+}
+
+.agreement {
+	color: #999;
+	margin-top: 0.2rem;
+}
+
+
+/*注册协议*/
+
+#user_protocol,
+#app_protocol {
+	width: 80%;
+	height: auto;
+	overflow: hidden;
+	padding-top: 1.5rem;
+	margin-left: 10%;
+	background: #fff;
+	display: none;
+	text-align: justify;
+	text-justify: inter-ideograph;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.protocol_title {
+	text-align: center;
+	color: #000;
+	font-weight: bold;
+	font-size: .4rem;
+	margin-bottom: .2rem;
+}
+
+.protocol_body {
+	color: #4c4c4c;
+	font-size: .3rem;
+	line-height: .4rem;
+	margin-bottom: .2rem;
+}
+
+.protocol_body div {
+	padding-left: .3rem;
+	margin-bottom: .1rem;
+}
+
+.protocol_subtitle {
+	font-weight: bold;
+	font-size: .32rem;
+	margin: .1rem 0;
+}
+
+.protocol_button {
+	background: #078ffe;
+	color: #fff;
+	margin: 0 0 .4rem 25%;
+	border: #078ffe;
+	width: 50%;
+}
+
+
+/*实名认证*/
+
+.realname_icon {
+	width: .32rem;
+	height: .26rem;
+	margin-right: .1rem;
+	vertical-align: text-top;
+}
+
+.realname_img {
+	position: relative;
+	width: 3.45rem;
+	height: 1.95rem;
+	margin: .7rem auto .3rem;
+}
+
+.change_img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0.8rem;
+	margin: -0.4rem;
+}
+
+.realname_text {
+	text-align: center;
+	color: #fe601b;
+	font-size: .24rem;
+	margin-top: .1rem;
+	line-height: .44rem;
+}
+
+
+/*首页公告*/
+
+.index_notice {
+	position: relative;
+	position: relative;
+	z-index: 3;
+	width: 7.12rem;
+	height: 0.76rem;
+	line-height: 0.76rem;
+	background: #fff;
+	margin: 0 auto;
+	border-radius: 6px;
+	box-shadow: 0 0 8px #ddd;
+	margin-top: -0.28rem;
+	padding: 0 0.2rem;
+}
+
+.index_notice .icon_notice {
+	width: 0.32rem;
+	float: left;
+	margin-top: 0.2rem;
+}
+
+.text_notice {
+	color: #078ffe;
+}
+
+.notice_list {
+	float: left;
+	width: 4.8rem;
+	color: rgb(170, 168, 168);
+	line-height: 0.76rem;
+}
+
+.notice_list span {
+	margin-right: 20px;
+}
+
+
+/*首页统计*/
+
+.today_statistics {
+	background: url(../img/bg_today_statistics.png) no-repeat;
+}
+
+.yesterday_statistics {
+	background: url(../img/bg_yesterday_statistics.png) no-repeat;
+}
+
+.today_statistics,
+.yesterday_statistics {
+	width: 7.12rem;
+	height: 3.56rem;
+	margin: 0.26rem auto 0;
+	background-size: cover;
+	padding: 0.56rem 0.65rem 0 0.65rem;
+}
+
+.statistics_left {
+	width: 32%;
+	float: left;
+	text-align: center;
+}
+
+.statistics_left .icon {
+	width: 0.9rem;
+	height: 1.72rem;
+	margin-left: -0.06rem;
+}
+
+.statistics_left .type {
+	font-size: 0.3rem;
+	font-weight: bold;
+	color: #fff;
+	margin-top: 0.2rem;
+}
+
+.statistics_right {
+	width: 68%;
+	float: right;
+	text-align: right;
+}
+
+.statistics_right p {
+	color: #fff;
+	margin-bottom: 0.2rem;
+}
+
+.statistics_right .total_price {
+	font-size: 0.8rem;
+	font-weight: bold;
+	margin-bottom: 0.36rem;
+}
+
+
+/*个人中心*/
+
+.bg_personalcenter {
+	width: 100%;
+	background: url(../img/bg_personalcenter.png) #f1f1f1 no-repeat;
+	background-size: 100% auto;
+}
+
+.bg_personalcenter .mui-content {
+	background: none;
+	height: 100%;
+}
+
+.personal_title {
+	color: #fff;
+	margin: 0.68rem 0.49rem 0.56rem;
+}
+
+.personal_title .type {
+	font-size: 0.32rem;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+
+.personal_title .icon_message {
+	width: 0.3rem;
+	vertical-align: middle;
+}
+
+.personal_title .message_box {
+	position: relative;
+	padding: 2px 4px;
+}
+
+.personal_title .message_box .red_dot {
+	position: absolute;
+	top: -2px;
+	right: -2px;
+	display: inline-block;
+	background: #FF0000;
+	width: 16px;
+	height: 16px;
+	line-height: 18px;
+	border-radius: 16px;
+	font-size: 10px;
+	text-align: center;
+	box-shadow: 0 0 4px #fff;
+	transform: scale(0.7);
+}
+
+.personal_title .money {
+	display: inline-block;
+	font-size: 0.46rem;
+	margin-top: 0.46rem;
+}
+
+.personal_title .btn_withdraw {
+	background: #fff;
+	color: #007afe;
+	border-radius: 15px;
+	border: none;
+	margin-top: 0.34rem;
+}
+
+.personal_box_top {
+	width: 6.87rem;
+	height: 2.81rem;
+	margin: 0 auto;
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: -1px 0 12px rgba(47, 151, 249, 0.27);
+}
+
+.personal_box_top .user_info {
+	color: #007afe;
+}
+
+.personal_box_top .user_info .user_head {
+	width: 0.5rem;
+	margin: 0.3rem 0.24rem 0 0.52rem;
+	vertical-align: bottom;
+}
+
+.boxtop_flex {
+	display: flex;
+}
+
+.boxtop_flex div {
+	flex: 1;
+	text-align: center;
+}
+
+.boxtop_flex div img {
+	display: block;
+	width: 0.9rem;
+	margin: 0.26rem auto 0.28rem;
+}
+
+.personal_box_bottom {
+	width: 6.87rem;
+	margin: 0.18rem auto 0;
+	padding-bottom: 2rem;
+	background: #fff;
+	border-radius: 10px;
+	box-shadow: -1px 0 12px rgba(47, 151, 249, 0.27);
+}
+
+.personal_box_bottom_title {
+	font-weight: bold;
+	margin: 0 0.36rem;
+	padding: 0.36rem 0 0;
+}
+
+.personal_box_bottom_title span {
+	display: inline-block;
+	padding-bottom: 0.2rem;
+	width: 5.8rem;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.personal_link {
+	margin: 0 0.36rem;
+	padding: 0.36rem 0 0;
+	background: url(../img/icon_personal_enter.png) center right no-repeat;
+	background-size: 0.16rem;
+}
+
+.personal_link img {
+	width: 0.4rem;
+	vertical-align: middle;
+}
+
+.personal_link span {
+	display: inline-block;
+	padding-bottom: 0.2rem;
+	width: 5.4rem;
+	margin-left: 0.1rem;
+	padding-left: 0.1rem;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+#library,
+#transfers_machine,
+#tools_account {
+	display: none;
+}
+
+.user_head_icon {
+	width: 1.3rem;
+	height: 0.32rem;
+	vertical-align: middle;
+	margin-left: .2rem;
+	margin-top: -.07rem;
+}
+
+.pos_dot {
+	display: none;
+	position: absolute;
+	top: 14px;
+	left: 52%;
+	width: 6px;
+	height: 6px;
+	background: #F05B47;
+	border-radius: 4px;
+}
+
+
+/*个人中心--设置*/
+
+.personal_setting .personal_link {
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.personal_setting .personal_link span {
+	border: none;
+	width: inherit;
+}
+
+.mr_enter {
+	margin-right: 0.3rem;
+}
+
+
+/*个人中心--机具管理*/
+
+.Equipment_serachicon {
+	width: 0.5rem;
+	float: right;
+	margin: -0.75rem 0.3rem 0 0;
+}
+
+.Equipment_tab {
+	margin: 6px 1rem 6px 0.3rem;
+	width: 6.2rem;
+	height: 0.8rem;
+	background: rgba(255, 255, 255, 0.47);
+	border-radius: 40px;
+}
+
+.Equipment_tab .mui-control-item {
+	line-height: 0.8rem;
+	color: #fff;
+	border: none;
+	border-radius: 40px;
+}
+
+.Equipment_tab .mui-control-item.mui-active {
+	color: #4c4c4c;
+	background-color: #fff;
+}
+
+.Equipment_box {
+	position: relative;
+	margin: 0.77rem auto 0;
+	width: 6.91rem;
+	height: 6.914rem;
+	background: #fff;
+	border-radius: 10px;
+	padding: 0.57rem 0.32rem;
+}
+
+.Equipment_sum {
+	position: absolute;
+	z-index: 2;
+	top: -0.57rem;
+	left: 50%;
+	width: 1.14rem;
+	height: 1.14rem;
+	line-height: 1.14rem;
+	border-radius: 1.14rem;
+	margin-left: -0.57rem;
+	text-align: center;
+	color: #fff;
+	background: linear-gradient(to right, #ff7878, #ffb97c);
+	box-shadow: 0 2px 12px rgba(47, 151, 249, 0.27);
+}
+
+
+/*.Equipment_box .mui-scroll-wrapper {
+	position: relative;
+}*/
+
+.Equipment_box ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.Equipment_box ul li {
+	font-size: 0.95em;
+	overflow: hidden;
+	border-bottom: 1px solid #dcdcdc;
+	padding: 12px 0;
+}
+
+.Equipment_box ul li .time {
+	display: inline-block;
+	line-height: 1.6em;
+	font-size: 0.85em;
+	color: #666;
+}
+
+
+/*个人中心--地址管理*/
+
+.newaddress_btn {
+	position: relative;
+	z-index: 10;
+	color: #fff;
+	font-size: 0.8em;
+	margin: 0.3rem 0.2rem;
+}
+
+.address_lists {
+	padding: 0;
+	margin: 0;
+}
+
+.address_list {
+	overflow: hidden;
+	padding: 0.25rem 5%;
+	border-bottom: 1px solid #ddd;
+	margin: -0.15rem 0;
+}
+
+.address_list .tel {
+	margin-left: 0.2rem;
+	font-size: 0.9em;
+}
+
+.address_list .name {
+	font-weight: bold;
+}
+
+.edit_btn {
+	float: right;
+	margin: 0 0.2rem;
+}
+
+.delete_btn {
+	float: right;
+}
+
+.address_details {
+	margin-top: 0.18rem;
+}
+
+.Default_tab {
+	color: #f7550e;
+	background: #fddbcc;
+	padding: 2px 6px;
+	border-radius: 4px;
+}
+
+
+/*地址管理--新建地址*/
+
+.user_row_01 {
+	position: relative;
+	display: flex;
+	font-size: 0.9em;
+	margin: 0 0.32rem;
+	padding: 0.52rem 0 0.18rem;
+	overflow: hidden;
+	border-bottom: 1px solid#ddd;
+}
+
+.user_row_01 .title {
+	display: inline-block;
+	width: 1.8rem;
+}
+
+.user_row_01 input {
+	display: inline-block;
+	font-size: 0.9em;
+	border: none;
+	margin: 0;
+	padding: 0;
+	height: inherit;
+}
+
+.user_row_01 .row_enter {
+	position: absolute;
+	z-index: 1;
+	right: 0;
+}
+
+
+/*个人中心--银行卡*/
+
+.bankcard_lists {
+	margin: 0;
+	padding: 0;
+}
+
+.bankcard_list {
+	position: relative;
+	list-style: none;
+	width: 6.91rem;
+	height: 2.63rem;
+	margin: 10px auto;
+	padding: 0.6rem 0.76rem;
+	background: #078ffe;
+	border-radius: 12px;
+}
+
+.icon_bank_card {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	width: 1.0rem;
+}
+
+.bank_name,
+.bank_card_num {
+	color: #fff;
+	font-size: 0.34rem;
+	letter-spacing: 1px;
+	margin: 0.34rem 0;
+}
+
+.btn_bank_Unbind {
+	position: absolute;
+	right: 0.4rem;
+	bottom: 0.5rem;
+	background: rgba(255, 255, 255, 0.47);
+	border: none;
+	color: #f05b47;
+	padding: 2px 8px 1px;
+	font-size: 0.2rem;
+	border-radius: 10px;
+}
+
+.bank_card_add_hint {
+	background: #f0f0f0;
+	font-size: 0.8em;
+	padding: 4px 0.3rem;
+	margin: 0;
+	color: #999;
+}
+
+.bank_tab {
+	overflow: hidden;
+}
+
+.bank_tab .type {
+	width: 1.35rem;
+	margin: 0 1.2rem;
+	padding: 0.24rem 0;
+	float: left;
+}
+
+.bank_tab .active {
+	background: url(../img/bg_bank_title.png)no-repeat 50% 110%;
+	background-size: 100%;
+}
+
+#segmentedControl a,
+#segmentedControl1 a {
+	background: #fff;
+	color: #333;
+	font-size: .3rem;
+	border-color: #fff;
+	padding: .08rem;
+}
+
+#segmentedControl1 .mui-active {
+	background: url(../img/bg_profit_title.png)no-repeat 50% 110%;
+	background-size: 18%;
+}
+
+
+/*银行选项*/
+
+.bank_content {
+	left: 0;
+	height: 7.0rem;
+	overflow: auto;
+}
+
+.bank_content .mui-table-view-cell.active {
+	background: #078ffe;
+	color: #fff;
+}
+
+
+/*支付密码*/
+
+.pay_password_content {
+	text-align: center;
+	margin: 1.25rem 0 0;
+}
+
+.pay_password_title_big {
+	font-size: 0.6rem;
+	font-weight: bold;
+	color: #333;
+}
+
+.pay_password_title {
+	color: #333;
+	font-size: 0.7em;
+	margin-top: 0.3rem;
+}
+
+table#number_input {
+	width: 6.78rem;
+	margin: 0.54rem 0.36rem 0.6rem;
+	text-align: center;
+}
+
+table#number_input td {
+	border: 1px solid gainsboro;
+	border-right: 0;
+	width: 1.12rem;
+	height: 0.9rem;
+}
+
+table#number_input td:last-child {
+	border-right: 1px solid gainsboro;
+}
+
+table#keyboard {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	width: 100%;
+	height: 4.4rem;
+	background-color: white;
+	font-size: 0.36rem;
+}
+
+table#keyboard td {
+	border: 1px solid gainsboro;
+	border-right: 0;
+	border-bottom: 0;
+	width: 33%;
+}
+
+table#keyboard td:enabled {
+	color: red;
+}
+
+table#keyboard td:last-child {
+	border-right: 1px solid gainsboro;
+}
+
+table#keyboard .keboard-action {
+	background: #ccc;
+	font-size: 0.32rem;
+}
+
+
+/*列表为空*/
+
+.list-none {
+	display: none;
+}
+
+.list-none .icon_none_lead {
+	width: 3.03rem;
+	float: right;
+	margin: 0.27rem 0.91rem 0.2rem 0;
+}
+
+.list-none .icon_none {
+	width: 3.76rem;
+	margin: 0.47rem 1.87rem 0.87rem;
+}
+
+.list-none .icon_none_mt {
+	margin-top: 3.68rem;
+}
+
+.list-none .icon_none_small {
+	display: block;
+	width: 2rem;
+	margin: 3.68rem auto .82rem;
+}
+
+.list-none .fonts {
+	clear: both;
+	width: 100%;
+	text-align: center;
+	color: #333;
+	margin-top: -20px;
+}
+
+
+/*我的二维码
+ * Axun*/
+
+.mui-title {
+	font-weight: bold;
+}
+
+.erweima_linear {
+	background: linear-gradient(#078ffe, #924cfa);
+}
+
+.erweima_linear header {
+	box-shadow: none;
+	background: #1588fd;
+}
+
+.erweima_linear .mui-content {
+	background: none;
+}
+
+.erweima_content .content_top {
+	width: 6.16rem;
+	height: 5.34rem;
+	border-radius: 10px;
+	margin: .22rem auto;
+	padding-top: .48rem;
+}
+
+.saveImg {
+	display: block;
+	width: 3.79rem;
+	height: 3.79rem;
+	margin: 0 auto;
+}
+
+.erweima_content .content_img {
+	width: 3.78rem;
+	height: 3.79rem;
+	margin: 0 auto;
+}
+
+.erweima_content .content_button {
+	width: 2.01rem;
+	height: .62rem;
+	border-radius: 28px;
+	background: #078ffe;
+	margin: .23rem auto;
+	font-size: .22rem;
+	color: #fff;
+	text-align: center;
+	line-height: .62rem;
+}
+
+.erweima_content .content_bottom {
+	width: 6.16rem;
+	height: 1.8rem;
+	background: url(../img/bg_erweima.png);
+	background-size: 100%;
+	margin: .3rem auto;
+	padding-top: .5rem;
+}
+
+.content_title {
+	font-size: .26rem;
+	text-align: center;
+	color: #333;
+}
+
+.erweima_content .content_number {
+	text-align: center;
+	font-size: .26rem;
+}
+
+.erweima_content .content_number img {
+	width: .2rem;
+	height: .26rem;
+	vertical-align: baseline;
+	margin-right: .15rem;
+}
+
+
+/*分享二维码
+ * Axun*/
+
+#share {
+	width: 7.5rem;
+	height: 4.26rem;
+	background: #e5e5e5;
+	padding-top: .65rem;
+	position: fixed;
+	bottom: 0;
+	border-radius: 0;
+}
+
+#share .share_title {
+	font-size: .36rem;
+	color: #333;
+	text-align: center;
+}
+
+#share .share_content .share_img {
+	width: 1.1rem;
+	height: 1.1rem;
+	background: #fff;
+	margin: 0 .45rem;
+	float: left;
+	border-radius: 50%;
+}
+
+#share .share_cancel {
+	width: 7.5rem;
+	height: 1rem;
+	background: #fff;
+	font-size: .3rem;
+	text-align: center;
+	line-height: 1rem;
+	margin-top: .1rem;
+}
+
+
+/*我的代理商
+ * Axun*/
+
+.agent_title {
+	color: #333;
+	padding: 0 .3rem;
+	line-height: 1rem;
+	font-weight: bold;
+}
+
+.agent_title div {
+	float: left;
+}
+
+.title_subtitle {
+	font-size: .26rem;
+	color: #999;
+	margin-left: .1rem;
+}
+
+.line {
+	width: 100%;
+	height: .14rem;
+	background: #f0f0f3;
+}
+
+.average_three_list {
+	font-size: .28rem;
+	letter-spacing: 1px;
+	color: #333;
+	overflow: hidden;
+	padding: .2rem 0.1rem;
+	margin: 0 0.28rem;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.average_three_list .nameandphone {
+	float: left;
+}
+
+.average_three_list .list_date {
+	float: right;
+	font-size: .26rem;
+	color: #666;
+}
+
+.average_three_list .current_month {
+	clear: both;
+	text-align: left;
+	color: #666;
+	font-size: .26rem;
+}
+
+.average_three_list .current_month .vip_icon {
+	float: right;
+	margin-top: 0.06rem;
+}
+
+
+/*我的收益
+ Axun*/
+
+.mark {
+	width: .05rem;
+	height: .3rem;
+	margin: .04rem .15rem 0 0;
+}
+
+.mark_down {
+	width: .22rem;
+	height: .1rem;
+	margin: -.05rem .15rem 0 .2rem;
+}
+
+.mark_portrait {
+	width: .36rem;
+	height: .36rem;
+	margin-top: 0.04rem;
+}
+
+.mark_portraits {
+	width: .4rem;
+	height: .4rem;
+}
+
+.income {
+	font-size: .5rem;
+	font-weight: bold;
+	text-align: center;
+	color: #333;
+	background: #fff;
+	padding: .5rem 0 .35rem;
+}
+
+.trade {
+	font-size: .38rem;
+	font-weight: bold;
+	text-align: center;
+	background: #fff;
+	padding-bottom: .35rem;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.my_profit {
+	padding: .3rem;
+	overflow: hidden;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.my_profit_title {
+	overflow: hidden;
+	padding: 0 0 .15rem;
+}
+
+.my_profit_title_name {
+	font-weight: bold;
+	font-size: .3rem;
+	margin-left: .12rem;
+}
+
+.my_profit_title_price {
+	height: .45rem;
+	font-size: .28rem;
+	font-weight: bold;
+	color: #078ffe;
+	text-align: center;
+	background: #cde9ff;
+	border-radius: 5px;
+	line-height: .48rem;
+	padding: 0 4px;
+}
+
+.my_profit_content div {
+	float: left;
+	width: 50%;
+	text-align: left;
+	font-size: .24rem;
+	line-height: .44rem;
+}
+
+.date1,
+.date2 {
+	font-size: .28rem;
+	font-weight: bold;
+}
+
+
+/*运营小库
+ Axun*/
+
+.profit_content {
+	width: 100%;
+	height: 1rem;
+	padding: 0 .3rem;
+	line-height: 1rem;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.sopt_icon {
+	width: .3rem;
+	height: .3rem;
+	margin-right: .15rem;
+	vertical-align: text-top;
+}
+
+.main_title {
+	font-size: .28rem;
+	margin-right: .3rem;
+}
+
+
+/*运营小库明细
+ Axun*/
+
+.library_content {
+	overflow: hidden;
+	padding: .2rem .3rem;
+	color: #333;
+	font-weight: bold;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.library_content_name {
+	font-size: .28rem;
+	line-height: .45rem;
+}
+
+.subname {
+	font-size: .24rem;
+	margin-left: .2rem;
+	font-weight: normal;
+}
+
+.library_content_date {
+	font-size: .22rem;
+	font-weight: normal;
+	line-height: .44rem;
+}
+
+.library_content_right {
+	float: right;
+	font-size: .4rem;
+	line-height: .89rem;
+}
+
+
+/*收益明细
+ Axun*/
+
+#segmentedControl2 {
+	padding: .05rem 1rem;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+#segmentedControl2 a {
+	background: #fff;
+	color: #333;
+	font-size: .28rem;
+	font-weight: bold;
+	border-color: #fff;
+	padding: .08rem;
+}
+
+.profit_detail #slider .mui-control-item {
+	background-color: #fff;
+}
+
+#segmentedControl2 .mui-active span {
+	width: 1.54rem;
+	height: .48rem;
+	background: #078ffe;
+	padding: .1rem .2rem;
+	border-radius: 25px;
+	color: #fff;
+}
+
+.my_profit_pay_date {
+	font-size: .24rem;
+	color: #666;
+}
+
+.my_profit_pay_name {
+	font-weight: bold;
+	font-size: .28rem;
+	margin: 0.06rem .1rem 0;
+	float: left;
+	line-height: .35rem;
+}
+
+.my_profit_pay_content {
+	width: 50%;
+	text-align: left;
+	font-size: .24rem;
+	color: #333;
+}
+
+.pay_detail_left {
+	width: 60%;
+}
+
+.pay_detail_right {
+	width: 40%;
+	text-align: right;
+	font-size: .4rem;
+}
+
+.my_pay_detail {
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+.agent_img {
+	width: .86rem;
+	height: .21rem;
+	vertical-align: text-top;
+	margin-left: .2rem;
+}
+
+
+/*申请记录
+ Axun*/
+
+.apply_content {
+	padding: .15rem .3rem .15rem .8rem;
+	position: relative;
+}
+
+.apply_content::before {
+	content: "";
+	position: absolute;
+	width: 6.4rem;
+	height: .01rem;
+	border-bottom: 1px solid #dcdcdc;
+	bottom: 0;
+	left: .8rem;
+}
+
+.apply_content div:nth-child(odd) {
+	width: 60%;
+	line-height: .5rem;
+}
+
+.apply_content div:nth-child(even) {
+	width: 40%;
+	line-height: .5rem;
+}
+
+.state {
+	color: #ff7c78;
+	font-size: .26rem;
+	padding-right: .2rem;
+	text-align: right;
+}
+
+.apply_name {
+	font-size: .28rem;
+	padding-top: .05rem;
+}
+
+.apply_button {
+	color: #fff;
+	font-size: .22rem;
+	padding: .08rem .23rem;
+	border-radius: 5px;
+	margin-left: .18rem;
+}
+
+.circular {
+	width: .12rem;
+	height: .12rem;
+	background: #fe601b;
+	display: block;
+	border-radius: 50%;
+	position: relative;
+	top: .15rem;
+	left: -.38rem;
+}
+
+
+/*机具详情
+ Axun*/
+
+.tools_detail_content {
+	padding: .3rem .3rem .3rem .8rem;
+}
+
+.tools_content {
+	position: relative;
+	margin-bottom: .15rem;
+	padding-bottom: .1rem;
+}
+
+.tools_content::before {
+	content: "";
+	position: absolute;
+	width: 6.8rem;
+	height: .01rem;
+	border-bottom: 1px solid #dcdcdc;
+	bottom: 0;
+	left: -.45rem;
+}
+
+.tools_content div {
+	width: 80%;
+}
+
+.icon_danger {
+	width: .28rem;
+	height: .28rem;
+	display: block;
+	position: absolute;
+	right: .3rem;
+	top: .06rem;
+}
+
+.danger {
+	color: #ed2626;
+}
+
+
+/*确认收货
+ Axun*/
+
+.scan {
+	width: .4rem;
+	height: .4rem;
+	/*position: absolute;
+	right: 4%;
+	bottom: 18%;
+	width: .3rem;
+	height: .3rem;
+	position: absolute;
+	right: 70%;
+	bottom: -40%;*/
+}
+
+.more {
+	width: .36rem;
+	height: .1rem;
+	position: absolute;
+	right: 5%;
+	bottom: 32%;
+}
+
+.collect_title {
+	padding: .3rem;
+}
+
+.collect_content {
+	padding: 0 .32rem;
+}
+
+.collect_content .tools_type_box {
+	overflow: hidden;
+}
+
+.collect_content .tools_type_box div {
+	width: 50%;
+	line-height: .45rem;
+	float: left;
+	text-align: left;
+	margin-bottom: .13rem;
+	font-size: .3rem;
+}
+
+.collect_content .tools_type_box .icon {
+	width: .3rem;
+	height: .3rem;
+	margin: 0.05rem 0.2rem 0 .2rem;
+	vertical-align: middle;
+}
+
+.collect_button {
+	width: calc(100% - 1.5rem);
+	height: .95rem;
+	line-height: .95rem;
+	background: #078ffe;
+	border-radius: 7px;
+	color: #fff;
+	font-weight: bold;
+	font-size: .31rem;
+	text-align: center;
+	margin: 0 .75rem;
+	box-shadow: 0 17px 12px -13px #45abfe;
+}
+
+.collect_receive {
+	display: none;
+	font-size: 0.28rem;
+	text-align: center;
+	margin: .2rem 0 1rem 0;
+}
+
+.head_icon {
+	width: .28rem;
+	height: .28rem;
+	margin: 0rem .15rem .05rem 0;
+	vertical-align: middle;
+}
+
+.collect_tips {
+	font-size: .22rem;
+	text-align: center;
+	margin-top: .3rem;
+	color: #999;
+}
+
+
+/*机具申请
+ Axun*/
+
+.header_banner {
+	width: 6.66rem;
+	height: 3.23rem;
+	background: url(../img/bg_apply_tools.png);
+	background-size: 100%;
+	margin: .7rem auto .7rem;
+	padding: .54rem .89rem;
+}
+
+.header_banner_img {
+	width: 2rem;
+	height: 2rem;
+}
+
+.header_banner_text {
+	color: #fff;
+	font-size: .3rem;
+	margin: .3rem 0 0 .8rem;
+	line-height: 1.7;
+}
+
+.appls_from {
+	position: relative;
+	display: flex;
+	font-size: 0.9em;
+	margin: .22rem 1.3rem .44rem 0;
+	padding: 0 0 0 .4rem;
+	overflow: hidden;
+}
+
+.appls_from .head_img {
+	width: .48rem;
+	height: .48rem;
+}
+
+.img {
+	width: 100%;
+	height: 100%;
+}
+
+.appls_from .title {
+	display: inline-block;
+	font-size: .28rem;
+	font-weight: bold;
+	color: #1e1e1e;
+	margin: 0 0.1rem 0 .15rem;
+}
+
+.appls_from input,
+.appls_from .tools_address {
+	width: 140%;
+	display: inline-block;
+	font-size: 0.9em;
+	border: none;
+	border-bottom: 1px solid #dcdcdc;
+	padding-left: 0.5rem;
+	text-indent: .5rem;
+	margin: 0;
+	padding: 0;
+	height: inherit;
+	border-radius: 0;
+}
+
+.appls_from .tools_address {
+	max-width: 68%;
+	text-indent: 0;
+	padding-left: 0.5rem;
+}
+
+.icon_tools_type_choose {
+	position: absolute;
+	right: 0;
+	width: 8px;
+}
+
+.icon_tools_address_choose {
+	position: absolute;
+	top: calc(18% - 20px);
+	right: -32px;
+	width: 48px;
+	padding: 20px;
+}
+
+.appls_tips {
+	margin: -.2rem 0 0 1.15rem;
+	text-align: left;
+}
+
+.appls_price {
+	position: absolute;
+	right: 0;
+	font-size: .34rem;
+}
+
+
+/*运营小库申请
+ Axun*/
+
+.user_row_02 input,
+.user_row_02 textarea {
+	width: 130%;
+	display: inline-block;
+	font-size: 0.9em;
+	border: none;
+	margin: 0;
+	padding: 0;
+	height: inherit;
+}
+
+.appply_fail {
+	font-size: .46rem;
+	text-align: center;
+	margin: 1rem 0 0 0;
+	position: relative;
+}
+
+.appply_fail img {
+	width: .46rem;
+	height: .5rem;
+	vertical-align: text-bottom;
+}
+
+.fail_reason {
+	font-size: .28rem;
+	margin: .4rem 0;
+	text-align: center;
+}
+
+.textarea {
+	width: 100%;
+	border-bottom: 1px solid #dcdcdc;
+	line-height: 1rem;
+	padding: 0 .3rem;
+}
+
+.textarea textarea {
+	width: 65%;
+	height: auto;
+	margin-top: .29rem;
+	resize: none;
+	padding: 0px;
+	overflow-y: hidden;
+	height: auto;
+	border: none;
+	font-size: 0.9em;
+}
+
+.popup_profit {
+	width: 5.26rem;
+	height: 6.05rem;
+	background: url(../img/bg_profit_close.png)no-repeat;
+	background-size: 100%;
+	margin: 0 auto;
+	position: relative;
+}
+
+.popup_close {
+	width: .47rem;
+	height: .91rem;
+	position: absolute;
+	right: .3rem;
+	top: -.24rem;
+}
+
+.apply_profit .mui-backdrop,
+.apply_tools .mui-backdrop,
+#Identity .mui-backdrop {
+	max-height: 100%;
+}
+
+.apply_profit #div,
+#Identity #div {
+	position: fixed;
+	top: 20%;
+	left: 50%;
+}
+
+.apply_profit .mui-popover,
+#Identity .mui-popover {
+	box-shadow: none;
+	position: fixed;
+}
+
+.apply_profit .mui-popover .mui-popover-arrow:after,
+#Identity .mui-popover .mui-popover-arrow:after {
+	width: 0px;
+}
+
+.apply_profit .popup_text {
+	text-align: center;
+	font-size: .3rem;
+	position: absolute;
+	bottom: 0.8rem;
+	left: 0;
+	width: 100%;
+	line-height: 1.5;
+	font-weight: bold;
+}
+
+
+/*设置费率
+ Axun*/
+
+.p30 {
+	padding: 0 .3rem;
+}
+
+.rate_title {
+	padding: .15rem .3rem;
+	line-height: .45rem;
+	font-size: .28rem;
+}
+
+.my_profit_list div {
+	width: 33.33%;
+	float: left;
+}
+
+.rate_title input {
+	width: 13%;
+	height: .42rem;
+	font-size: .28rem;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+}
+
+.mark_pay {
+	width: .36rem;
+	height: .36rem;
+	float: left;
+}
+
+.library_content_name input {
+	border: none;
+	font-size: .28rem;
+	margin: 0;
+	padding: 0;
+	height: auto;
+	line-height: normal;
+	min-width: 40%;
+	width: inherit;
+}
+
+
+/*我的退货
+ Axun*/
+
+.return_goods .mui-content {
+	padding-top: 2.5rem;
+}
+
+.return_goods .mui-bar {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.return_goods header {
+	box-shadow: none;
+	background: url(../img/bg_return_goods.png)no-repeat -1px 5%;
+	background-size: 101%;
+}
+
+.return_title {
+	padding-bottom: .65rem;
+	background: url(../img/bg_return_goods.png)no-repeat 0% 115%;
+	background-size: 100%;
+	margin-top: .1rem;
+	padding-top: .85rem;
+}
+
+.return_title .return_name {
+	width: 1.54rem;
+	height: .52rem;
+	background: #fff;
+	color: #1697fd;
+	line-height: .52rem;
+	text-align: center;
+	border-radius: 15px;
+	margin: 0 auto;
+}
+
+.return_goods_list {
+	margin: .18rem .3rem;
+	padding: .24rem .3rem;
+	line-height: .46rem;
+	border-left: .09rem solid;
+	border-radius: 0 5px 5px 0;
+	box-shadow: #8fb8e4 0px 0px 10px;
+	background: #fff;
+}
+
+.return_goods_list div:nth-child(odd) {
+	width: 70%;
+	line-height: .5rem;
+}
+
+.return_goods_list div:nth-child(even) {
+	width: 30%;
+	line-height: .5rem;
+}
+
+.border_orange {
+	border-color: #fec20b;
+}
+
+
+/*机具详情
+ Axun*/
+
+.delete_button {
+	background: #ed2626;
+	color: #fff;
+	padding: .01rem .26rem;
+	font-size: .22rem;
+	border-radius: 6px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+
+/*消息中心
+ Axun*/
+
+.message_img {
+	width: .67rem;
+	height: .67rem;
+	position: relative;
+}
+
+.message_text {
+	font-size: .24rem;
+	color: #666;
+	margin-left: .1rem;
+	width: 80%;
+	height: auto;
+	line-height: .44rem;
+}
+
+.message_active {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: .15rem;
+	height: .15rem;
+	background: url(../img/icon_message_active.png)no-repeat;
+	background-size: 100%;
+}
+
+
+/*提现记录
+ Axun*/
+
+.present_text {
+	font-size: .24rem;
+	color: #333;
+	line-height: .44rem;
+}
+
+.present_text span {
+	margin-left: .8rem;
+}
+
+
+/*申请退款
+ Axun*/
+
+.textarea1 {
+	margin: 0 .3rem .3rem;
+	border: 1px solid #dcdcdc;
+	padding: .2rem .3rem;
+	border-radius: 5px;
+}
+
+.textarea1 textarea {
+	margin: 0;
+	padding: 0;
+	border: none;
+	font-size: .28rem;
+	line-height: .4rem;
+}
+
+
+/*提现
+ Axun*/
+
+.putforward_content {
+	width: calc(100% - .6rem);
+	margin: .3rem;
+	background: #fff;
+	padding: .45rem;
+	border-radius: 12px;
+}
+
+.putforward_title {
+	font-size: .28rem;
+	color: #333;
+	line-height: .45rem;
+}
+
+.mb06 {
+	margin-bottom: .6rem;
+}
+
+.mt25 {
+	margin-top: .25rem;
+}
+
+.putforward_price {
+	font-size: .6rem;
+	padding: .5rem 0 .36rem;
+	font-weight: bold;
+	border-bottom: 1px solid #dcdcdc;
+	overflow: hidden;
+}
+
+.putforward_price span,
+.putforward .popup_profit .price span {
+	margin-top: .2rem;
+	font-size: .4rem;
+	font-weight: 800;
+}
+
+.putforward_price input {
+	width: 85%;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	line-height: 1.4em;
+	font-size: .6rem;
+	border: none;
+	float: left;
+}
+
+#more,
+#choose_banklist {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	border-radius: 0;
+}
+
+#more .share_cancel {
+	padding: .4rem 0;
+	background: #fff;
+	font-size: .3rem;
+	color: #333;
+	text-align: center;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+#choose_banklist li {
+	list-style: none;
+	background: #fff;
+	line-height: 0.8rem;
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+}
+
+.putforward .mui-backdrop {
+	max-height: 100%;
+}
+
+.putforward #div {
+	position: fixed;
+	top: 20%;
+	left: 50%;
+}
+
+.putforward .mui-popover {
+	box-shadow: none;
+	position: fixed;
+}
+
+.putforward .mui-popover .mui-popover-arrow:after {
+	width: 0px;
+}
+
+.putforward .popup_profit {
+	width: 5.6rem;
+	height: 5.02rem;
+	background: #fff;
+	margin: 0 auto;
+}
+
+.putforward .popup_profit .title {
+	font-size: .32rem;
+	color: #333;
+	text-align: center;
+	padding: .3rem 0;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+.putforward .popup_profit .close {
+	width: .19rem;
+	height: .19rem;
+	position: absolute;
+	right: .3rem;
+	top: .15rem;
+}
+
+.putforward .popup_profit .price {
+	font-size: .6rem;
+	text-align: center;
+	font-weight: bold;
+	color: #333;
+}
+
+
+/*发货
+ Axun*/
+
+.ml30 {
+	margin-left: .3rem;
+}
+
+.bottom_c {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 1.22rem;
+	margin: auto;
+}
+
+.tail_icon {
+	width: .16rem;
+	height: .3rem;
+	vertical-align: text-top;
+}
+
+
+/*退货申请记录
+ Axun*/
+
+.border_green {
+	border-color: #18df63;
+}
+
+
+/*退货详情
+ Axun*/
+
+.two_button {
+	padding: 1.27rem 1.06rem;
+}
+
+.two_button div {
+	width: 2.23rem;
+	height: .72rem;
+	color: #fff;
+	border-radius: 7px;
+	font-size: .28rem;
+	font-weight: bold;
+	text-align: center;
+	line-height: .72rem;
+}
+
+
+/*首页弹窗
+ Axun*/
+
+.popup_index {
+	width: 5.26rem;
+	height: 7.05rem;
+	background: url(../img/bg_popup_index.png)no-repeat;
+	background-size: 100%;
+	margin: 0 auto;
+	position: relative;
+}
+
+#Identity .mui-backdrop {
+	max-height: 100%;
+}
+
+#Identity #div {
+	position: fixed;
+	top: 20%;
+	left: 50%;
+}
+
+#Identity .mui-popover {
+	box-shadow: none;
+	position: fixed;
+}
+
+#Identity .mui-popover .mui-popover-arrow:after {
+	width: 0px;
+}
+
+#Identity .popup_title {
+	font-size: .28rem;
+	color: #fff;
+	text-align: center;
+	margin-top: 1.7rem;
+}
+
+#Identity .popup_price {
+	font-size: .54rem;
+	color: #fff;
+	text-align: center;
+	margin-top: .3rem;
+}
+
+#Identity .popup_price span {
+	font-size: .32rem;
+	margin-left: .1rem;
+	vertical-align: middle;
+}
+
+#Identity .popup_close {
+	top: -.02rem;
+}
+
+#Identity .popup_bank {
+	font-size: .32rem;
+	color: #000;
+	text-align: center;
+	margin-top: .8rem;
+	font-family: "microsoft yahei";
+}
+
+#Identity .popup_text {
+	font-size: .28rem;
+	margin-top: .2rem;
+	color: #000;
+	text-align: center;
+}
+
+
+/*调拨机具
+ Axun*/
+
+.tools_allocation #segmentedControl1 .mui-active {
+	background: #f0f0f3 url(../img/bg_profit_title.png)no-repeat 50% 93%;
+	background-size: 25%;
+}
+
+.tools_allocation #segmentedControl a,
+#segmentedControl1 a {
+	padding: 0;
+	background: #f0f0f3;
+	border: none;
+	line-height: 0.75rem;
+}
+
+.serch {
+	padding: .18rem .3rem 0;
+	position: relative;
+	/*height: .8rem;*/
+}
+
+.serch input {
+	height: .6rem;
+	text-indent: .4rem;
+	color: #999;
+	font-size: .24rem;
+	border-radius: 10px;
+	background: #eee;
+	border: none;
+	padding: .3rem .2rem;
+}
+
+.serch .mark_portrait {
+	width: .3rem;
+	height: .3rem;
+	position: absolute;
+	top: 35%;
+	left: 7%;
+}
+
+.serch .btn_search {
+	float: right;
+	margin-top: -0.6rem;
+	border: none;
+	background: rgb(7, 143, 254);
+	color: #fff;
+	border-radius: 0 10px 10px 0;
+}
+
+.pt0 {
+	padding-top: 0;
+}
+
+.vip_icon {
+	width: 1.15rem;
+	height: .29rem;
+	vertical-align: middle;
+	margin-left: .2rem;
+}
+
+.b_none {
+	border: none;
+}
+
+.allocation {
+	width: .65rem;
+	font-size: .22rem;
+	color: #078ffe;
+	line-height: 1.8;
+	margin: 0 .1rem;
+	text-indent: .05rem;
+	font-weight: 100;
+	text-align: left;
+	background: url(../img/icon_allocation.png)no-repeat 0 100%;
+	background-size: 100%;
+}
+
+
+/*调拨信息
+ Axun*/
+
+.message_title {
+	font-size: .3rem;
+	font-weight: bold;
+	padding: .3rem;
+	border-bottom: 1px solid #dcdcdc;
+	text-align: center;
+}
+
+.message_title .allocation {
+	display: inline-block;
+	position: relative;
+	top: -5px;
+}
+
+
+/*等级规则
+ Axun*/
+
+.grade {
+	width: 100%;
+	border: 2px solid #d2d2d2;
+}
+
+.grade tr {
+	border-bottom: 1px solid #d2d2d2;
+	border-top: none;
+}
+
+.grade div {
+	float: left;
+	font-size: .28rem;
+	color: #333;
+	text-align: center;
+	padding: .3rem 0 .22rem 0;
+	line-height: .44rem;
+}
+
+.grade_title div {
+	font-weight: 100;
+}
+
+.grade_name {
+	width: 28%;
+	font-weight: 100;
+}
+
+.grade_content {
+	width: 44%;
+	font-weight: bold;
+}
+
+.grade tr td img {
+	width: 1.09rem;
+	height: .28rem;
+	vertical-align: middle;
+}
+
+
+/*下载方式
+ Axun*/
+
+.download_img {
+	width: 3.17rem;
+	height: 3.17rem;
+	margin: .3rem auto;
+}
+
+
+/*保修说明
+ Axun*/
+
+.guarantee_content {
+	padding: .3rem .3rem 0;
+}
+
+.guarantee_img {
+	width: 5%;
+	text-align: center;
+	color: #fff;
+	font-size: .19rem;
+	display: inline-block;
+	margin-right: .2rem;
+	background: url(../img/icon_guarantee.png)no-repeat 0% 70%;
+	background-size: 100%;
+	line-height: .44rem;
+}
+
+.guarantee_text {
+	width: 90%;
+	font-size: .28rem;
+	color: #000;
+	line-height: .44rem;
+}
+
+
+/*应用功能
+ Axun*/
+
+.packing .tools_content::before {
+	border: none;
+}
+
+.packing .tools_detail_content ol {
+	margin-left: -.35rem;
+}
+
+.packing .tools_detail_content ol li div {
+	width: 50%;
+	color: #000;
+	font-size: .28rem;
+	padding-left: .1rem;
+}
+
+
+/*应用功能
+ Axun*/
+
+.appfunction_icon {
+	width: .22rem;
+	height: .27rem;
+	vertical-align: middle;
+	margin-right: .1rem;
+}
+
+
+/*分享链接
+ Axun*/
+
+.share header {
+	box-shadow: none;
+	background: rgba(0, 0, 0, 0);
+}
+
+.share {
+	background: url(../img/bg_share.png)no-repeat;
+	background-size: 100%;
+	padding-top: 5.4rem;
+}
+
+.share_content {
+	width: 100%;
+	border-radius: 15px;
+	/*padding: .52rem 0.75rem 0.4rem;*/
+	padding: .52rem 1.75rem 0.4rem;
+}
+
+.share_content input {
+	font-size: .26rem;
+	color: #999;
+	border: 2px solid #b5b5b5;
+	border-radius: 7px;
+}
+
+.share_verify {
+	overflow: hidden;
+	width: 100%;
+	/*height: .9rem;*/
+}
+
+.share_verify input {
+	width: 64%;
+	float: left;
+}
+
+.share_verify div {
+	width: 34%;
+	height: 40px;
+	float: right;
+	background: #ba4de4;
+	font-size: .28rem;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	line-height: 41px;
+}
+
+.share .checkbox {
+	font-size: .24rem;
+	color: #999;
+}
+
+.check_img {
+	width: .25rem;
+	height: .25rem;
+	vertical-align: text-top;
+	margin-right: .1rem;
+	margin-top: .01rem;
+}
+
+.share_btn {
+	width: 3.25rem;
+	height: .79rem;
+	margin: .3rem auto;
+	background: #ba4de4;
+	font-size: .46rem;
+	color: #fff;
+	text-align: center;
+	line-height: .79rem;
+	border-radius: 20px;
+}
+
+
+/*注册成功
+ Axun*/
+
+.share_img {
+	width: 1.47rem;
+	height: 1.47rem;
+	margin: .25rem auto;
+}
+
+.share_text {
+	font-size: .58rem;
+	color: #000;
+	padding: .35rem 0;
+	text-align: center;
+}
+
+.mask {
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: .8;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+}
+
+.mask_img {
+	width: 100%;
+	height: 4rem;
+	margin-top: 2rem;
+	padding: 0 .5rem;
+}
+
+
+/*帮助中心
+ Axun*/
+
+.help_center header {
+	box-shadow: none;
+}
+
+.help_center .mui-control-item {
+	width: 50%;
+	background: #fff;
+	color: #fff;
+	border: none;
+	line-height: .74rem;
+}
+
+.help_center .mui-control-item span {
+	color: #575757;
+	font-size: 0.94em;
+	display: inline-block;
+}
+
+.help_center .mui-segmented-control .mui-control-item.mui-active {
+	background: #fff url(../img/bg_help_title.png)no-repeat center 122%;
+	background-size: 45%;
+	font-weight: bold;
+}
+
+.help_center .serch {
+	height: .8rem;
+}
+
+.help_center .mark_portrait {
+	width: .3rem;
+	height: .3rem;
+	position: absolute;
+	left: 7%;
+	top: 40%;
+}
+
+.help_center .serch input {
+	background: #fff;
+	box-shadow: #dadfe4 0px 0px 20px;
+}
+
+.help_close {
+	width: .27rem;
+	height: .27rem;
+	position: absolute;
+	right: .5rem;
+	top: .34rem;
+}
+
+.help_content {
+	padding: .23rem;
+	margin: .24rem .3rem;
+	box-shadow: #dcdcdc 0px 0px 10px;
+	border-radius: 7px;
+}
+
+.help_img {
+	width: .68rem;
+	height: .68rem;
+	margin-top: .1rem;
+}
+
+.help_tet {
+	font-size: .28rem;
+	margin-left: .3rem;
+	color: #999;
+	line-height: .44rem;
+}
+
+.help_center .lines {
+	width: 100%;
+	height: 0.2rem;
+	background: #f0f0f3;
+}
+
+@media only screen and (max-width: 414px) and (min-width: 412px) {
+	.help_center .lines {
+		height: 27.5%;
+	}
+}
+
+
+/*帮助中心--常见问题*/
+
+
+/*机具交易失败列表*/
+
+.transaction_list {
+	height: .9rem;
+	font-size: .28rem;
+	line-height: .9rem;
+	color: #000;
+	padding: 0 .3rem;
+	position: relative;
+}
+
+.transaction_list::before {
+	content: "";
+	position: absolute;
+	width: 6.4rem;
+	height: .01rem;
+	border-bottom: 1px solid #dcdcdc;
+	bottom: 0;
+	left: .8rem;
+}
+
+.transaction_number {
+	color: #078ffe;
+	margin: 0 .15rem 0 0;
+	font-size: .31rem;
+	line-height: .91rem;
+}
+
+
+/*机具交易失败内容*/
+
+.font30 {
+	font-size: .3rem;
+}
+
+.pt25 {
+	padding-top: .25rem;
+}
+
+.cheat_suspicion_img {
+	margin: .2rem auto;
+	width: 4.5rem;
+}
+
+.transaction_overrun_img {
+	margin: .2rem auto;
+	width: 4rem;
+}
+
+.password_error_img {
+	margin: .2rem auto;
+	width: 5.3rem;
+}
+
+.bindings_failure_img {
+	margin: .2rem auto;
+	width: 3rem;
+}
+
+.transaction_img {
+	width: 100%;
+	height: auto;
+}
+
+.answer {
+	float: left;
+	width: 8%;
+}
+
+.answer_content {
+	float: left;
+	width: 92%;
+}
+
+.answer_content div {
+	line-height: .35rem;
+	margin-bottom: .15rem;
+}
+
+.answer_content div div {
+	font-size: .28rem;
+	margin-left: .2rem;
+	line-height: .2rem;
+}
+
+
+/*操作流程内容*/
+
+.process_num {
+	float: left;
+	width: 5%;
+	line-height: .3rem;
+}
+
+.process_content {
+	float: left;
+	width: 95%;
+	line-height: .3rem;
+}
+
+.process_content div {
+	line-height: .32rem;
+	margin-bottom: .15rem;
+}
+
+.process_content div div {
+	font-size: .28rem;
+	margin-left: .1rem;
+	line-height: .32rem;
+}
+
+
+/*月账单
+ Axun*/
+
+.bill_content {
+	padding: .3rem;
+	font-size: .28rem;
+	border-bottom: 1px solid #dcdcdc;
+}
+
+
+/*审核拒绝原因*/
+
+.apply_refuse {
+	display: none;
+}
+
+.apply_refuse .collect_receive {
+	margin: 0.4rem 0 0.2rem;
+}
+
+.refuse_reason {
+	text-align: center;
+	font-size: 0.28rem;
+	color: #575757;
+}
+
+
+/*loading*/
+
+.open_box_loading {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+}
+
+.open_box_loading_title {
+	width: 154px;
+	height: 154px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -77px;
+	margin-top: -77px;
+	background-color: #FFFFFF;
+	border-radius: 10px;
+}
+
+.open_box_loading img {
+	width: 30%;
+	position: absolute;
+	left: 35%;
+	top: 30%;
+}
+
+.open_box_text {
+	position: absolute;
+	bottom: 20px;
+	text-align: center;
+	width: 100%;
+	color: #20BEFF;
+	font-size: 14px;
+}
+
+
+/*404,没有网络*/
+
+.img_network_loss {
+	width: 5.02rem;
+	height: 4.85rem;
+	margin: 2.32rem 1.06rem .8rem 1.4rem;
+}
+
+.network_loss_text {
+	text-align: center;
+	font-size: .36rem;
+	color: #919090;
+	font-weight: bold;
+	margin-bottom: 1.48rem;
+}
+
+.network_loss_btn {
+	width: 2.22rem;
+	height: .59rem;
+	line-height: .6rem;
+	background: #3584ff;
+	color: #fff;
+	margin: 0 auto;
+	font-size: .3rem;
+	font-weight: bold;
+	text-align: center;
+	border-radius: 15px;
+}
+
+
+/*上拉加载*/
+
+.mui-pull-bottom-tips {
+	text-align: center;
+}
+
+
+/*下属机具*/
+
+.proxy_machine_list {
+	padding: .3rem;
+	border-bottom: 1px solid #dcdcdc;
+	overflow: hidden;
+}
+
+.proxy_machine_icon {
+	float: left;
+	width: 0.8rem;
+	margin: 0.15rem 0.4rem 0.15rem 0.2rem;
+}
+
+.proxy_machine_list .info,
+.proxy_machine_detailslist .info,
+.proxy_profit_list .info {
+	color: #4c4c4c;
+	font-size: 0.9em;
+	margin: .2rem 0 0;
+}
+
+.proxy_machine_list .info {
+	float: left;
+	width: 5.5rem;
+	margin: 0;
+}
+
+.proxyname,
+.proxy_profit_bold {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+
+/*下属机具详情*/
+
+.proxy_machine_detailslist {
+	padding: .35rem 1rem;
+	overflow: hidden;
+}
+
+.proxy_machine_details_icon {
+	float: left;
+	width: 0.9rem;
+	margin: 0.15rem 0.4rem 0.15rem 0.2rem;
+}
+
+.proxy_machine_detailslist .info {
+	float: left;
+	width: 4rem;
+}
+
+.proxy_profit_list {
+	padding: .3rem;
+	border-bottom: 1px solid #dcdcdc;
+}

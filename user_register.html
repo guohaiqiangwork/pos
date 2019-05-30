@@ -1,0 +1,305 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>注册</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_user">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-closeempty mui-pull-right icon_close"></a>
+		</header>
+		<div class="mui-content">
+			<div class="account_password">
+				<p class="user_title">欢迎注册</p>
+				<form id="reg_form" action="" method="post">
+					<div class="user_row">
+						<div class="title">
+							<img src="img/icon_tel.png" />
+							<span>手机号码</span>
+						</div>
+						<input type="text" name="model.phone" id="phone" value="" placeholder="请输入手机号码" maxlength="11" />
+					</div>
+					<div class="user_row">
+						<div class="title">
+							<img src="img/icon_code_02.png" />
+							<span>推荐码</span>
+						</div>
+						<input type="text" name="model.userProxy.code" id="Recommend_code" value="" placeholder="请输入推荐码" />
+					</div>
+					<input type="hidden" id="jiami_pwd" name="model.loginPassword" value="" />
+					<div class="user_row">
+						<div class="title">
+							<img src="img/icon_code_01.png" />
+							<span>验证码</span>
+						</div>
+						<input style="width: 137px;" type="text" name="smsCode" id="smsCode" value="" placeholder="请输入验证码" />
+						<button id="get_auth_code" type="button" class="mui-btn mui-btn-blue right auth_code">获取验证码</button>
+					</div>
+					<div class="user_row">
+						<div class="title">
+							<img src="img/icon_password.png" />
+							<span>密码</span>
+						</div>
+						<input type="password" id="password" value="" placeholder="请输入登录密码" />
+					</div>
+					<!--<input type="hidden" name="model.source" id="" value="1" placeholder="" />-->
+				</form>
+				<form id="agreement_form" action="" method="">
+					<div class="agreement hint">
+						<div class="mui-input-row mui-checkbox " style="display: inline-block;float: left;">
+							<label></label>
+							<input name="Checkbox" type="checkbox" checked>
+						</div>
+						<div style="display: inline-block;margin: 8px 0 0 -16px;">
+							<span>注册即同意</span>
+							<span class="app_protocol font_blue">《用户说明》</span><span class="user_protocol font_blue">《合作协议》</span>
+						</div>
+					</div>
+				</form>
+			</div>
+			<button type="button" class="btn_common_submit">下一步</button>
+		</div>
+		<!--用户协议开始-->
+		<div id="user_protocol">
+			<div class="protocol_title">汇爱天下合作协议</div>
+
+			<div class="protocol_body">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;微盟友是有意愿将闪电宝产品推荐给其他客户，并使其他客户成功注册使用闪电宝产品 的人员，本协议为汇爱天下合作协议通用版本，在申请注册流程中同意 本协议之前，应当认真阅读本协议。请务必审慎阅读、充分理解各项条款内容，特别是免除或者限制责任的条款、法律适用和争议解决条款。如对协议有任何疑问，可向甲方客服咨询。同意后即表示您已充分阅读、理解并接受所有协议条款，届时您将必须遵守本协议约定。 本协议中甲方为“致成达网络科技有限公司”，乙方即为“微盟友”，请认真阅读以下条款： 经甲、乙双方平等友好协商，本着平等自愿、互利共赢的原则，根据国家法律法规、规 章及相关业务规定（以下简称“法律法规”），就双方合作事宜协商一致达成协议如下：
+			</div>
+
+			<div class="protocol_subtitle">一、甲方权利与义务</div>
+
+			<div class="protocol_body"><span class="bold">1.</span>甲方有权要求乙方遵守国家法律、法规、监管机构的规定、行业自律规则、市场规 范以及甲方制定的相关制度，确保服务水平符合要求。甲方有权随时对自行制定的 相关制度进行修改，乙方对此无异议;</div>
+			<div class="protocol_body"><span class="bold">2.</span>如果甲方要对本协议相关产品的定价及价格策略进行调整，应至少提前一周以通告 方式通知乙方，该通知一经发出即产生相应法律效力;</div>
+			<div class="protocol_body"><span class="bold">3.</span>甲方有权对乙方推荐的用户按照甲方准入标准进行审批，与用户签署相关的协议;</div>
+			<div class="protocol_body"><span class="bold">4.</span>甲方有权根据自身业务管理需要设计相应的考核指标体系，对乙方的业务开展情况 进行检查、考核及评价;</div>
+			<div class="protocol_body"><span class="bold">5.</span>甲方应根据本协议约定内容向乙方支付相应服务费，服务费规则汇爱天下APP显示;</div>
+			<div class="protocol_body"><span class="bold">6.</span>甲方有权在乙方发生以下情形时，与乙方提前终止服务合同：
+				<div><span class="bold">1)</span>提供虚假材料，骗取合作资格;</div>
+				<div><span class="bold">2)</span>与不良用户勾结进行如虚假伪冒申请、伪卡盗刷、套现、洗钱、分单、虚假交易等活动；</div>
+				<div><span class="bold">3)</span>采取不正当竞争手段盗取、转移合作机构用户或受理终端；</div>
+				<div><span class="bold">4)</span>留存、窃取或泄露客户账号、身份证号码等敏感信息及交易信息；</div>
+				<div><span class="bold">5)</span>将协议项下业务进行转包、转让；</div>
+				<div><span class="bold">6)</span>将用户结算资金通过其他机构进行二次清算；</div>
+				<div><span class="bold">7)</span>因自身行为严重影响甲方声誉或给甲方造成重大经济损失；</div>
+				<div><span class="bold">8)</span>严重违反法律、法规或行业自律规定；</div>
+				<div><span class="bold">9)</span>甲方认为需要提前终止协议的其他行为。</div>
+			</div>
+			<div class="protocol_body"><span class="bold">7.</span>甲方有权调整本协议相关内容以及相关制度，并根据相应制度管理乙方。甲方通知乙方相应制度或对相应内容做调整，包括但不限于网站公示、书面、邮件等通知形式；</div>
+			<div class="protocol_body"><span class="bold">8.</span>甲方只负责受理涉及“闪电宝”服务本身问题的投诉并处理因此产生的纠纷。</div>
+
+			<div class="protocol_subtitle">二、乙方权利与义务</div>
+
+			<div class="protocol_body"><span class="bold">1.</span>乙方承诺遵守法律、法规、行业规章及市场规则，遵守甲方相关制度规定。不得损害国家利益、社会公众利益、持卡人、发卡机构和银行卡清算机构的合法权益；</div>
+			<div class="protocol_body"><span class="bold">2.</span>乙方保证如实提交甲方要求的各种信息、资料和证件；乙方提交资料错误造成的损失由乙方自行承担。如乙方冒用第三方资料，甲方有权提前终止合作并要求乙方退还甲方已支 付的全部服务费、奖励及其他款项；</div>
+			<div class="protocol_body"><span class="bold">3.</span>乙方推荐的客户需满足甲方客户准入标准。不得超过甲方授权范围向客户进行营销、宣传等活动，不得就客户推广工作向客户收取任何费用；</div>
+			<div class="protocol_body"><span class="bold">4.</span>乙方不得转移甲方客户资源，即将甲方客户转变为其他机构的客户；</div>
+			<div class="protocol_body"><span class="bold">5.</span>乙方应配合甲方接受监管机构、行业自律组织以及银行卡清算机构的检查以及公安等有关部门的调查活动；</div>
+			<div class="protocol_body"><span class="bold">6.</span>合作终止后，乙方有义务协助甲方处理后续事项；</div>
+			<div class="protocol_body"><span class="bold">7.</span>乙方必须获得甲方授权，方可使用闪电宝相关品牌元素标识,乙方应当按照甲方品牌及宣传管理规定合理使用，乙方亦应当遵守中国银联和各金融机构的规章、办法。未经正式授 权，乙方不得擅自使用银联及其他金融机构的名称、标识。如乙方在使用过程中如对闪电宝品牌形象及利益造成损害的，甲方可立即撤消乙方使用授权，并追究乙方法律责任；</div>
+			<div class="protocol_body"><span class="bold">8
+			
+			
+			.</span>乙方应当具备金融行业基本知识、风险意识和职业道德，必须具有健全的组织架构、内控制度和业务管理、风险控制措施，有熟悉支付相关业务的专业人员担任董事、高级管理 职务，遵守支付业务相关的各项法律法规和业务规则；</div>
+			<div class="protocol_body"><span class="bold">9.</span>乙方在向潜在客户介绍业务时，应就协议条款中涉及的收费项目及条件等做明确说明，并严格按照约定项目及金额收取相关费用，未经甲方书面同意，乙方不得随意向客户收取任 何费用。对由于乙方在推广业务中的不当行为而造成甲方支付服务业务的损失，乙方将承担 赔偿责任；</div>
+			<div class="protocol_body"><span class="bold">10.</span>乙方有义务配合甲方调取客户的相关经营资质材料，包括但不限于客户协议、营业执照、税务登记证、组织机构代码证、法定代表人或负责人身份证件等，并在甲方规定的时限 内予以提供；</div>
+			<div class="protocol_body"><span class="bold">11.</span>乙方不得将专用于客户业务受理的资源（包括信用卡资源和借记卡资源）用于本协议范围以外的用途，也不得转让给第三方使用；</div>
+			<div class="protocol_body"><span class="bold">12.</span>乙方不得因提供合作业务服务而实际拥有、控制客户结算资金，为客户提供二次清算；</div>
+			<div class="protocol_body"><span class="bold">13.</span>协助甲方进行市场调查，搜集有关资料，以便甲方了解市场动态；</div>
+			<div class="protocol_body"><span class="bold">14.</span>乙方授权甲方以包括但不限于短信、微信、自媒体、邮件等方式向乙方及乙方拓展商户发送推广信息及通知;</div>
+			<div class="protocol_body"><span class="bold">15.</span>乙方如需开展推广宣传活动的或需自行制作相关宣传推广材料的，应遵守甲方相关管理规定，提前经甲方书面审核同意方可使用。如无甲方书面授权的，给甲方造成一切损失由乙方全额承担，且甲方享有单方面解除本协议的权利。</div>
+
+			<div class="protocol_body">本营销规范的最终解释权归致成达网络科技有限公司所有，规范中未涵盖的其他违规类型视情节而定，违约处罚类别、轻重以公司最终研究结果为准。 致成达网络科技有限公司
+			</div>
+
+			<button class="protocol_button" type="button">返回</button>
+		</div>
+		<!--用户协议结束-->
+
+		<!--App协议开始-->
+		<div id="app_protocol">
+			<div class="protocol_title">汇爱天下用户许可安装协议</div>
+
+			<div class="protocol_body">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户须知：在此特别提醒各位用户认真阅读、充分理解本《软件许可及安装协议》（下称《协议》）——用户应认真阅读充分理解本《协议》中各条款。您的安装、使用、获取和登录汇爱天下app等行为将视为对本《协议》的接受，并同意接受本《协议》各项条款的约束。 本《协议》是您（下称“用户”）与公司之间关于用户安装、使用软件，注册、使用、管理软件；以及使用公司公司提供的相关服务所订立的协议。本《协议》描述公司与用户之间关于“软件”许可使用及服务相关方面的权利义务。“用户”是指通过公司提供的获取软件授权和汇爱天下注册的途径获得软件产品及号码授权许可以及使用公司公司提供的相关服务的个人或组织。 本《协议》可由公司随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知。用户可重新下载安装本软件或网站查阅最新版协议条款。在公司修改《协议》条款后，如果用户不接受修改后的条款，请立即停止使用公司提供的软件和服务，用户继续使用公司提供的软件和服务将被视为已接受了修改后的协议。 除本《协议》有明确规定外，本《协议》并未对利用本“软件”使用的公司或合作单位的其他服务规定相关的服务条款。对于这些服务，一般有单独的服务条款加以规范，用户须在使用有关服务时另行了解与确认。单独的服务条款与本协议有冲突的地方，以单独的服务条款为准。如用户使用该服务，视为对相关服务条款的接受。
+			</div>
+
+			<div class="protocol_body"><span class="bold">1.</span>知识产权声明 本“软件”是由公司开发。“软件”的一切版权、商标权、专利权、商业秘密等知识产权，以及与“软件”相关的所有信息内容，包括但不限于：文字表述及其组合、图标、图饰、图表、色彩、界面设计、版面框架、有关数据、印刷材料、或电子文档等均受中华人民共和国著作权法、商标法、专利法、反不正当竞争法和相应的国际条约以及其他知识产权法律法规的保护，除涉及第三方授权的软件或技术外，公司享有上述知识产权。 </div>
+			<div class="protocol_body"><span class="bold">2.</span>软件授权范围
+				<div><span class="bold">2.1</span>用户可以在个人计算机或者手机上安装、使用、显示、运行本软件。</div>
+				<div><span class="bold">2.2</span>保留权利：未明示授权的其他一切权利仍归公司所有，用户使用其他权利时须另外取得公司的书面同意。</div>
+				<div><span class="bold">2.3</span>除本《协议》有明确规定外， 本《协议》并未对利用本软件访问的公司公司或合作单位的其他服务规定相关的服务条款，对于这些服务有可能有单独的服务条款加以规范，请用户在使用有关服务时另行了解与确认。</div>
+			</div>
+			<div class="protocol_body"><span class="bold">3.</span>关于软件使用
+				<div><span class="bold">3.1</span>用户可以通过预约功能体验公司提供的各种服务。</div>
+				<div><span class="bold">3.2</span>用户可以通过在线购买方式获得本公司各类产品。</div>
+			</div>
+			<div class="protocol_body"><span class="bold">4.</span>法律责任与免责
+				<div><span class="bold">4.1 </span>利用的许可。</div>
+				<div><span class="bold">4.2</span>公司特别提请用户注意：公司为了保障公司业务发展和调整的自主权，公司拥有随时自行修改或中断软件授权而不需通知用户的权利，如有必要，修改或中断会以通告形式公布于公司网站重要页面上。</div>
+				<div><span class="bold">4.3</span>用户违反本《协议》或相关的服务条款的规定，导致或产生的任何第三方主张的任何索赔、要求或损失，包括合理的律师费，用户同意赔偿公司与合作公司、关联公司，并使之免受损害。</div>
+				<div><span class="bold">4.4</span>使用本“软件”由用户自己承担风险，公司及合作单位对本“软件”不作任何类型的担保，不论是明示的、默示的或法令的保证和条件，包括但不限于本“软件”的适销性、适用性、无病毒、无疏忽或无技术瑕疵问题、所有权和无侵权的明示或默示担保和条件，对在任何情况下因使用或不能使用本“软件”所产生的直接、间接、偶然、特殊及后续的损害及风险，公司及合作单位不承担任何责任。</div>
+				<div><span class="bold">4.5</span>使用本“软件”涉及到互联网服务，可能会受到各个环节不稳定因素的影响，存在因不可抗力、计算机病毒、黑客攻击、系统不稳定、非法内容信息、骚扰信息屏蔽以及其他任何网络、技术、通信线路、信息安全管理措施等原因造成的用户的经济损失，公司及合作单位不承担任何责任。</div>
+				<div><span class="bold">4.6</span>用户因第三方如电信部门的通讯线路故障、技术问题、网络、电脑故障、系统不稳定性及其他各种不可抗力原因而遭受的一切损失，公司及合作单位不承担责任。</div>
+				<div><span class="bold">4.7</span>因技术故障等不可抗事件影响到服务的正常运行的，公司及合作单位承诺在第一时间内与相关单位配合，及时处理进行修复，但用户因此而遭受的一切损失，公司及合作单位不承担责任。</div>
+			</div>
+			<div class="protocol_body"><span class="bold">5.</span>其他条款
+				<div><span class="bold">5.1 </span>本《协议》所定的任何条款的部分或全部无效者，不影响其它条款的效力。</div>
+				<div><span class="bold">5.2 </span>本《协议》的解释、效力及纠纷的解决，适 用于中华人民共和国法律。若用户和公司之间发生任何纠纷或争议，首先应友好协商解决，协商不成的，用户在此完全同意将纠纷或争议提交公司公司所在地即北京有管辖权的人民法院管辖。</div>
+				<div><span class="bold">5.3 </span>本《协议》版权由公司所有，公司保留一切解释权利。本文中提及的软件和服务名称有可能为公司的注册商标或商标，受法律保护。</div>
+			</div>
+
+			<button class="protocol_button" type="button">返回</button>
+		</div>
+		<!--App协议结束-->
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/md5.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var cid = "";
+			var apptype="";
+			if(mui.os.ios) {
+				apptype="ios";
+			} else {
+				apptype="android";
+			}
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('dark');
+				cid = plus.push.getClientInfo().clientid;
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//用户协议
+			$(".user_protocol").click(function() {
+				$("#user_protocol").fadeIn();
+				$(".icon_close").hide();
+			});
+			$(".protocol_button").click(function() {
+				$("#user_protocol").fadeOut();
+				$(".icon_close").show();
+				
+			});
+
+			//app协议
+			$(".app_protocol").click(function() {
+				$("#app_protocol").fadeIn();
+				$(".icon_close").hide();
+			});
+			$(".protocol_button").click(function() {
+				$("#app_protocol").fadeOut();
+				$(".icon_close").show();
+			});
+
+			mui('#get_auth_code')[0].addEventListener('tap', function() {
+				if(phone_check()) {
+					var phone = mui('#phone')[0].value;
+					mui.ajax(ajax_url + 'appCustomer/getSMSCode', {
+						data: {
+							phone: phone,
+							flage: 'R'
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							console.log(phone)
+							if(true == data.success) {
+								var time_remaining = 60;
+								clearInterval(int);
+								var int = self.setInterval('countdown()', 1000);
+								countdown = function() {
+									if(1 < time_remaining) {
+										time_remaining--;
+										mui('#get_auth_code')[0].setAttribute('disabled', 'disabled');
+										mui('#get_auth_code')[0].innerText = time_remaining + 's后再次获取';
+									} else {
+										window.clearInterval(int);
+										mui('#get_auth_code')[0].removeAttribute('disabled');
+										mui('#get_auth_code')[0].innerText = '获取验证码';
+									}
+								}
+							}
+							if(false == data.success) {
+								mui.toast(data.msg);
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							if(xhr.status != '0')
+								mui.toast('服务器走丢了')
+						}
+					});
+				}
+			});
+
+			mui('.btn_common_submit')[0].addEventListener('tap', function() {
+				if(phone_check() && Recommendcode_check() && smsCode_check() && pwd_check()) {
+					$('#jiami_pwd').val(hex_md5($('#password').val()));
+					var formData = $('#reg_form').serialize();
+					//					console.log($("#agreement_form").serialize());
+					if($("#agreement_form").serialize() == "" || $("#agreement_form").serialize() == null) {
+						mui.alert("请阅读并同意《用户协议》")
+					} else {
+						mui.ajax(ajax_url + 'appCustomer/doRegister', {
+							data: formData,
+							dataType: 'json', //服务器返回json格式数据
+							type: 'post', //HTTP请求类型
+							timeout: 10000, //超时时间设置为10秒；
+							success: function(data) {
+								if(true == data.success) {
+									mui.toast(data.msg);
+									var customerId = data.obj;
+									mui.ajax(ajax_url + 'appCustomer/doLogin', {
+										data: {
+											phone: $('#phone').val().trim(),
+											password: $('#jiami_pwd').val().trim(),
+											pushMsgClientid: cid,
+											apptype: apptype
+										},
+										dataType: 'json', //服务器返回json格式数据
+										type: 'post', //HTTP请求类型
+										timeout: 10000, //超时时间设置为10秒；
+										success: function(data) {
+											if(true == data.success) {
+//												mui.toast(data.msg);
+												myStorage.setItem('customerId', customerId);
+												location.href = 'user_real_name.html';
+											}
+											if(false == data.success) {
+												mui.toast(data.msg)
+											}
+										},
+										error: function(xhr, type, errorThrown) {
+											if(xhr.status != '0')
+												mui.toast('服务器走丢了')
+										}
+									});
+								}
+								if(false == data.success) {
+									mui.toast(data.msg)
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								if(xhr.status != '0')
+									mui.toast('服务器走丢了')
+							}
+						});
+					}
+				}
+			});
+		</script>
+	</body>
+
+</html>

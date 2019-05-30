@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>设置</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			#set_paypassword,
+			#change_paypassword {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">设置 </h1>
+		</header>
+		<div class="mui-content personal_setting bg_white">
+			<div id="set_paypassword" class="personal_link go_url" data-url="user_pay_password.html?key=backsetting">
+				<span>设置提现密码</span>
+			</div>
+			<div class="personal_link go_url" data-url="user_password.html?key=settingrevise">
+				<span>修改登录密码</span>
+			</div>
+			<div id="change_paypassword" class="personal_link go_url" data-url="user_change_password.html">
+				<span>修改提现密码</span>
+			</div>
+			<div class="personal_link go_url" data-url="user_look_realname.html">
+				<span>实名认证</span>
+			</div>
+			<div class="personal_link go_url setup_rate" data-url="my_rate.html">
+				<span>我的费率</span>
+			</div>
+			<div class="personal_link goaboutus">
+				<span>关于我们</span>
+			</div>
+			<div class="personal_link" style="background: none;">
+				<span>客服电话</span>
+				<a class="right font_grey" href="tel:400 158 0472">400 158 0472</a>
+			</div>
+			<button id="exit_btn" class="btn_common_submit user_out">退出登录</button>
+		</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		mui.back = function() {
+			if(1 == user_type) {
+				location.href = "Nav_Personalcenter_Partners.html";
+			} else if(2 == user_type || 3 == user_type) {
+				location.href = "Nav_Personalcenter_Agent.html";
+			} else {
+				location.href = "Nav_Personalcenter_Agent.html";
+			}
+		}
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色，颜色
+			plus.navigator.setStatusBarBackground('#078ffe');
+			plus.navigator.setStatusBarStyle('light');
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+		console.log(myStorage.getItem('Customer_info'))
+		//我的费率是否显示
+		if(null != myStorage.getItem('Customer_info')) {
+			if(myStorage.getItem('Customer_info').isSetPayPassword) {
+				$("#set_paypassword").hide()
+				$("#change_paypassword").show()
+			} else {
+				$("#set_paypassword").show()
+				$("#change_paypassword").hide()
+
+			}
+		} else {
+			$("#exit_btn").hide()
+		}
+		//关于我们
+		mui('.goaboutus')[0].addEventListener('tap', function() {
+			location.href = "about_us.html"
+		});
+		//退出登录
+		mui('.user_out')[0].addEventListener('tap', function() {
+			var btnArray = ['关闭', '确认'];
+			mui.confirm('退出后信息将清空', '确认要退出登录吗？', btnArray, function(e) {
+				if(1 == e.index) {
+					mui.ajax(ajax_url + 'appCustomer/logout', {
+						data: {
+							customerId: customerId
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							console.log(data.msg);
+							if(true == data.success) {
+								mui.toast("退出登录成功")
+								var Remember_password = myStorage.getItem('Remember_password');
+								myStorage.clear();
+								location.href = "Nav_Personalcenter_Agent.html";
+								myStorage.setItem('Remember_password', Remember_password);
+							} else {
+								if("logout_faild" == data.msg) {
+									mui.toast("退出登录失败，请重新试试")
+								} else if("need_customerId" == data.msg) {
+									mui.toast("未传入会员ID")
+								} else {
+									mui.toast(data.msg)
+								}
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							if(xhr.status != '0')
+								mui.toast('服务器走丢了')
+						}
+					});
+				} else {
+
+				}
+			});
+		});
+	</script>
+
+</html>

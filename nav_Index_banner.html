@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>详情</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">详情</h1>
+		</header>
+		<div class="mui-content" style="padding-top: 20px;">
+		</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		var ws = "",
+			embed = "";
+		mui.init();
+		mui.back = function() {
+			if(embed)
+				embed.close();
+			location.href = "Nav_Index.html?ad=1";
+		};
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色，颜色
+			plus.navigator.setStatusBarBackground('#078ffe');
+			plus.navigator.setStatusBarStyle('light');
+			console.log(myStorage.getItem('banner_httpurl'))
+			if(getQueryString("id")) {
+				mui.ajax(ajax_url + 'appCustomer/getBannerOne', {
+					data: {
+						bannerId: getQueryString("id")
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							$(".mui-content").append(data.obj.title)
+							$(".mui-content").append(data.obj.content);
+							$(".mui-content").css({
+								"padding": "84px 20px 20px",
+								"background": "#fff"
+							})
+							$("img").css({
+								"max-width": "100%",
+								"height": "inherit"
+							})
+							$("img").each(function() {
+								if("/"==$(this).attr("src")[0]){
+									$(this).attr("src",img_url_banner + $(this).attr("src"))
+								}else{
+									$(this).attr("src",$(this).attr("src"))
+								}
+							});
+						}
+						if(false == data.success) {
+							mui.toast(data.msg)
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+					}
+				});
+			} else {
+				var nwaiting = plus.nativeUI.showWaiting(); //打开原生加载等待框 
+				ws = plus.webview.currentWebview(); //创建一个新的页面 
+				embed = plus.webview.create(myStorage.getItem('banner_httpurl'), " ", {
+					top: "64px",
+					bottom: "0px"
+				}); //新的页面地址 
+				embed.onclose = embedClose;
+				ws.append(embed);
+				plus.nativeUI.closeWaiting();
+				// 页面关闭事件回调函数 
+				function embedClose(e) {}
+			}
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+	</script>
+
+</html>

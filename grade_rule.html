@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>等级规则</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">等级规则 </h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="collect_title">
+				<table class="grade" border="0" cellspacing="0" cellpadding="0">
+					<tbody>
+						<tr>
+							<th class="grade_title">
+								<div class="grade_name">等级</div>
+								<div class="grade_content">升级条件</div>
+								<div class="grade_name">分润</div>
+							</th>
+						</tr>
+						<!--<tr>
+							<td>
+								<div class="grade_name"><img src="img/icon_vip_1.png" /></div>
+								<div class="grade_content">0-300W</div>
+								<div class="grade_name">5%</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="grade_name"><img src="img/icon_vip_2.png" /></div>
+								<div class="grade_content">301W-500W</div>
+								<div class="grade_name">6%</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="grade_name"><img src="img/icon_vip_3.png" /></div>
+								<div class="grade_content">501W-800W</div>
+								<div class="grade_name">7%</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="grade_name"><img src="img/icon_vip_4.png" /></div>
+								<div class="grade_content">拥有 (2个V3代理)<br />801W-1000W</div>
+								<div class="grade_name">8%</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="grade_name"><img src="img/icon_vip_5.png" /></div>
+								<div class="grade_content">拥有 (3个V3代理)<br />1001W-2000W</div>
+								<div class="grade_name">9%</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="grade_name"><img src="img/icon_vip_6.png" /></div>
+								<div class="grade_content">拥有 (4个V3代理)<br />2001W-8000W</div>
+								<div class="grade_name">10%</div>
+							</td>
+						</tr>-->
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			//获取等级规则
+			mui.ajax(ajax_url + 'appCustomer/getLevelSetAll', {
+				data: {
+					customerId: customerId,
+				},
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 10000, //超时时间设置为10秒；
+				success: function(data) {
+					if(true == data.success) {
+						var grade = data.obj;
+						for(var i = 0; i < grade.length; i++) {
+							if(grade[i].otherLevel == null) {
+								//没有其他等级要求
+								if(i == grade.length - 1) {
+									//最高一级没有上限
+									var grade_list = '<tr>' +
+										'<td>' +
+										'<div class="grade_name"><img src="' + img_url + grade[i].imgUrl[0] + '" /></div>' +
+										'<div class="grade_content">' + (Number(grade[i].money) / 10000) + 'W以上</div>' +
+										'<div class="grade_name">' + grade[i].radio + '%</div>' +
+										'</td>' +
+										'</tr>';
+								} else {
+									var grade_list = '<tr>' +
+										'<td>' +
+										'<div class="grade_name"><img src="' + img_url + grade[i].imgUrl[0] + '" /></div>' +
+										'<div class="grade_content">' + (Number(grade[i].money) / 10000) + 'W-' + (Number(grade[i + 1].money) / 10000) + 'W</div>' +
+										'<div class="grade_name">' + grade[i].radio + '%</div>' +
+										'</td>' +
+										'</tr>';
+								}
+							} else {
+								//有其他等级要求
+								if(i == grade.length - 1) {
+									//最高一级没有上限
+									var grade_list = '<tr>' +
+										'<td>' +
+										'<div class="grade_name"><img src="' + img_url + grade[i].imgUrl[0] + '" /></div>' +
+										'<div class="grade_content">拥有 (' + grade[i].otherLevelNumber + '个' + grade[grade[i].otherLevel-1].name + '代理)<br />'+(Number(grade[i].money) / 10000)+'W以上</div>' +
+										'<div class="grade_name">' + grade[i].radio + '%</div>' +
+										'</td>' +
+										'</tr>';
+								} else {
+									var grade_list = '<tr>' +
+										'<td>' +
+										'<div class="grade_name"><img src="' + img_url + grade[i].imgUrl[0] + '" /></div>' +
+										'<div class="grade_content">拥有 (' + grade[i].otherLevelNumber + '个' + grade[grade[i].otherLevel-1].name + '代理)<br />' + (Number(grade[i].money) / 10000) + 'W-' + (Number(grade[i + 1].money) / 10000) + 'W</div>' +
+										'<div class="grade_name">' + grade[i].radio + '%</div>' +
+										'</td>' +
+										'</tr>';
+								}
+							}
+							$("tbody").append(grade_list)
+						}
+						console.log(data.obj)
+					}
+					if(false == data.success) {
+						mui.toast(data.msg)
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					if(xhr.status != '0')
+						mui.toast('服务器走丢了')
+				}
+			});
+		</script>
+	</body>
+
+</html>

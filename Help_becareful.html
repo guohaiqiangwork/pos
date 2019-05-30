@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>注意事项</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">注意事项 </h1>
+		</header>
+
+		<div class="mui-content bg_white mt25">
+			<div class="library_content_name collect_title pt0"><span class="font_blue">*</span> 如刷卡失败，请检查卡槽内是否有异物。刷卡动作是否平稳，银行卡是否损坏、或重新连接刷卡器。</div>
+			<div class="library_content_name collect_title pt0"><span class="font_blue">*</span> 如支付失败，请检查网络连接是否畅通，正常，银行卡余额是否充足。</div>
+			<div class="library_content_name collect_title pt0"><span class="font_blue">*</span> 请勿拆机以防刷卡器无法正常使用<br />（刷卡器内置电池，请注意防火）</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back = function() {
+				location.href = "Nav_Help.html?key=help"
+			}
+		</script>
+	</body>
+
+</html>

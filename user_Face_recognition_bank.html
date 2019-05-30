@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>提现刷脸认证</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.content_title {
+				font-size: 1.05em;
+			}
+			
+			#customer_name {
+				color: #078ffe;
+			}
+			
+			.Face_recognition {
+				width: 2.66rem;
+				margin: 0.36rem auto 0.5rem;
+			}
+			
+			.Face_recognition_img {
+				width: 100%;
+			}
+			
+			#Face_recognition_submit {
+				display: none;
+			}
+			
+			input[type=file] {
+				display: none;
+			}
+			
+			.face_tip {
+				color: #4c4c4c;
+				text-align: center;
+				margin: 0.16rem 0;
+				line-height: 2em;
+			}
+		</style>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">提现刷脸认证</h1>
+		</header>
+
+		<div class="mui-content bg_white">
+			<div class="collect_title">
+				<p class="face_tip">请衣着整齐，平视屏幕，并正对光源</p>
+				<!--表单-->
+				<form id="Face_recognition_form" class="user_form" action="" method="post">
+					<!--用户id-->
+					<input id="input_customer" type="hidden" name="customerId" value="" />
+					<input id="faceImgString" type="hidden" name="faceImg" value="" />
+					<!--人脸识别-->
+					<div id="Face_recognition" class="Face_recognition" id="upload_front_IDcard">
+						<img id="Face_recognition_img" class="Face_recognition_img" src="img/face_example.png" />
+					</div>
+					<input id="choose_Face_recognition" type="file" accept="image/*" />
+					<div class="content_title bold">请确保是<span id="customer_name"></span>本人操作</div>
+				</form>
+				<img style="margin: 0.29rem 0.55rem -0.3rem;width: 5.8rem;" src="img/face_tip.jpg" />
+				<button id="Face_recognition_choosepic" type="button" class="btn_common_submit">点击拍摄</button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/jquery-1.8.3.min.js"></script>
+		<script src="js/myStorage.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/NumberUtil.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			// H5 plus事件处理
+			function plusReady() {
+				// 设置系统状态栏背景色，颜色
+				plus.navigator.setStatusBarBackground('#078ffe');
+				plus.navigator.setStatusBarStyle('light');
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			mui.back = function() {
+				var user_type = myStorage.getItem('Customer_info').type;
+				if(1 == user_type) {
+					location.href = "Nav_Personalcenter_Partners.html";
+				} else if(2 == user_type || 3 == user_type) {
+					location.href = "Nav_Personalcenter_Agent.html";
+				}
+			}
+			//申请人ID
+			$("#input_customer").val(customerId);
+			$("#customer_name").text(protectionName(myStorage.getItem('Customer_info').name));
+
+			function protectionName(name) {
+				var name_len = name.length;
+				if(name_len == 2) {
+					return "*" + name.substring(1, 2);
+				} else {
+					var xing = '';
+					for(var i = 0; i < name_len - 1; i++) {
+						xing += '*';
+					}
+					return xing + name.substring(name_len - 1, name_len);
+				}
+			}
+			//对比
+			function faceContrast() {
+				var formData = $('#Face_recognition_form').serialize();
+				formData = decodeURIComponent(formData, true);
+				console.log(formData)
+				$("#Face_recognition_img").attr("src", "img/faceloading.gif");
+				mui.ajax(ajax_url + 'appCustomer/faceContrast', {
+					data: formData,
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						if(true == data.success) {
+							$(".open_box_loading").remove();
+							console.log(data.msg)
+							location.href = "bank_withdrawal.html";
+						}
+						if(false == data.success) {
+							mui.toast("录入照片失败，请重新上传试试")
+							console.log(data.msg)
+							$("#faceImgString").val("");
+							faceImgString = "";
+							$("#Face_recognition_choosepic").removeAttr("disabled");
+							$("#Face_recognition_img").attr("src", "img/face_example.png");
+							$("#choose_Face_recognition").val("");
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						if(xhr.status != '0')
+							mui.toast('服务器走丢了')
+						$("#faceImgString").val("");
+						faceImgString = "";
+						$("#Face_recognition_choosepic").removeAttr("disabled");
+						$("#Face_recognition_img").attr("src", "img/face_example.png");
+						$("#choose_Face_recognition").val("");
+					}
+				});
+
+			}
+
+			//上传图片js 开始
+			//图片字符串
+			var faceImgString = "";
+			//用于压缩图片的canvas
+			var canvas = document.createElement("canvas");
+			var ctx = canvas.getContext('2d');
+			//瓦片canvas
+			var tCanvas = document.createElement("canvas");
+			var tctx = tCanvas.getContext("2d");
+			var maxsize = 1048576; //  1M
+
+			//上传证件正面
+			document.getElementById('Face_recognition_choosepic').addEventListener('tap', function() {
+				getImage();
+				/*拍照*/
+				//				if(mui.os.plus) {
+				//					var buttonTit = [{
+				//						title: "拍照"
+				//					}, {
+				//						title: "从手机相册选择"
+				//					}];
+				//
+				//					plus.nativeUI.actionSheet({
+				//						//						title: "上传图片",
+				//						cancel: "取消",
+				//						buttons: buttonTit
+				//					}, function(b) { /*actionSheet 按钮点击事件*/
+				//						switch(b.index) {
+				//							case 0:
+				//								break;
+				//							case 1:
+				//								getImage(); /*拍照*/
+				//								break;
+				//							case 2:
+				//								galleryImg(); /*打开相册*/
+				//								break;
+				//							default:
+				//								break;
+				//						}
+				//					})
+				//				}
+			}, false);
+
+			// 拍照获取图片
+			function getImage() {
+				var c = plus.camera.getCamera();
+				c.captureImage(function(e) {
+					plus.io.resolveLocalFileSystemURL(e, function(entry) {
+							$("#Face_recognition_choosepic").attr("disabled", "disabled");
+							var imgSrc = entry.toLocalURL(); //拿到图片路径
+							//图片显示
+							var img = "";
+							img = document.getElementById("Face_recognition_img");
+							img.src = imgSrc;
+
+							entry.file(function(file) {
+									reader = new plus.io.FileReader();
+									reader.onloadend = function(e) {
+										console.log(file.size)
+										file.type = "image/jpeg";
+										var image_ = new Image();
+										image_.src = imgSrc;
+										imgSrc = getBase64ImgData(image_, file);
+
+										//e.target.result;//base64字符串
+										//如果图片大小小于1000kb，则直接上传
+										if(file.size <= maxsize) {
+											img = null;
+											upload(imgSrc, file.type);
+											return;
+										} else if(file.size > accMul(5, maxsize)) {
+											mui.toast("上传失败，图片大小超出5M上限");
+											$("#faceImgString").val("");
+											faceImgString = "";
+											$("#Face_recognition_choosepic").removeAttr("disabled");
+											$("#Face_recognition_img").attr("src", "img/face_example.png");
+											$("#choose_Face_recognition").val("");
+											return;
+										}
+										img = null;
+										//图片加载完毕之后进行压缩，然后上传
+										if(image_.complete) {
+											callback();
+										} else {
+											image_.onload = callback;
+										}
+
+										function callback() {
+											var data = compress(image_, file);
+											upload(data, file.type);
+											image_ = null;
+										}
+									};
+									reader.readAsDataURL(file);
+								},
+								function(e) {
+									alert(e.message);
+								});
+						},
+						function(e) {
+							console.log("读取拍照文件错误：" + e.message);
+						});
+				}, function(s) {
+					console.log("error" + s);
+				}, {
+					filename: "_doc/camera/"
+				})
+			}
+			// 从相册中选择图片 
+			function galleryImg() {
+				// 从相册中选择图片
+				plus.gallery.pick(function(e) {
+					for(var i in e.files) {
+						var fileSrc = e.files[i];
+						plus.io.resolveLocalFileSystemURL(fileSrc, function(entry) {
+							$("#Face_recognition_choosepic").attr("disabled", "disabled");
+							var imgSrc = entry.toLocalURL(); //拿到图片路径
+							//图片显示
+							var img = "";
+							img = document.getElementById("Face_recognition_img");
+							img.src = imgSrc;
+							// 可通过entry对象操作test.html文件 
+							entry.file(function(file) {
+									reader = new plus.io.FileReader();
+									reader.onloadend = function(e) {
+										console.log(file.type)
+										file.type = "image/jpeg";
+										var image_ = new Image();
+										image_.src = imgSrc;
+										imgSrc = getBase64ImgData(image_, file);
+
+										//e.target.result;//base64字符串
+										//如果图片大小小于1000kb，则直接上传
+										if(file.size <= maxsize) {
+											img = null;
+											upload(imgSrc, file.type);
+											return;
+										} else if(file.size > accMul(5, maxsize)) {
+											mui.toast("上传失败，图片大小超出5M上限");
+											$("#faceImgString").val("");
+											faceImgString = "";
+											$("#Face_recognition_choosepic").removeAttr("disabled");
+											$("#Face_recognition_img").attr("src", "img/face_example.png");
+											$("#choose_Face_recognition").val("");
+											return;
+										}
+										img = null;
+										//图片加载完毕之后进行压缩，然后上传
+										if(image_.complete) {
+											callback();
+										} else {
+											image_.onload = callback;
+										}
+
+										function callback() {
+											var data = compress(image_, file);
+											upload(data, file.type);
+											image_ = null;
+										}
+									};
+									reader.readAsDataURL(file);
+								},
+								function(e) {
+									alert(e.message);
+								});
+						}, function(e) {
+							alert("Resolve file URL failed: " + e.message);
+						});
+					}
+				}, function(e) {
+					console.log("取消选择图片");
+				}, {
+					filter: "image",
+					multiple: true,
+					maximum: 1,
+					system: false,
+					onmaxed: function() {
+						plus.nativeUI.alert('最多只能选择1张图片');
+					}
+				});
+			}
+
+			// 使用canvas对大图片进行压缩
+			function compress(img, file) {
+				//console.log(file)
+				var w = img.width,
+					h = img.height,
+					scale = w / h,
+					initSize = file.size;
+				var quality = 1; // 默认图片质量为1
+				//生成canvas
+				var canvas = document.createElement('canvas');
+				var ctx = canvas.getContext('2d');
+				// 创建属性节点
+				var anw = document.createAttribute("width");
+				anw.nodeValue = w;
+				var anh = document.createAttribute("height");
+				anh.nodeValue = h;
+				canvas.setAttributeNode(anw);
+				canvas.setAttributeNode(anh);
+				ctx.drawImage(img, 0, 0, w, h);
+				// 图像质量
+				quality = accDiv(accDiv(maxsize, initSize), 2) - 0;
+				// quality值越小，所绘制出的图像越模糊
+				console.log(file.type)
+				var ndata = canvas.toDataURL(file.type, quality);
+				//				console.log('压缩前：' + initSize);
+				//				console.log('压缩后：' + ndata.length);
+				//				console.log('压缩率：' + ~~(100 * (initSize - ndata.length) / initSize) + "%");
+				return ndata;
+			}
+			//图片上传，将base64的图片转成二进制对象，塞进formdata上传
+			function upload(basestr, type) {
+				console.log(basestr.split(",")[1])
+				if(basestr.split(",")[1] == undefined) {
+					mui.toast("请更换图片试试")
+					faceImgString = "";
+					$("#Face_recognition_img").attr("src", "img/face_example.png");
+					$("#choose_Face_recognition").val("");
+				} else {
+					var text = window.atob(basestr.split(",")[1]);
+					var buffer = new Uint8Array(text.length);
+					var pecent = 0,
+						loop = null;
+					for(var i = 0; i < text.length; i++) {
+						buffer[i] = text.charCodeAt(i);
+					}
+					var blob = getBlob([buffer], type);
+					var xhr = new XMLHttpRequest();
+					var formdata = getFormData();
+					formdata.append('file', blob);
+					formdata.append('fileType', type);
+					xhr.open('post', ajax_url + 'appCustomer/saveUploadFile');
+					xhr.onreadystatechange = function() {
+						if(xhr.readyState == 4 && xhr.status == 200) {
+							console.log(xhr)
+							var jsonData = JSON.parse(xhr.responseText);
+							console.log(jsonData)
+							var imagedata = jsonData[0] || {};
+							var text = jsonData.success ? '上传成功' : '上传失败';
+							console.log(text + '：' + jsonData.success);
+							clearInterval(loop);
+							//当收到该消息时上传完毕
+							if(!jsonData.success) return;
+							faceImgString = jsonData.msg;
+							$("#faceImgString").val(faceImgString);
+							$(".pic-list").append('<a href="' + jsonData.success + '">' + imagedata.name + '（' + imagedata.size + '）<img src="' + imagedata.path + '" /></a>');
+							faceContrast();
+						}
+					};
+					xhr.send(formdata);
+				}
+
+			}
+			/**
+			 * 获取blob对象的兼容性写法
+			 * @param buffer
+			 * @param format
+			 * @returns {*}
+			 */
+			function getBlob(buffer, format) {
+				try {
+					return new Blob(buffer, {
+						type: format
+					});
+				} catch(e) {
+					var bb = new(window.BlobBuilder || window.WebKitBlobBuilder || window.MSBlobBuilder);
+					buffer.forEach(function(buf) {
+						bb.append(buf);
+					});
+					return bb.getBlob(format);
+				}
+			}
+			/**
+			 * 获取formdata
+			 */
+			function getFormData() {
+				var isNeedShim = ~navigator.userAgent.indexOf('Android') &&
+					~navigator.vendor.indexOf('Google') &&
+					!~navigator.userAgent.indexOf('Chrome') &&
+					navigator.userAgent.match(/AppleWebKit\/(\d+)/).pop() <= 534;
+				return isNeedShim ? new FormDataShim() : new FormData()
+			}
+			/**
+			 * formdata 补丁, 给不支持formdata上传blob的android机打补丁
+			 * @constructor
+			 */
+			function FormDataShim() {
+				console.warn('using formdata shim');
+				var o = this,
+					parts = [],
+					boundary = Array(21).join('-') + (+new Date() * (1e16 * Math.random())).toString(36),
+					oldSend = XMLHttpRequest.prototype.send;
+				this.append = function(name, value, filename) {
+					parts.push('--' + boundary + '\r\nContent-Disposition: form-data; name="' + name + '"');
+					if(value instanceof Blob) {
+						parts.push('; filename="' + (filename || 'blob') + '"\r\nContent-Type: ' + value.type + '\r\n\r\n');
+						parts.push(value);
+					} else {
+						parts.push('\r\n\r\n' + value);
+					}
+					parts.push('\r\n');
+				};
+				// Override XHR send()
+				XMLHttpRequest.prototype.send = function(val) {
+					var fr,
+						data,
+						oXHR = this;
+					if(val === o) {
+						// Append the final boundary string
+						parts.push('--' + boundary + '--\r\n');
+						// Create the blob
+						data = getBlob(parts);
+						// Set up and read the blob into an array to be sent
+						fr = new FileReader();
+						fr.onload = function() {
+							oldSend.call(oXHR, fr.result);
+						};
+						fr.onerror = function(err) {
+							throw err;
+						};
+						fr.readAsArrayBuffer(data);
+						// Set the multipart content type and boudary
+						this.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+						XMLHttpRequest.prototype.send = oldSend;
+					} else {
+						oldSend.call(this, val);
+					}
+				};
+			}
+
+			function getBase64ImgData(img, file) {
+				var w = img.width,
+					h = img.height,
+					scale = w / h,
+					initSize = file.size;
+				var quality = 0.92; // 默认图片质量为1
+				//生成canvas
+				var canvas = document.createElement('canvas');
+				var ctx = canvas.getContext('2d');
+				// 创建属性节点
+				var anw = document.createAttribute("width");
+				anw.nodeValue = w;
+				var anh = document.createAttribute("height");
+				anh.nodeValue = h;
+				canvas.setAttributeNode(anw);
+				canvas.setAttributeNode(anh);
+				ctx.drawImage(img, 0, 0, w, h);
+				var ndata = canvas.toDataURL(file.type, quality);
+				return ndata;
+			}
+		</script>
+	</body>
+
+</html>

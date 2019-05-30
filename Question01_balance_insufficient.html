@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>机具交易时“余额不足”</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">机具交易时“余额不足” </h1>
+		</header>
+
+		<div class="mui-content bg_white p30 font30">
+			<div class="bold pt25">余额不足请换卡操作</div>
+			
+			<div>控台查询返回码描述：51 余额不足请换卡操作</div>
+			
+			<div class="cheat_suspicion_img">
+				<img class="transaction_img" src="img/img_balance_insufficient.png" alt="" />
+			</div>
+
+			<div class="overflow">
+				<div class="answer">答：</div>
+				<div class="answer_content">
+					<div>请持卡人确认交易卡的余额是否足够，如为贷记卡，请及时还款。</div>
+				</div>
+			</div>			
+		</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色
+			plus.navigator.setStatusBarBackground('#078ffe');
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+	</script>
+
+</html>

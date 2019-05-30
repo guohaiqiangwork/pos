@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>未检测到设备</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+		<script src="js/rem_controle.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body class="bg_white">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">未检测到设备</h1>
+		</header>
+
+		<div class="mui-content bg_white p30 font30">
+			<div class="bold pt25">未检测到设备</div>
+
+			<div class="transaction_overrun_img">
+				<img class="transaction_img" src="img/img_undetected_equipment1.png" alt="" />
+			</div>
+
+			<div class="overflow">
+				<div class="process_num">1</div>
+				<div class="process_content">
+					<div>确认机具蓝牙、手机蓝牙均已打开</div>
+				</div>
+			</div>
+
+			<div class="overflow">
+				<div class="process_num">2</div>
+				<div class="process_content">
+					<div>请商户退出客户端，重新打开蓝牙，再登陆客端尝试（切勿登录客户端后，再打开蓝牙）</div>
+				</div>
+			</div>
+
+			<div class="overflow">
+				<div class="process_num">3</div>
+				<div class="process_content">
+					<div>蓝牙配对请求（输入 PIN 码）</div>
+				</div>
+			</div>
+
+			<div class="transaction_overrun_img">
+				<img class="transaction_img" src="img/img_undetected_equipment2.png" alt="" />
+			</div>
+
+			<div>请打开客户端→点击“服务”→点击“收款”→选择交易方式，客户端自动跳转连接机具，无需输入 PIN 码</div>
+
+			<div class="overflow">
+				<div class="process_num">4</div>
+				<div class="process_content">
+					<div>USB 通信模式</div>
+					<div>a 点击机具“功能”</div>
+					<div>b 依次输入数字：2186624，点击“确认”</div>
+					<div>c 依次选择“2”、“1”、确认</div>
+					<img class="transaction_img mt25" src="img/img_undetected_equipment3.png" style="margin-left: -.2rem;" alt="" />
+					<div class="mt25">d 无需修改“蓝牙名称”，点击“确认”</div>
+					<img class="transaction_img mt25" src="img/img_undetected_equipment4.png" style="margin-left: -.2rem;" alt="" />
+					<div class="mt25">e 点击“取消”，直到退回主界面</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/myStorage.js"></script>
+	<script src="js/custom.js"></script>
+	<script type="text/javascript">
+		// H5 plus事件处理
+		function plusReady() {
+			// 设置系统状态栏背景色
+			plus.navigator.setStatusBarBackground('#078ffe');
+		}
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+	</script>
+
+</html>
